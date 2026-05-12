@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Michael Vasquez — Mechanical Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --surface: #111; --card: #141414; --card-hi: #1a1a1a;
+      --border: #1e1e1e; --muted: #3a3a3a; --subtle: #666;
+      --body: #b8b8b8; --heading: #f0f0f0;
+      --accent: #c9a96e; --accent-dim: #7a6340;
+      --blue: #6b9fbd; --green: #7fb37f;
+      --syne: 'Syne', sans-serif; --mono: 'JetBrains Mono', monospace; --sans: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--body); font-family: var(--sans); font-weight: 300; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 2.5rem; background: rgba(10,10,10,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--syne); font-weight: 700; font-size: 1rem; color: var(--heading); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.68rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    #hero { padding: 9rem 2.5rem 5rem; max-width: 1100px; margin: 0 auto; }
+    .hero-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 4rem; align-items: start; }
+    .hero-h1 { font-family: var(--syne); font-size: clamp(2.6rem, 6vw, 4.6rem); font-weight: 800; color: var(--heading); line-height: 1.02; letter-spacing: -0.03em; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.6s 0.15s ease forwards; }
+    .hero-h1 em { font-style: italic; font-weight: 400; color: var(--subtle); }
+    .hero-sub { font-size: 1rem; color: var(--body); max-width: 460px; margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.6s 0.3s ease forwards; }
+    .avail-strip { display: grid; grid-template-columns: auto auto auto; gap: 0 2rem; padding: 1.25rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); opacity: 0; animation: fadeUp 0.6s 0.45s ease forwards; }
+    .avail-cell { display: flex; flex-direction: column; gap: 0.3rem; }
+    .avail-label { font-family: var(--mono); font-size: 0.58rem; color: var(--subtle); letter-spacing: 0.14em; text-transform: uppercase; }
+    .avail-val { font-family: var(--syne); font-size: 0.9rem; color: var(--heading); font-weight: 500; }
+    .avail-val.green { color: var(--green); }
+    .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green); margin-right: 0.4rem; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
+
+    /* RESUME THUMBNAIL */
+    .hero-right { opacity: 0; animation: fadeUp 0.6s 0.5s ease forwards; }
+    .resume-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem; transition: border-color 0.2s, transform 0.2s; text-decoration: none; display: block; }
+    .resume-card:hover { border-color: var(--accent-dim); transform: translateY(-2px); }
+    .resume-thumb { width: 100%; aspect-ratio: 8.5/11; background: #f5f5f5; margin-bottom: 0.9rem; padding: 1rem 1.25rem; overflow: hidden; position: relative; }
+    .rt-name { font-family: 'Times New Roman', serif; font-size: 0.85rem; font-weight: 700; color: #000; margin-bottom: 0.1rem; }
+    .rt-contact { font-family: 'Times New Roman', serif; font-size: 0.38rem; color: #444; margin-bottom: 0.5rem; border-bottom: 0.5px solid #888; padding-bottom: 0.35rem; }
+    .rt-section { font-size: 0.42rem; font-weight: 700; color: #8b0000; text-transform: uppercase; letter-spacing: 0.06em; margin: 0.55rem 0 0.2rem; border-bottom: 0.5px solid #ccc; padding-bottom: 0.1rem; }
+    .rt-line { font-family: 'Times New Roman', serif; font-size: 0.36rem; color: #222; margin-bottom: 0.12rem; line-height: 1.4; }
+    .rt-bold { font-weight: 700; }
+    .rt-right { float: right; font-style: italic; }
+    .rt-indent { padding-left: 0.5rem; color: #444; }
+    .resume-card-meta { display: flex; justify-content: space-between; align-items: center; }
+    .resume-card-label { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; }
+    .resume-card-dl { font-family: var(--mono); font-size: 0.6rem; color: var(--subtle); }
+    .resume-card:hover .resume-card-dl { color: var(--accent); }
+
+    /* PROJECTS */
+    #projects { padding: 0 2.5rem 5rem; max-width: 1100px; margin: 0 auto; }
+    .projects-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2.5rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--border); }
+    .projects-title { font-family: var(--syne); font-size: 0.78rem; font-weight: 600; color: var(--heading); letter-spacing: 0.12em; text-transform: uppercase; }
+    .projects-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--subtle); }
+    .project-list { display: flex; flex-direction: column; gap: 1.5px; background: var(--border); }
+
+    /* PROJECT CARD */
+    .pcard { display: grid; grid-template-columns: 1fr 1.3fr; background: var(--card); text-decoration: none; transition: background 0.2s; min-height: 300px; }
+    .pcard:hover { background: var(--card-hi); }
+    .pcard:hover .pcard-arrow { opacity: 1; transform: translateX(0); }
+    .pcard-vis { background: #0c0c0c; position: relative; overflow: hidden; border-right: 1px solid var(--border); }
+    .pcard-vis svg { width: 100%; height: 100%; display: block; }
+    .pcard-body { padding: 2rem 2.25rem; display: flex; flex-direction: column; justify-content: center; position: relative; }
+    .pcard-num { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.18em; margin-bottom: 0.8rem; }
+    .pcard-title { font-family: var(--syne); font-size: 1.4rem; font-weight: 700; color: var(--heading); line-height: 1.15; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+    .pcard-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
+    .pcard-desc { font-size: 0.88rem; color: var(--body); margin-bottom: 1.2rem; max-width: 500px; }
+    .pcard-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem; }
+    .tag { display: inline-block; font-family: var(--mono); font-size: 0.6rem; color: var(--subtle); border: 1px solid var(--border); padding: 0.3rem 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .tag-accent { color: var(--accent); border-color: var(--accent-dim); }
+    .tag-blue { color: var(--blue); border-color: rgba(107,159,189,0.35); }
+    .pcard-arrow { position: absolute; bottom: 2rem; right: 2.25rem; font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; opacity: 0; transform: translateX(-6px); transition: all 0.25s; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; max-width: 1100px; margin: 3rem auto 0; display: flex; align-items: center; justify-content: space-between; }
+    footer span { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--accent); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 3rem; } .hero-right { max-width: 300px; } .avail-strip { grid-template-columns: 1fr; gap: 1rem; } }
+    @media (max-width: 720px) {
+      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1.25rem; }
+      #hero { padding: 8rem 1.25rem 3rem; } #projects { padding: 0 1.25rem 3rem; }
+      .pcard { grid-template-columns: 1fr; min-height: auto; }
+      .pcard-vis { aspect-ratio: 16/9; border-right: none; border-bottom: 1px solid var(--border); }
+      .pcard-body { padding: 1.5rem; }
+      .pcard-arrow { position: static; opacity: 1; transform: none; margin-top: 1rem; }
+      footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">MV<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Projects</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="resume.pdf" target="_blank">Resume</a></li>
+    <li><a href="about.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid">
+    <div>
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;opacity:0;animation:fadeUp 0.5s 0.05s ease forwards;">
+        <div style="width:28px;height:1px;background:var(--accent);"></div>
+        <span style="font-family:var(--mono);font-size:0.66rem;color:var(--accent);letter-spacing:0.16em;text-transform:uppercase;">Mechanical Engineer · B.S. RIT 2025</span>
+      </div>
+      <h1 class="hero-h1">Michael Vasquez<br><em>designs, simulates, ships.</em></h1>
+      <p class="hero-sub">From compliant mechanisms and FEA-validated structures to production-line robotics — engineering work across the full design cycle.</p>
+      <div class="avail-strip">
+        <div class="avail-cell">
+          <span class="avail-label">Status</span>
+          <span class="avail-val green"><span class="dot"></span>Open to opportunities</span>
+        </div>
+        <div class="avail-cell">
+          <span class="avail-label">Targeting</span>
+          <span class="avail-val">R&amp;D · Automation · CAE</span>
+        </div>
+        <div class="avail-cell">
+          <span class="avail-label">Location</span>
+          <span class="avail-val">Connecticut · Hybrid OK</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <a class="resume-card" href="resume.pdf" target="_blank">
+        <div class="resume-thumb">
+          <div class="rt-name">Michael Vasquez</div>
+          <div class="rt-contact">mvas8037@gmail.com &nbsp;·&nbsp; (203) 571-2052 &nbsp;·&nbsp; linkedin.com/in/michael-vasquez-me &nbsp;·&nbsp; Portfolio</div>
+          <div class="rt-section">Education</div>
+          <div class="rt-line"><span class="rt-bold">B.S. Mechanical Engineering — Rochester Institute of Technology</span><span class="rt-right">2020–2025</span></div>
+          <div class="rt-line rt-indent">Advanced CAD, Optimal Design, System Dynamics, Material Science, Heat Transfer</div>
+          <div class="rt-section">Skills</div>
+          <div class="rt-line"><span class="rt-bold">CAD/CAE</span> — SolidWorks, Fusion 360, Creo, AutoCAD, OnShape, Ansys</div>
+          <div class="rt-line"><span class="rt-bold">Fabrication</span> — FDM &amp; SLA 3D Printing, Mill &amp; Lathe, CMM Inspection</div>
+          <div class="rt-line"><span class="rt-bold">Programming</span> — MATLAB, Simulink, C++, Java</div>
+          <div class="rt-line"><span class="rt-bold">Certs</span> — GD&amp;T Professional, CSWA Mechanical Design, CSWA Additive Mfg.</div>
+          <div class="rt-section">Experience</div>
+          <div class="rt-line"><span class="rt-bold">Mechanical Engineer — Point Lighting Corporation</span><span class="rt-right">Jun 2025–Present</span></div>
+          <div class="rt-line rt-indent">Sole ME · full lifecycle · ISO 9001 · FAA-compliant lighting</div>
+          <div class="rt-line"><span class="rt-bold">Manufacturing Engineering Intern — ThermoFisher Scientific</span><span class="rt-right">2023–2024</span></div>
+          <div class="rt-line rt-indent">+18% yield (robot controls) · CMM/ShapeGrabber inspection · 98% weld yield</div>
+          <div class="rt-line"><span class="rt-bold">Engine Technician Asst. — Ken's Automotive</span><span class="rt-right">2023–2024</span></div>
+          <div class="rt-section">Projects</div>
+          <div class="rt-line"><span class="rt-bold">Binder-Jet Bone 3D Printer</span> — 2-DoF compliant coupling, piston sleeve redesign · RevBio partnership</div>
+          <div class="rt-line"><span class="rt-bold">Custom FPV Drone</span> — MATLAB flight sim, external validation, Ansys FEA, sacrificial arm design</div>
+          <div class="rt-line"><span class="rt-bold">Standing Desk Automation</span> — Helical planetary gearbox + custom motor controller</div>
+          <div class="rt-line"><span class="rt-bold">VEX U World Championships</span> — Innovate Award · 3rd qualification · 15+ member team lead</div>
+        </div>
+        <div class="resume-card-meta">
+          <span class="resume-card-label">Resume.pdf</span>
+          <span class="resume-card-dl">Download ↓</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="projects-header">
+    <span class="projects-title">Selected Projects</span>
+    <span class="projects-meta">5 projects · sorted by relevance</span>
+  </div>
+
+  <div class="project-list">
+
+    <!-- 01 BONE PRINTER -->
+    <a class="pcard" href="projects/bone-printer.html">
+      <div class="pcard-vis">
+        <svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="560" height="340" fill="#0c0c0c"/>
+          <g stroke="#161616" stroke-width="1"><line x1="0" y1="68" x2="560" y2="68"/><line x1="0" y1="136" x2="560" y2="136"/><line x1="0" y1="204" x2="560" y2="204"/><line x1="0" y1="272" x2="560" y2="272"/><line x1="112" y1="0" x2="112" y2="340"/><line x1="224" y1="0" x2="224" y2="340"/><line x1="336" y1="0" x2="336" y2="340"/><line x1="448" y1="0" x2="448" y2="340"/></g>
+          <rect x="105" y="55" width="8" height="230" fill="#222"/><rect x="447" y="55" width="8" height="230" fill="#222"/>
+          <rect x="105" y="55" width="350" height="8" fill="#222"/><rect x="105" y="277" width="350" height="8" fill="#222"/>
+          <line x1="275" y1="63" x2="275" y2="277" stroke="#333" stroke-width="3"/>
+          <rect x="195" y="135" width="160" height="28" rx="2" fill="#1a1a1a" stroke="#444" stroke-width="1.5"/>
+          <rect x="258" y="110" width="34" height="22" rx="2" fill="#181818" stroke="#c9a96e" stroke-width="1.5"/>
+          <text x="275" y="103" text-anchor="middle" fill="#c9a96e" font-family="JetBrains Mono,monospace" font-size="8" letter-spacing="0.5">2-DOF COUPLING</text>
+          <line x1="235" y1="163" x2="235" y2="208" stroke="#666" stroke-width="1" stroke-dasharray="3 2"/><line x1="275" y1="163" x2="275" y2="208" stroke="#666" stroke-width="1" stroke-dasharray="3 2"/><line x1="315" y1="163" x2="315" y2="208" stroke="#666" stroke-width="1" stroke-dasharray="3 2"/>
+          <rect x="178" y="213" width="195" height="10" fill="#1c1c1c" stroke="#c9a96e" stroke-width="1"/>
+          <rect x="148" y="228" width="13" height="48" fill="#1a1a1a" stroke="#c9a96e" stroke-width="1"/><rect x="163" y="228" width="13" height="48" fill="#1a1a1a" stroke="#c9a96e" stroke-width="1"/>
+          <rect x="376" y="228" width="13" height="48" fill="#1a1a1a" stroke="#c9a96e" stroke-width="1"/><rect x="391" y="228" width="13" height="48" fill="#1a1a1a" stroke="#c9a96e" stroke-width="1"/>
+          <text x="22" y="26" fill="#333" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1.5">BINDER-JET BONE PRINTER · REVBIO PARTNERSHIP</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-num">01 / SENIOR CAPSTONE</div>
+        <h3 class="pcard-title">Binder-Ink Jet<br>Bone 3D Printer</h3>
+        <div class="pcard-meta">Aug 2024 – Apr 2025 · 8-person team · RevBio</div>
+        <p class="pcard-desc">Redesigned the Z-axis sub-assembly and powder containment for a regenerative bone-printing platform built on the open-source OASIS architecture, partnered with RevBio (Tetranite biotech). Replaced precision-machined linear bearing mounts with a 2-DoF compliant coupling — eliminating cost and tolerance stack-up simultaneously.</p>
+        <div class="pcard-tags">
+          <span class="tag tag-accent">Compliant Mechanisms</span>
+          <span class="tag">SolidWorks</span>
+          <span class="tag">DFM</span>
+          <span class="tag">Biomedical R&amp;D</span>
+        </div>
+        <span class="pcard-arrow">VIEW PROJECT →</span>
+      </div>
+    </a>
+
+    <!-- 02 FPV DRONE -->
+    <a class="pcard" href="projects/fpv-drone.html">
+      <div class="pcard-vis">
+        <svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="560" height="340" fill="#0c0c0c"/>
+          <g stroke="#161616" stroke-width="1"><line x1="0" y1="68" x2="560" y2="68"/><line x1="0" y1="136" x2="560" y2="136"/><line x1="0" y1="204" x2="560" y2="204"/><line x1="0" y1="272" x2="560" y2="272"/><line x1="112" y1="0" x2="112" y2="340"/><line x1="224" y1="0" x2="224" y2="340"/><line x1="336" y1="0" x2="336" y2="340"/><line x1="448" y1="0" x2="448" y2="340"/></g>
+          <!-- X frame -->
+          <line x1="195" y1="95" x2="365" y2="245" stroke="#3a3a3a" stroke-width="13" stroke-linecap="round"/>
+          <line x1="365" y1="95" x2="195" y2="245" stroke="#3a3a3a" stroke-width="13" stroke-linecap="round"/>
+          <!-- sacrificial arm dash highlight -->
+          <line x1="195" y1="95" x2="365" y2="245" stroke="#c9a96e" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.5"/>
+          <!-- center plate -->
+          <rect x="248" y="143" width="64" height="54" rx="3" fill="#161616" stroke="#444" stroke-width="1.5"/>
+          <text x="280" y="174" text-anchor="middle" fill="#555" font-family="JetBrains Mono,monospace" font-size="7">FC</text>
+          <!-- motors -->
+          <circle cx="195" cy="95" r="20" fill="#181818" stroke="#555" stroke-width="1.5"/>
+          <circle cx="365" cy="95" r="20" fill="#181818" stroke="#555" stroke-width="1.5"/>
+          <circle cx="195" cy="245" r="20" fill="#181818" stroke="#555" stroke-width="1.5"/>
+          <circle cx="365" cy="245" r="20" fill="#181818" stroke="#555" stroke-width="1.5"/>
+          <!-- props -->
+          <ellipse cx="195" cy="95" rx="38" ry="6" fill="none" stroke="#3a3a3a" stroke-width="0.8" opacity="0.6"/>
+          <ellipse cx="365" cy="95" rx="38" ry="6" fill="none" stroke="#3a3a3a" stroke-width="0.8" opacity="0.6"/>
+          <ellipse cx="195" cy="245" rx="38" ry="6" fill="none" stroke="#3a3a3a" stroke-width="0.8" opacity="0.6"/>
+          <ellipse cx="365" cy="245" rx="38" ry="6" fill="none" stroke="#3a3a3a" stroke-width="0.8" opacity="0.6"/>
+          <!-- FEA stress dots -->
+          <circle cx="290" cy="178" r="5" fill="#c9a96e" opacity="0.7"/>
+          <circle cx="306" cy="190" r="3" fill="#7fb37f" opacity="0.6"/>
+          <circle cx="274" cy="166" r="3" fill="#7fb37f" opacity="0.6"/>
+          <!-- MATLAB label -->
+          <rect x="410" y="105" width="110" height="36" fill="#111" stroke="#1e1e1e" rx="2"/>
+          <text x="465" y="120" text-anchor="middle" fill="#6b9fbd" font-family="JetBrains Mono,monospace" font-size="7.5" letter-spacing="0.5">MATLAB SIM</text>
+          <text x="465" y="133" text-anchor="middle" fill="#555" font-family="JetBrains Mono,monospace" font-size="7">v = validated</text>
+          <text x="22" y="26" fill="#333" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1.5">CUSTOM FPV · FEA + MATLAB SIM · SACRIFICIAL ARMS</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-num">02 / PERSONAL R&amp;D</div>
+        <h3 class="pcard-title">Custom FPV Drone</h3>
+        <div class="pcard-meta">Dec 2024 – Present · From-scratch design</div>
+        <p class="pcard-desc">Built a custom MATLAB flight simulation, validated against an established external simulator, then used predicted impact forces as FEA inputs. Designed the arms as intentionally <em>sacrificial</em> structural elements — engineering them to fail first and controlled on impact, protecting the flight controller stack.</p>
+        <div class="pcard-tags">
+          <span class="tag tag-blue">FEA · Ansys</span>
+          <span class="tag tag-blue">MATLAB</span>
+          <span class="tag">SolidWorks</span>
+          <span class="tag">Sacrificial Design</span>
+        </div>
+        <span class="pcard-arrow">VIEW PROJECT →</span>
+      </div>
+    </a>
+
+    <!-- 03 THERMOFISHER -->
+    <a class="pcard" href="projects/thermofisher.html">
+      <div class="pcard-vis">
+        <svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="560" height="340" fill="#0c0c0c"/>
+          <g stroke="#161616" stroke-width="1"><line x1="0" y1="68" x2="560" y2="68"/><line x1="0" y1="136" x2="560" y2="136"/><line x1="0" y1="204" x2="560" y2="204"/><line x1="0" y1="272" x2="560" y2="272"/><line x1="112" y1="0" x2="112" y2="340"/><line x1="224" y1="0" x2="224" y2="340"/><line x1="336" y1="0" x2="336" y2="340"/><line x1="448" y1="0" x2="448" y2="340"/></g>
+          <!-- conveyor -->
+          <rect x="50" y="258" width="270" height="14" fill="#161616" stroke="#2a2a2a" stroke-width="1"/>
+          <!-- bottles -->
+          <rect x="75" y="232" width="20" height="28" rx="2" fill="#181818" stroke="#333" stroke-width="1"/><rect x="84" y="222" width="8" height="13" rx="1" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+          <rect x="135" y="232" width="20" height="28" rx="2" fill="#181818" stroke="#333" stroke-width="1"/><rect x="144" y="222" width="8" height="13" rx="1" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+          <rect x="195" y="232" width="20" height="28" rx="2" fill="#181818" stroke="#333" stroke-width="1"/><rect x="204" y="222" width="8" height="13" rx="1" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+          <!-- robot arm -->
+          <rect x="93" y="186" width="14" height="48" fill="#1c1c1c" stroke="#3a3a3a" stroke-width="1.5"/>
+          <rect x="75" y="168" width="48" height="22" rx="2" fill="#181818" stroke="#6b9fbd" stroke-width="1.5"/>
+          <text x="99" y="182" text-anchor="middle" fill="#6b9fbd" font-family="JetBrains Mono,monospace" font-size="6">EPSON</text>
+          <circle cx="100" cy="232" r="8" fill="#1a1a1a" stroke="#c9a96e" stroke-width="1.2"/>
+          <!-- CMM -->
+          <rect x="340" y="160" width="90" height="75" fill="#0e0e0e" stroke="#2a2a2a" stroke-width="1"/>
+          <rect x="356" y="178" width="58" height="38" fill="none" stroke="#444" stroke-width="1"/>
+          <line x1="366" y1="174" x2="416" y2="174" stroke="#3a3a3a" stroke-width="2"/>
+          <circle cx="385" cy="197" r="4" fill="none" stroke="#c9a96e" stroke-width="1"/><line x1="385" y1="174" x2="385" y2="193" stroke="#c9a96e" stroke-width="1" stroke-dasharray="2 2"/>
+          <text x="385" y="248" text-anchor="middle" fill="#555" font-family="JetBrains Mono,monospace" font-size="6.5">CMM · GD&amp;T</text>
+          <!-- yield bars -->
+          <rect x="462" y="188" width="14" height="58" fill="#1e1e1e" stroke="#333" stroke-width="1"/>
+          <rect x="462" y="202" width="14" height="44" fill="#444"/>
+          <rect x="480" y="188" width="14" height="58" fill="#1e1e1e" stroke="#333" stroke-width="1"/>
+          <rect x="480" y="195" width="14" height="51" fill="#c9a96e"/>
+          <text x="473" y="260" text-anchor="middle" fill="#c9a96e" font-family="JetBrains Mono,monospace" font-size="7.5">+18%</text>
+          <text x="22" y="26" fill="#333" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1.5">THERMOFISHER · 2 CO-OPS · 16 MONTHS · 10+ PROJECTS</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-num">03 / INDUSTRY · 16 MONTHS</div>
+        <h3 class="pcard-title">ThermoFisher Scientific<br>Co-op Engineering</h3>
+        <div class="pcard-meta">Jan 2023 – Aug 2024 · Manufacturing Engineering</div>
+        <p class="pcard-desc">Two co-op rotations on production lines for laboratory consumables — ten projects from scratch. Epson robot controls integration (+18% yield), ultrasonic weld process to 98% yield, CMM programs, machine redesigns with 5-iteration tamping tools, ShapeGrabber vial inspection development, and DOEs on capping failures.</p>
+        <div class="pcard-tags">
+          <span class="tag tag-accent">Production Engineering</span>
+          <span class="tag">Robot Controls</span>
+          <span class="tag">CMM · GD&amp;T</span>
+          <span class="tag">DOE</span>
+        </div>
+        <span class="pcard-arrow">VIEW PROJECT →</span>
+      </div>
+    </a>
+
+    <!-- 04 DESK -->
+    <a class="pcard" href="projects/automated-desk.html">
+      <div class="pcard-vis">
+        <svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="560" height="340" fill="#0c0c0c"/>
+          <g stroke="#161616" stroke-width="1"><line x1="0" y1="68" x2="560" y2="68"/><line x1="0" y1="136" x2="560" y2="136"/><line x1="0" y1="204" x2="560" y2="204"/><line x1="0" y1="272" x2="560" y2="272"/><line x1="112" y1="0" x2="112" y2="340"/><line x1="224" y1="0" x2="224" y2="340"/><line x1="336" y1="0" x2="336" y2="340"/><line x1="448" y1="0" x2="448" y2="340"/></g>
+          <!-- planetary -->
+          <circle cx="195" cy="170" r="95" fill="none" stroke="#2a2a2a" stroke-width="10"/>
+          <circle cx="195" cy="170" r="95" fill="none" stroke="#c9a96e" stroke-width="0.7" stroke-dasharray="5 3" opacity="0.4"/>
+          <circle cx="195" cy="108" r="25" fill="#161616" stroke="#444" stroke-width="1.5"/>
+          <circle cx="248" cy="200" r="25" fill="#161616" stroke="#444" stroke-width="1.5"/>
+          <circle cx="142" cy="200" r="25" fill="#161616" stroke="#444" stroke-width="1.5"/>
+          <circle cx="195" cy="170" r="25" fill="#1a1a1a" stroke="#c9a96e" stroke-width="1.5"/>
+          <circle cx="195" cy="170" r="9" fill="#c9a96e" opacity="0.25"/>
+          <line x1="195" y1="170" x2="195" y2="108" stroke="#2a2a2a" stroke-width="3"/>
+          <line x1="195" y1="170" x2="248" y2="200" stroke="#2a2a2a" stroke-width="3"/>
+          <line x1="195" y1="170" x2="142" y2="200" stroke="#2a2a2a" stroke-width="3"/>
+          <g stroke="#c9a96e" stroke-width="0.7" opacity="0.6"><line x1="182" y1="149" x2="186" y2="154"/><line x1="190" y1="146" x2="194" y2="151"/><line x1="198" y1="146" x2="202" y2="151"/><line x1="206" y1="149" x2="210" y2="154"/></g>
+          <!-- controller -->
+          <rect x="348" y="118" width="162" height="110" rx="2" fill="#0e0e0e" stroke="#1e1e1e" stroke-width="1"/>
+          <text x="429" y="137" text-anchor="middle" fill="#555" font-family="JetBrains Mono,monospace" font-size="7">MOTOR CONTROLLER</text>
+          <circle cx="376" cy="168" r="14" fill="#1a1a1a" stroke="#6b9fbd" stroke-width="1.2"/>
+          <line x1="376" y1="158" x2="382" y2="163" stroke="#6b9fbd" stroke-width="1.5"/>
+          <text x="376" y="190" text-anchor="middle" fill="#444" font-family="JetBrains Mono,monospace" font-size="6">SPEED</text>
+          <rect x="406" y="158" width="18" height="18" rx="1" fill="#181818" stroke="#6b9fbd" stroke-width="1.2"/>
+          <text x="415" y="190" text-anchor="middle" fill="#444" font-family="JetBrains Mono,monospace" font-size="6">DIR</text>
+          <rect x="440" y="152" width="48" height="26" fill="#0a0a0a" stroke="#6b9fbd" stroke-width="1"/>
+          <text x="464" y="169" text-anchor="middle" fill="#7fb37f" font-family="JetBrains Mono,monospace" font-size="8" font-weight="bold">12.4V</text>
+          <text x="464" y="192" text-anchor="middle" fill="#444" font-family="JetBrains Mono,monospace" font-size="6">READOUT</text>
+          <text x="22" y="26" fill="#333" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1.5">DESK AUTOMATION · MECHATRONICS</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-num">04 / MECHATRONICS</div>
+        <h3 class="pcard-title">Standing Desk<br>Automation</h3>
+        <div class="pcard-meta">Dec 2023 – Aug 2024 · End-to-end build</div>
+        <p class="pcard-desc">Custom 3D-printed helical planetary gearbox sized via system dynamics calculations, paired with a from-scratch motor controller circuit (potentiometer speed control, direction switch, voltage readout), and a bracket designed to mate with existing tapped holes — no new drilling.</p>
+        <div class="pcard-tags">
+          <span class="tag">Gear Design</span>
+          <span class="tag">System Dynamics</span>
+          <span class="tag tag-blue">Electronics</span>
+          <span class="tag">FDM</span>
+        </div>
+        <span class="pcard-arrow">VIEW PROJECT →</span>
+      </div>
+    </a>
+
+    <!-- 05 ROBOTICS -->
+    <a class="pcard" href="projects/robotics.html">
+      <div class="pcard-vis">
+        <svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="560" height="340" fill="#0c0c0c"/>
+          <g stroke="#161616" stroke-width="1"><line x1="0" y1="68" x2="560" y2="68"/><line x1="0" y1="136" x2="560" y2="136"/><line x1="0" y1="204" x2="560" y2="204"/><line x1="0" y1="272" x2="560" y2="272"/><line x1="112" y1="0" x2="112" y2="340"/><line x1="224" y1="0" x2="224" y2="340"/><line x1="336" y1="0" x2="336" y2="340"/><line x1="448" y1="0" x2="448" y2="340"/></g>
+          <!-- 4-bar linkage -->
+          <g stroke="#c9a96e" stroke-width="2" fill="none">
+            <line x1="115" y1="230" x2="195" y2="110"/>
+            <line x1="195" y1="110" x2="315" y2="110"/>
+            <line x1="315" y1="110" x2="235" y2="230"/>
+            <line x1="115" y1="230" x2="235" y2="230"/>
+          </g>
+          <circle cx="115" cy="230" r="5" fill="#c9a96e"/><circle cx="195" cy="110" r="5" fill="#c9a96e"/>
+          <circle cx="315" cy="110" r="5" fill="#c9a96e"/><circle cx="235" cy="230" r="5" fill="#c9a96e"/>
+          <text x="215" y="93" text-anchor="middle" fill="#c9a96e" font-family="JetBrains Mono,monospace" font-size="8">4-BAR LINKAGE</text>
+          <!-- intake roller -->
+          <circle cx="315" cy="110" r="16" fill="none" stroke="#6b9fbd" stroke-width="1.5"/>
+          <text x="340" y="105" fill="#6b9fbd" font-family="JetBrains Mono,monospace" font-size="6.5">INTAKE</text>
+          <!-- chassis -->
+          <rect x="125" y="234" width="240" height="55" rx="3" fill="#161616" stroke="#444" stroke-width="1.5"/>
+          <circle cx="158" cy="295" r="13" fill="#111" stroke="#555" stroke-width="2"/><circle cx="338" cy="295" r="13" fill="#111" stroke="#555" stroke-width="2"/>
+          <!-- award badge -->
+          <g transform="translate(442,130)">
+            <polygon points="0,0 16,28 46,28 24,48 32,80 0,60 -32,80 -24,48 -46,28 -16,28" fill="none" stroke="#c9a96e" stroke-width="1.2" opacity="0.8"/>
+            <text x="0" y="44" text-anchor="middle" fill="#c9a96e" font-family="JetBrains Mono,monospace" font-size="8" font-weight="500">1ST</text>
+          </g>
+          <text x="22" y="26" fill="#333" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1.5">VEX U · WORLD CHAMPIONSHIPS · INNOVATE AWARD</text>
+        </svg>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-num">05 / LEADERSHIP</div>
+        <h3 class="pcard-title">VEX U Competition<br>Robot</h3>
+        <div class="pcard-meta">2019 – 2022 · President, RIT VEX U Robotics</div>
+        <p class="pcard-desc">Multi-year competition robotics — 4-bar linkage with intake rollers, pivoting deposit tray, drivetrain with independent odometry wheels, and PID controllers for autonomous position correction. Innovate Award at World Championships. Led 15+ member team across hardware and software sub-teams.</p>
+        <div class="pcard-tags">
+          <span class="tag">Mechanism Design</span>
+          <span class="tag tag-blue">PID Controls</span>
+          <span class="tag tag-blue">Odometry</span>
+          <span class="tag">Team Lead</span>
+        </div>
+        <span class="pcard-arrow">VIEW PROJECT →</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Michael Vasquez · Mechanical Engineer</span>
+  <div class="footer-links">
+    <a href="mailto:mvas8037@gmail.com">Email</a>
+    <a href="https://linkedin.com/in/michael-vasquez-me" target="_blank">LinkedIn</a>
+    <a href="resume.pdf" target="_blank">Resume</a>
+  </div>
+</footer>
+
+</body>
+</html>

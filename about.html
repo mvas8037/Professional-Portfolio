@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — Michael Vasquez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --surface: #111; --card: #141414; --card-hi: #1a1a1a;
+      --border: #1e1e1e; --border-hi: #2a2a2a; --muted: #3a3a3a; --subtle: #666;
+      --body: #b8b8b8; --heading: #f0f0f0; --accent: #c9a96e; --accent-dim: #7a6340;
+      --blue: #6b9fbd; --green: #7fb37f;
+      --syne: 'Syne', sans-serif; --mono: 'JetBrains Mono', monospace; --sans: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--body); font-family: var(--sans); font-weight: 300; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 2.5rem; background: rgba(10,10,10,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--syne); font-weight: 700; font-size: 1rem; color: var(--heading); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.68rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+    .eyebrow-line { width: 28px; height: 1px; background: var(--accent); }
+    .eyebrow-text { font-family: var(--mono); font-size: 0.66rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; }
+    /* Hero */
+    .project-hero { padding: 9rem 2.5rem 3rem; max-width: 980px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+    .proj-meta-tag { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; }
+    .proj-title { font-family: var(--syne); font-weight: 800; font-size: clamp(2.2rem, 5vw, 3.8rem); color: var(--heading); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+    .proj-subtitle { font-size: 1.05rem; color: var(--body); max-width: 620px; margin-bottom: 2rem; }
+    .proj-stats { display: grid; grid-template-columns: repeat(4, 1fr); padding: 1.5rem 0; border-top: 1px solid var(--border); }
+    .proj-stat { padding-right: 1.5rem; border-right: 1px solid var(--border); }
+    .proj-stat:last-child { border-right: none; }
+    .stat-val { font-family: var(--syne); font-size: 1.1rem; font-weight: 700; color: var(--heading); margin-bottom: 0.2rem; line-height: 1.2; }
+    .stat-label { font-family: var(--mono); font-size: 0.58rem; color: var(--subtle); text-transform: uppercase; letter-spacing: 0.1em; }
+    /* Role strip */
+    .role-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2.5rem; max-width: 980px; margin: 0 auto; display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    .role-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+    .role-content { font-size: 0.88rem; color: var(--body); }
+    /* Content */
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 2.5rem; }
+    .content-section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+    .content-section:last-child { border-bottom: none; }
+    .section-label { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.1rem; }
+    .section-h { font-family: var(--syne); font-size: 1.55rem; font-weight: 700; color: var(--heading); line-height: 1.2; margin-bottom: 1.2rem; }
+    .wrap p { font-size: 0.94rem; color: var(--body); margin-bottom: 1rem; }
+    .wrap p strong { color: var(--heading); font-weight: 500; }
+    .wrap p em { color: var(--body); font-style: italic; }
+    .lead { font-size: 1rem !important; }
+    /* two-col */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1.5rem; }
+    .col-head { font-family: var(--mono); font-size: 0.6rem; color: var(--blue); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.7rem; }
+    /* Highlight list */
+    .hl { list-style: none; }
+    .hl li { font-size: 0.92rem; color: var(--body); padding: 1rem 0 1rem 1.5rem; border-bottom: 1px solid var(--border); position: relative; }
+    .hl li:first-child { border-top: 1px solid var(--border); }
+    .hl li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+    .hl li strong { color: var(--heading); font-weight: 500; }
+    /* Image placeholder */
+    .img-ph { width: 100%; background: #0c0c0c; border: 1px dashed var(--border-hi); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; min-height: 180px; position: relative; margin: 1rem 0; }
+    .img-ph::before { content:''; position:absolute; inset:0; background-image: linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px); background-size:24px 24px; pointer-events:none; }
+    .img-ph-label { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem; position: relative; z-index: 1; }
+    .img-ph-desc { font-family: var(--sans); font-size: 0.75rem; color: var(--subtle); text-align: center; max-width: 360px; position: relative; z-index: 1; font-style: italic; }
+    .img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .img-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    /* Tools block */
+    .tools-block { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .tools-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { display: inline-block; font-family: var(--mono); font-size: 0.6rem; color: var(--subtle); border: 1px solid var(--border); padding: 0.3rem 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .tag-accent { color: var(--accent); border-color: var(--accent-dim); }
+    .tag-blue { color: var(--blue); border-color: rgba(107,159,189,0.35); }
+    /* Sub-projects */
+    .subproject { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .subproject:last-child { border-bottom: none; }
+    .sp-num { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.18em; margin-bottom: 0.6rem; }
+    .sp-title { font-family: var(--syne); font-size: 1.25rem; font-weight: 700; color: var(--heading); margin-bottom: 0.4rem; line-height: 1.2; }
+    .sp-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
+    .sp-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2.5rem; align-items: start; }
+    /* Rotation header */
+    .rotation-header { padding: 3rem 0 2rem; border-bottom: 2px solid var(--accent-dim); margin-bottom: 0; }
+    .rotation-tag { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .rotation-title { font-family: var(--syne); font-size: 1.75rem; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; margin-bottom: 0.4rem; }
+    .rotation-sub { font-size: 0.9rem; color: var(--subtle); }
+    /* Project nav */
+    .proj-nav { display: flex; justify-content: space-between; align-items: center; padding: 2.5rem; max-width: 980px; margin: 0 auto 2rem; }
+    .proj-nav a { font-family: var(--mono); font-size: 0.65rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+    .proj-nav a:hover { color: var(--accent); }
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; max-width: 980px; margin: 1rem auto 0; display: flex; align-items: center; justify-content: space-between; }
+    footer span { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--accent); }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1.25rem; }
+      .project-hero, .wrap, .proj-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .proj-stats { grid-template-columns: 1fr 1fr; }
+      .proj-stat { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+      .two-col, .sp-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .img-row, .img-row-3 { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
+    }
+  </style>
+  <style>
+    .page-hero { padding: 9rem 2.5rem 4rem; max-width: 980px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+    .page-title { font-family: var(--syne); font-weight: 800; font-size: clamp(2.5rem,5vw,4.2rem); color: var(--heading); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.4rem; }
+    .page-lead { font-size: 1.05rem; color: var(--body); max-width: 600px; }
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+    .skill-cell { padding: 1.5rem; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface); }
+    .skill-cell-label { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.9rem; }
+    .sp { font-family: var(--mono); font-size: 0.66rem; padding: 0.3rem 0.7rem; border: 1px solid var(--border); background: var(--card); display: inline-block; margin: 0.2rem 0.15rem; }
+    .sp-e { color: var(--accent); border-color: var(--accent-dim); }
+    .sp-p { color: var(--blue); border-color: rgba(107,159,189,0.35); }
+    .sp-w { color: var(--subtle); }
+    .exp-row { display: grid; grid-template-columns: 190px 1fr; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
+    .exp-row:first-child { border-top: 1px solid var(--border); }
+    .exp-date { font-family: var(--mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
+    .exp-loc { font-family: var(--mono); font-size: 0.62rem; color: var(--subtle); margin-top: 0.4rem; }
+    .exp-role { font-family: var(--syne); font-size: 1.1rem; color: var(--heading); font-weight: 700; line-height: 1.2; margin-bottom: 0.3rem; }
+    .exp-co { font-size: 0.88rem; color: var(--subtle); margin-bottom: 0.6rem; }
+    .contact-link { display: flex; align-items: center; gap: 1.5rem; text-decoration: none; color: var(--body); padding: 1.1rem 0; border-bottom: 1px solid var(--border); transition: color 0.2s; }
+    .contact-link:first-child { border-top: 1px solid var(--border); }
+    .contact-link:hover { color: var(--accent); }
+    .cl-label { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; width: 80px; flex-shrink: 0; }
+    .cl-arr { margin-left: auto; color: var(--muted); transition: transform 0.2s, color 0.2s; }
+    .contact-link:hover .cl-arr { transform: translateX(4px); color: var(--accent); }
+    @media(max-width:768px){ .page-hero,.wrap { padding-left:1.25rem; padding-right:1.25rem; } .skills-grid { grid-template-columns:1fr; } .exp-row { grid-template-columns:1fr; gap:0.5rem; } }
+  </style>
+</head>
+<body>
+<nav><a class="nav-logo" href="index.html">MV<span>.</span></a><ul class="nav-links"><li><a href="index.html">Projects</a></li><li><a href="about.html" style="color:var(--accent)">About</a></li><li><a href="resume.pdf" target="_blank">Resume</a></li><li><a href="#contact">Contact</a></li></ul></nav>
+
+<div class="page-hero">
+  <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">Background</span></div>
+  <h1 class="page-title">About</h1>
+  <p class="page-lead">Mechanical engineer with hands-on experience across the full design cycle — compliant mechanism R&amp;D, FEA-validated structures, robot controls integration, and production-line process engineering.</p>
+</div>
+
+<div class="wrap">
+  <div class="content-section">
+    <div class="section-label">Who I Am</div>
+    <h2 class="section-h">A Bit About Me</h2>
+    <p>I graduated from <strong>Rochester Institute of Technology</strong> in 2025 with a B.S. in Mechanical Engineering. RIT's co-op program meant I spent nearly two full years working at <strong>ThermoFisher Scientific</strong>, owning real production-engineering work on live manufacturing lines. That experience shaped how I approach design — every CAD decision is a tolerance stack-up waiting to happen, and every design intent has to survive the operator who's been on shift for 11 hours.</p>
+    <p>Right now I'm the only mechanical engineer at <strong>Point Lighting Corporation</strong>, owning the full product lifecycle for specialized lighting systems serving aerospace, industrial, and architectural clients — including FAA-compliant solutions.</p>
+    <p>Outside of work I keep building things — gearboxes, drones, machines. I'm looking for roles in <strong>R&amp;D, automation/robotics, or systems engineering</strong> in <strong>aerospace, defense, or automotive</strong>. Work with technical depth and a mission I can get behind.</p>
+  </div>
+
+  <div class="content-section">
+    <div class="section-label">Technical Skills</div>
+    <h2 class="section-h">Tools &amp; Capabilities</h2>
+    <p style="color:var(--subtle);font-size:0.82rem;margin-bottom:1.5rem;">
+      <span style="color:var(--accent);">●</span> Expert &nbsp;&nbsp; <span style="color:var(--blue);">●</span> Proficient &nbsp;&nbsp; <span style="color:var(--subtle);">●</span> Working knowledge
+    </p>
+    <div class="skills-grid">
+      <div class="skill-cell">
+        <div class="skill-cell-label">CAD</div>
+        <span class="sp sp-e">SolidWorks</span><span class="sp sp-e">Fusion 360</span><span class="sp sp-p">Creo</span><span class="sp sp-p">AutoCAD</span><span class="sp sp-p">OnShape</span>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cell-label">Simulation &amp; Analysis</div>
+        <span class="sp sp-e">Ansys FEA</span><span class="sp sp-e">MATLAB</span><span class="sp sp-p">Simulink</span><span class="sp sp-p">System Dynamics</span><span class="sp sp-p">Tolerance Stack-Up</span>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cell-label">Manufacturing &amp; Inspection</div>
+        <span class="sp sp-e">FDM 3D Printing</span><span class="sp sp-e">SLA 3D Printing</span><span class="sp sp-e">CMM Programming</span><span class="sp sp-p">Mill &amp; Lathe</span><span class="sp sp-p">SmartScope</span><span class="sp sp-p">ShapeGrabber</span>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cell-label">Standards &amp; Process</div>
+        <span class="sp sp-e">GD&amp;T (Cert.)</span><span class="sp sp-e">DOE</span><span class="sp sp-e">ISO 9001</span><span class="sp sp-p">Root Cause Analysis</span><span class="sp sp-p">Gauge R&amp;R</span><span class="sp sp-p">FAA Compliance</span>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cell-label">Controls &amp; Programming</div>
+        <span class="sp sp-e">Epson Robot Controls</span><span class="sp sp-p">PLC Logic</span><span class="sp sp-p">PID Tuning</span><span class="sp sp-p">C++</span><span class="sp sp-w">Java</span>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cell-label">Specialty Methods</div>
+        <span class="sp sp-e">Compliant Mechanisms</span><span class="sp sp-e">Ultrasonic Welding</span><span class="sp sp-p">Gear Design</span><span class="sp sp-p">Sacrificial Design</span><span class="sp sp-p">Odometry Localization</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="section-label">Experience</div>
+    <h2 class="section-h">Work History</h2>
+    <div>
+      <div class="exp-row">
+        <div><div class="exp-date">Jun 2025 – Present</div><div class="exp-loc">Bloomfield, CT</div></div>
+        <div>
+          <div class="exp-role">Mechanical Engineer (Sole ME)</div>
+          <div class="exp-co">Point Lighting Corporation</div>
+          <p style="font-size:0.9rem;color:var(--body)">Full product lifecycle — CAD, prototyping, testing, documentation. Specialized lighting for aerospace, industrial, and architectural clients. ISO 9001, FAA-compliant solutions.</p>
+        </div>
+      </div>
+      <div class="exp-row">
+        <div><div class="exp-date">Jan 2023 – Aug 2024</div><div class="exp-loc">Penfield, NY</div></div>
+        <div>
+          <div class="exp-role">Manufacturing Engineering Intern</div>
+          <div class="exp-co">ThermoFisher Scientific · Two Co-op Rotations · 16 months</div>
+          <p style="font-size:0.9rem;color:var(--body)">+18% yield via robot controls reconfiguration. CMM and 3D scanner inspection programs. Ergonomic safety machine design. Ultrasonic weld process development to 98% yield. <a href="projects/thermofisher.html" style="color:var(--accent);">See all 10 projects →</a></p>
+        </div>
+      </div>
+      <div class="exp-row">
+        <div><div class="exp-date">Jun 2023 – Dec 2024</div><div class="exp-loc">Walworth, NY</div></div>
+        <div>
+          <div class="exp-role">Engine Technician Assistant</div>
+          <div class="exp-co">Ken's Automotive</div>
+          <p style="font-size:0.9rem;color:var(--body)">Disassembled and restored performance engines. Machined components to spec. Hands-on with mechanical fits, clearances, and assembly sequencing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="section-label">Education &amp; Leadership</div>
+    <h2 class="section-h">Background</h2>
+    <div>
+      <div class="exp-row">
+        <div><div class="exp-date">2020–2025</div><div class="exp-loc">Rochester, NY</div></div>
+        <div>
+          <div class="exp-role">B.S. Mechanical Engineering</div>
+          <div class="exp-co">Rochester Institute of Technology</div>
+          <p style="font-size:0.9rem;color:var(--body)">Advanced CAD · Optimal Design · System Dynamics · Material Science · Heat Transfer<br>GD&amp;T Professional Cert. · CSWA Mechanical Design · CSWA Additive Manufacturing</p>
+        </div>
+      </div>
+      <div class="exp-row">
+        <div><div class="exp-date">2021–2022</div><div class="exp-loc">RIT</div></div>
+        <div>
+          <div class="exp-role">President, RIT VEX U Robotics</div>
+          <div class="exp-co">15+ member team · Innovate Award at World Championships</div>
+          <p style="font-size:0.9rem;color:var(--body)">Led hardware and software sub-teams. <a href="projects/robotics.html" style="color:var(--accent)">View project →</a></p>
+        </div>
+      </div>
+      <div class="exp-row">
+        <div><div class="exp-date">2021–2023</div><div class="exp-loc">RIT</div></div>
+        <div>
+          <div class="exp-role">Resident Advisor</div>
+          <div class="exp-co">RIT Residence Life</div>
+          <p style="font-size:0.9rem;color:var(--body)">Supported students, fostered community, mediated conflicts. Two years of responsibility outside the technical track.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-section" id="contact">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-h">Contact</h2>
+    <p style="max-width:480px;margin-bottom:2rem;">Open to R&amp;D, automation/robotics, and systems engineering roles — aerospace, defense, or automotive preferred. Connecticut-based, hybrid-friendly.</p>
+    <div>
+      <a class="contact-link" href="mailto:mvas8037@gmail.com"><span class="cl-label">Email</span>mvas8037@gmail.com<span class="cl-arr">→</span></a>
+      <a class="contact-link" href="https://linkedin.com/in/michael-vasquez-me" target="_blank"><span class="cl-label">LinkedIn</span>linkedin.com/in/michael-vasquez-me<span class="cl-arr">→</span></a>
+      <a class="contact-link" href="tel:+12035712052"><span class="cl-label">Phone</span>(203) 571-2052<span class="cl-arr">→</span></a>
+      <a class="contact-link" href="resume.pdf" target="_blank"><span class="cl-label">Resume</span>Download PDF<span class="cl-arr">↓</span></a>
+    </div>
+  </div>
+</div>
+
+<footer><span>© 2025 Michael Vasquez · Mechanical Engineer · Connecticut</span><div class="footer-links"><a href="index.html">Projects</a><a href="resume.pdf" target="_blank">Resume</a></div></footer>
+</body></html>

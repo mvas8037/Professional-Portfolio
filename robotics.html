@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VEX U Robotics — Michael Vasquez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --surface: #111; --card: #141414; --card-hi: #1a1a1a;
+      --border: #1e1e1e; --border-hi: #2a2a2a; --muted: #3a3a3a; --subtle: #666;
+      --body: #b8b8b8; --heading: #f0f0f0; --accent: #c9a96e; --accent-dim: #7a6340;
+      --blue: #6b9fbd; --green: #7fb37f;
+      --syne: 'Syne', sans-serif; --mono: 'JetBrains Mono', monospace; --sans: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--body); font-family: var(--sans); font-weight: 300; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 2.5rem; background: rgba(10,10,10,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--syne); font-weight: 700; font-size: 1rem; color: var(--heading); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.68rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+    .eyebrow-line { width: 28px; height: 1px; background: var(--accent); }
+    .eyebrow-text { font-family: var(--mono); font-size: 0.66rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; }
+    /* Hero */
+    .project-hero { padding: 9rem 2.5rem 3rem; max-width: 980px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+    .proj-meta-tag { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; }
+    .proj-title { font-family: var(--syne); font-weight: 800; font-size: clamp(2.2rem, 5vw, 3.8rem); color: var(--heading); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+    .proj-subtitle { font-size: 1.05rem; color: var(--body); max-width: 620px; margin-bottom: 2rem; }
+    .proj-stats { display: grid; grid-template-columns: repeat(4, 1fr); padding: 1.5rem 0; border-top: 1px solid var(--border); }
+    .proj-stat { padding-right: 1.5rem; border-right: 1px solid var(--border); }
+    .proj-stat:last-child { border-right: none; }
+    .stat-val { font-family: var(--syne); font-size: 1.1rem; font-weight: 700; color: var(--heading); margin-bottom: 0.2rem; line-height: 1.2; }
+    .stat-label { font-family: var(--mono); font-size: 0.58rem; color: var(--subtle); text-transform: uppercase; letter-spacing: 0.1em; }
+    /* Role strip */
+    .role-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2.5rem; max-width: 980px; margin: 0 auto; display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    .role-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+    .role-content { font-size: 0.88rem; color: var(--body); }
+    /* Content */
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 2.5rem; }
+    .content-section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+    .content-section:last-child { border-bottom: none; }
+    .section-label { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.1rem; }
+    .section-h { font-family: var(--syne); font-size: 1.55rem; font-weight: 700; color: var(--heading); line-height: 1.2; margin-bottom: 1.2rem; }
+    .wrap p { font-size: 0.94rem; color: var(--body); margin-bottom: 1rem; }
+    .wrap p strong { color: var(--heading); font-weight: 500; }
+    .wrap p em { color: var(--body); font-style: italic; }
+    .lead { font-size: 1rem !important; }
+    /* two-col */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1.5rem; }
+    .col-head { font-family: var(--mono); font-size: 0.6rem; color: var(--blue); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.7rem; }
+    /* Highlight list */
+    .hl { list-style: none; }
+    .hl li { font-size: 0.92rem; color: var(--body); padding: 1rem 0 1rem 1.5rem; border-bottom: 1px solid var(--border); position: relative; }
+    .hl li:first-child { border-top: 1px solid var(--border); }
+    .hl li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+    .hl li strong { color: var(--heading); font-weight: 500; }
+    /* Image placeholder */
+    .img-ph { width: 100%; background: #0c0c0c; border: 1px dashed var(--border-hi); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; min-height: 180px; position: relative; margin: 1rem 0; }
+    .img-ph::before { content:''; position:absolute; inset:0; background-image: linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px); background-size:24px 24px; pointer-events:none; }
+    .img-ph-label { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem; position: relative; z-index: 1; }
+    .img-ph-desc { font-family: var(--sans); font-size: 0.75rem; color: var(--subtle); text-align: center; max-width: 360px; position: relative; z-index: 1; font-style: italic; }
+    .img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .img-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    /* Tools block */
+    .tools-block { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .tools-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { display: inline-block; font-family: var(--mono); font-size: 0.6rem; color: var(--subtle); border: 1px solid var(--border); padding: 0.3rem 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .tag-accent { color: var(--accent); border-color: var(--accent-dim); }
+    .tag-blue { color: var(--blue); border-color: rgba(107,159,189,0.35); }
+    /* Sub-projects */
+    .subproject { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .subproject:last-child { border-bottom: none; }
+    .sp-num { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.18em; margin-bottom: 0.6rem; }
+    .sp-title { font-family: var(--syne); font-size: 1.25rem; font-weight: 700; color: var(--heading); margin-bottom: 0.4rem; line-height: 1.2; }
+    .sp-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
+    .sp-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2.5rem; align-items: start; }
+    /* Rotation header */
+    .rotation-header { padding: 3rem 0 2rem; border-bottom: 2px solid var(--accent-dim); margin-bottom: 0; }
+    .rotation-tag { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .rotation-title { font-family: var(--syne); font-size: 1.75rem; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; margin-bottom: 0.4rem; }
+    .rotation-sub { font-size: 0.9rem; color: var(--subtle); }
+    /* Project nav */
+    .proj-nav { display: flex; justify-content: space-between; align-items: center; padding: 2.5rem; max-width: 980px; margin: 0 auto 2rem; }
+    .proj-nav a { font-family: var(--mono); font-size: 0.65rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+    .proj-nav a:hover { color: var(--accent); }
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; max-width: 980px; margin: 1rem auto 0; display: flex; align-items: center; justify-content: space-between; }
+    footer span { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--accent); }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1.25rem; }
+      .project-hero, .wrap, .proj-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .proj-stats { grid-template-columns: 1fr 1fr; }
+      .proj-stat { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+      .two-col, .sp-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .img-row, .img-row-3 { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<nav><a class="nav-logo" href="../index.html">MV<span>.</span></a><ul class="nav-links"><li><a href="../index.html">Projects</a></li><li><a href="../about.html">About</a></li><li><a href="../resume.pdf" target="_blank">Resume</a></li><li><a href="../about.html#contact">Contact</a></li></ul></nav>
+<div class="project-hero">
+  <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">05 · Leadership · 2019 – 2022</span></div>
+  <h1 class="proj-title">VEX U<br>Competition Robot</h1>
+  <p class="proj-subtitle">Multi-year competition robotics — 4-bar linkage with intake rollers, pivoting deposit tray, drivetrain with independent odometry wheels, and PID controllers for autonomous position correction. <strong>Innovate Award</strong> at World Championships, 3rd in qualification rounds. Led 15+ member team as President of RIT VEX U Robotics.</p>
+  <div class="proj-stats">
+    <div class="proj-stat"><div class="stat-val">1st</div><div class="stat-label">Innovate Award · Worlds</div></div>
+    <div class="proj-stat"><div class="stat-val">3rd</div><div class="stat-label">Qualification rank</div></div>
+    <div class="proj-stat"><div class="stat-val">15+</div><div class="stat-label">Team members led</div></div>
+    <div class="proj-stat"><div class="stat-val">3 Seasons</div><div class="stat-label">Active design history</div></div>
+  </div>
+</div>
+<div class="role-strip"><span class="role-label">Role →</span><span class="role-content">President, RIT VEX U Robotics · Hardware sub-team lead · Cross-functional with software and autonomous programming teams.</span></div>
+<div class="wrap">
+  <div class="content-section">
+    <div class="section-label">Project Overview</div>
+    <h2 class="section-h">Designed End-to-End</h2>
+    <p class="lead">VEX U is the college-level competition where teams design, build, and program two robots that work in parallel during a match. The 2021–2022 season — the year we won the Innovate Award — I developed a robot end-to-end, which taught me more about mechatronic integration than any class I've taken.</p>
+    <div class="img-ph"><span class="img-ph-label">Image · Competition Robot</span><span class="img-ph-desc">Main scoring robot showing the 4-bar linkage and intake assembly.</span></div>
+  </div>
+  <div class="content-section">
+    <div class="section-label">Mechanism Design</div>
+    <h2 class="section-h">4-Bar Linkage + Intake Rollers + Pivoting Tray</h2>
+    <p>A <strong>4-bar linkage</strong> elevates the intake-and-deposit assembly to scoring height, maintaining the tray parallel to the ground throughout travel so game pieces can't tip out. <strong>Intake rollers</strong> mounted on the linkage pull game pieces in; a <strong>pivoting tray</strong> deposits them in a stack rather than dropping them individually.</p>
+    <p>Each subsystem — linkage geometry, roller drive ratio, tray pivot — was designed iteratively to balance speed, reliability, and weight within the VEX motor budget.</p>
+    <div class="img-row">
+      <div class="img-ph"><span class="img-ph-label">Image · 4-Bar Linkage Detail</span><span class="img-ph-desc">CAD or photo of the 4-bar with intake assembly mounted.</span></div>
+      <div class="img-ph"><span class="img-ph-label">Image · Pivoting Tray + Stack Deposit</span><span class="img-ph-desc">Tray pivoting to place a stack of game pieces at scoring height.</span></div>
+    </div>
+  </div>
+  <div class="content-section">
+    <div class="section-label">Drivetrain &amp; Autonomy</div>
+    <h2 class="section-h">Independent Odometry + PID Position Control</h2>
+    <p>The drivetrain uses <strong>independent free-spinning tracking wheels</strong> for odometry — separated from the powered wheels so they give a clean position signal regardless of slip or contact with other robots.</p>
+    <p>I wrote <strong>parallel PID controllers</strong> using the odometry feedback to automatically correct the robot's position whenever a disturbance occurs during autonomous. This kept autonomous routines hitting scoring positions even through collisions and unplanned field events.</p>
+    <div class="img-row">
+      <div class="img-ph"><span class="img-ph-label">Image · Drivetrain Underside</span><span class="img-ph-desc">Powered wheels and independent odometry tracking wheels.</span></div>
+      <div class="img-ph"><span class="img-ph-label">Image · Autonomous PID Run</span><span class="img-ph-desc">Video still showing position correction during an autonomous routine.</span></div>
+    </div>
+    <div class="two-col">
+      <div><div class="col-head">Why Independent Odometry?</div><p>Powered wheels slip under acceleration and robot contact. Independent tracking wheels give a clean position signal regardless of drive state — necessary for closing PID loops on actual position.</p></div>
+      <div><div class="col-head">Why PID Correction?</div><p>Open-loop autonomous fails when anything unexpected happens — and something always does. Closed-loop PID on odometry made our autonomous survive contact and still reach scoring positions.</p></div>
+    </div>
+  </div>
+  <div class="content-section">
+    <div class="section-label">Leadership</div>
+    <h2 class="section-h">Managing 15+ Engineers Across Sub-Teams</h2>
+    <p>As President I ran the technical program for two robots simultaneously — organized hardware and software sub-teams, led design reviews, made final architectural calls, and bridged mechanical design with the autonomous programming team. This is where I learned to delegate, mentor, and communicate technical decisions to a non-uniform audience.</p>
+    <div class="img-ph"><span class="img-ph-label">Image · Team at Worlds</span><span class="img-ph-desc">Team photo at the World Championships — robots on display.</span></div>
+  </div>
+  <div class="content-section">
+    <div class="section-label">Engineering Tools</div>
+    <div class="tools-block">
+      <div class="tools-label">Software · Methods · Manufacturing</div>
+      <div class="tag-row">
+        <span class="tag tag-accent">SolidWorks</span>
+        <span class="tag tag-blue">PID Controls</span><span class="tag tag-blue">Odometry Localization</span>
+        <span class="tag">C++ (PROS/VEXcode)</span><span class="tag">Mechanism Design</span>
+        <span class="tag">Drivetrain Design</span><span class="tag">Autonomous Path Planning</span><span class="tag">3D Printing</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="proj-nav"><a href="automated-desk.html">← Automated Desk</a><a href="../index.html">All Projects →</a></div>
+<footer><span>© 2025 Michael Vasquez</span><div class="footer-links"><a href="mailto:mvas8037@gmail.com">Email</a><a href="https://linkedin.com/in/michael-vasquez-me" target="_blank">LinkedIn</a></div></footer>
+</body></html>
