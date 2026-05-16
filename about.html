@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About — Michael Vasquez</title>
+  <title>About - Michael Vasquez</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
@@ -22,6 +22,13 @@
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { font-family: var(--mono); font-size: 0.68rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
+    .nav-item { position: relative; }
+    .project-menu { position: absolute; top: calc(100% + 0.75rem); left: 50%; transform: translateX(-50%) translateY(-6px); min-width: 230px; background: rgba(14,14,14,0.98); border: 1px solid var(--border); padding: 0.45rem; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; box-shadow: 0 18px 60px rgba(0,0,0,0.35); }
+    .project-menu::before { content: ''; position: absolute; left: 0; right: 0; top: -0.85rem; height: 0.85rem; }
+    .project-menu a { display: block; padding: 0.7rem 0.8rem; color: var(--body); border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .project-menu a:last-child { border-bottom: none; }
+    .project-menu a:hover { background: var(--card-hi); color: var(--accent); }
+    .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
     .eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
     .eyebrow-line { width: 28px; height: 1px; background: var(--accent); }
     .eyebrow-text { font-family: var(--mono); font-size: 0.66rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; }
@@ -56,7 +63,7 @@
     .hl { list-style: none; }
     .hl li { font-size: 0.92rem; color: var(--body); padding: 1rem 0 1rem 1.5rem; border-bottom: 1px solid var(--border); position: relative; }
     .hl li:first-child { border-top: 1px solid var(--border); }
-    .hl li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+    .hl li::before { content: '->'; position: absolute; left: 0; color: var(--accent); }
     .hl li strong { color: var(--heading); font-weight: 500; }
     /* Image placeholder */
     .img-ph { width: 100%; background: #0c0c0c; border: 1px dashed var(--border-hi); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; min-height: 180px; position: relative; margin: 1rem 0; }
@@ -95,7 +102,7 @@
     .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
     .footer-links a:hover { color: var(--accent); }
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1.25rem; }
+      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1rem; } .project-menu { left: auto; right: 0; transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu { transform: translateY(0); }
       .project-hero, .wrap, .proj-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
       .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
       .proj-stats { grid-template-columns: 1fr 1fr; }
@@ -106,9 +113,11 @@
     }
   </style>
   <style>
-    .page-hero { padding: 9rem 2.5rem 4rem; max-width: 980px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+    .page-hero { padding: 9rem 2.5rem 4rem; max-width: 980px; margin: 0 auto; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 0 3rem; align-items: end; }
+    .page-hero .eyebrow, .page-title, .page-lead { grid-column: 1; }
     .page-title { font-family: var(--syne); font-weight: 800; font-size: clamp(2.5rem,5vw,4.2rem); color: var(--heading); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.4rem; }
     .page-lead { font-size: 1.05rem; color: var(--body); max-width: 600px; }
+    .about-photo { grid-column: 2; grid-row: 1 / 4; width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: 52% 44%; border: 1px solid var(--border); filter: saturate(0.9) contrast(1.04); margin: 0; display: block; }
     .skills-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
     .skill-cell { padding: 1.5rem; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface); }
     .skill-cell-label { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.9rem; }
@@ -128,32 +137,49 @@
     .cl-label { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; width: 80px; flex-shrink: 0; }
     .cl-arr { margin-left: auto; color: var(--muted); transition: transform 0.2s, color 0.2s; }
     .contact-link:hover .cl-arr { transform: translateX(4px); color: var(--accent); }
-    @media(max-width:768px){ .page-hero,.wrap { padding-left:1.25rem; padding-right:1.25rem; } .skills-grid { grid-template-columns:1fr; } .exp-row { grid-template-columns:1fr; gap:0.5rem; } }
+    @media(max-width:768px){ .page-hero,.wrap { padding-left:1.25rem; padding-right:1.25rem; } .page-hero { display:block; } .about-photo { width:min(100%,340px); margin:0 0 1.5rem; } .skills-grid { grid-template-columns:1fr; } .exp-row { grid-template-columns:1fr; gap:0.5rem; } }
   </style>
 </head>
 <body>
-<nav><a class="nav-logo" href="index.html">MV<span>.</span></a><ul class="nav-links"><li><a href="index.html">Projects</a></li><li><a href="about.html" style="color:var(--accent)">About</a></li><li><a href="resume.pdf" target="_blank">Resume</a></li><li><a href="#contact">Contact</a></li></ul></nav>
+<nav>
+  <a class="nav-logo" href="index.html">MV<span>.</span></a>
+  <ul class="nav-links">
+    <li class="nav-item nav-projects"><a href="index.html#projects">Projects</a>
+      <div class="project-menu" aria-label="Project links">
+        <a href="projects/bone-printer.html">Bone 3D Printer</a>
+        <a href="projects/fpv-drone.html">FPV Drone</a>
+        <a href="projects/thermofisher.html">ThermoFisher Co-ops</a>
+        <a href="projects/automated-desk.html">Automated Desk</a>
+        <a href="projects/robotics.html">VEX Robotics</a>
+      </div>
+    </li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="resume.pdf" target="_blank">Resume</a></li>
+    <li><a href="about.html#contact">Contact</a></li>
+  </ul>
+</nav>
 
 <div class="page-hero">
   <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">Background</span></div>
   <h1 class="page-title">About</h1>
-  <p class="page-lead">Mechanical engineer with hands-on experience across the full design cycle — compliant mechanism R&amp;D, FEA-validated structures, robot controls integration, and production-line process engineering.</p>
+  <img class="about-photo" src="images/about/about-headshot-001.jpg" alt="Michael Vasquez">
+  <p class="page-lead">Mechanical engineer with hands-on experience across the full design cycle - compliant mechanism R&amp;D, FEA-validated structures, robot controls integration, and production-line process engineering.</p>
 </div>
 
 <div class="wrap">
   <div class="content-section">
     <div class="section-label">Who I Am</div>
     <h2 class="section-h">A Bit About Me</h2>
-    <p>I graduated from <strong>Rochester Institute of Technology</strong> in 2025 with a B.S. in Mechanical Engineering. RIT's co-op program meant I spent nearly two full years working at <strong>ThermoFisher Scientific</strong>, owning real production-engineering work on live manufacturing lines. That experience shaped how I approach design — every CAD decision is a tolerance stack-up waiting to happen, and every design intent has to survive the operator who's been on shift for 11 hours.</p>
-    <p>Right now I'm the only mechanical engineer at <strong>Point Lighting Corporation</strong>, owning the full product lifecycle for specialized lighting systems serving aerospace, industrial, and architectural clients — including FAA-compliant solutions.</p>
-    <p>Outside of work I keep building things — gearboxes, drones, machines. I'm looking for roles in <strong>R&amp;D, automation/robotics, or systems engineering</strong> in <strong>aerospace, defense, or automotive</strong>. Work with technical depth and a mission I can get behind.</p>
+    <p>I graduated from <strong>Rochester Institute of Technology</strong> in 2025 with a B.S. in Mechanical Engineering. RIT's co-op program meant I spent nearly two full years working at <strong>ThermoFisher Scientific</strong>, owning real production-engineering work on live manufacturing lines. That experience shaped how I approach design - every CAD decision is a tolerance stack-up waiting to happen, and every design intent has to survive the operator who's been on shift for 11 hours.</p>
+    <p>Right now I'm the only mechanical engineer at <strong>Point Lighting Corporation</strong>, owning the full product lifecycle for specialized lighting systems serving aerospace, industrial, and architectural clients - including FAA-compliant solutions.</p>
+    <p>Outside of work I keep building things - gearboxes, drones, machines. I'm looking for roles in <strong>R&amp;D, automation/robotics, or systems engineering</strong> in <strong>aerospace, defense, or automotive</strong>. Work with technical depth and a mission I can get behind.</p>
   </div>
 
   <div class="content-section">
     <div class="section-label">Technical Skills</div>
     <h2 class="section-h">Tools &amp; Capabilities</h2>
     <p style="color:var(--subtle);font-size:0.82rem;margin-bottom:1.5rem;">
-      <span style="color:var(--accent);">●</span> Expert &nbsp;&nbsp; <span style="color:var(--blue);">●</span> Proficient &nbsp;&nbsp; <span style="color:var(--subtle);">●</span> Working knowledge
+      <span style="color:var(--accent);">*</span> Expert &nbsp;&nbsp; <span style="color:var(--blue);">*</span> Proficient &nbsp;&nbsp; <span style="color:var(--subtle);">*</span> Working knowledge
     </p>
     <div class="skills-grid">
       <div class="skill-cell">
@@ -188,23 +214,23 @@
     <h2 class="section-h">Work History</h2>
     <div>
       <div class="exp-row">
-        <div><div class="exp-date">Jun 2025 – Present</div><div class="exp-loc">Bloomfield, CT</div></div>
+        <div><div class="exp-date">Jun 2025 - Present</div><div class="exp-loc">Bloomfield, CT</div></div>
         <div>
           <div class="exp-role">Mechanical Engineer (Sole ME)</div>
           <div class="exp-co">Point Lighting Corporation</div>
-          <p style="font-size:0.9rem;color:var(--body)">Full product lifecycle — CAD, prototyping, testing, documentation. Specialized lighting for aerospace, industrial, and architectural clients. ISO 9001, FAA-compliant solutions.</p>
+          <p style="font-size:0.9rem;color:var(--body)">Full product lifecycle - CAD, prototyping, testing, documentation. Specialized lighting for aerospace, industrial, and architectural clients. ISO 9001, FAA-compliant solutions.</p>
         </div>
       </div>
       <div class="exp-row">
-        <div><div class="exp-date">Jan 2023 – Aug 2024</div><div class="exp-loc">Penfield, NY</div></div>
+        <div><div class="exp-date">Jan 2023 - Aug 2024</div><div class="exp-loc">Penfield, NY</div></div>
         <div>
           <div class="exp-role">Manufacturing Engineering Intern</div>
-          <div class="exp-co">ThermoFisher Scientific · Two Co-op Rotations · 16 months</div>
-          <p style="font-size:0.9rem;color:var(--body)">+18% yield via robot controls reconfiguration. CMM and 3D scanner inspection programs. Ergonomic safety machine design. Ultrasonic weld process development to 98% yield. <a href="projects/thermofisher.html" style="color:var(--accent);">See all 10 projects →</a></p>
+          <div class="exp-co">ThermoFisher Scientific / Two Co-op Rotations / 16 months</div>
+          <p style="font-size:0.9rem;color:var(--body)">+18% yield via robot controls reconfiguration. CMM and 3D scanner inspection programs. Ergonomic safety machine design. Ultrasonic weld process development to 98% yield. <a href="projects/thermofisher.html" style="color:var(--accent);">See all 10 projects -></a></p>
         </div>
       </div>
       <div class="exp-row">
-        <div><div class="exp-date">Jun 2023 – Dec 2024</div><div class="exp-loc">Walworth, NY</div></div>
+        <div><div class="exp-date">Jun 2023 - Dec 2024</div><div class="exp-loc">Walworth, NY</div></div>
         <div>
           <div class="exp-role">Engine Technician Assistant</div>
           <div class="exp-co">Ken's Automotive</div>
@@ -219,23 +245,23 @@
     <h2 class="section-h">Background</h2>
     <div>
       <div class="exp-row">
-        <div><div class="exp-date">2020–2025</div><div class="exp-loc">Rochester, NY</div></div>
+        <div><div class="exp-date">2020-2025</div><div class="exp-loc">Rochester, NY</div></div>
         <div>
           <div class="exp-role">B.S. Mechanical Engineering</div>
           <div class="exp-co">Rochester Institute of Technology</div>
-          <p style="font-size:0.9rem;color:var(--body)">Advanced CAD · Optimal Design · System Dynamics · Material Science · Heat Transfer<br>GD&amp;T Professional Cert. · CSWA Mechanical Design · CSWA Additive Manufacturing</p>
+          <p style="font-size:0.9rem;color:var(--body)">Advanced CAD / Optimal Design / System Dynamics / Material Science / Heat Transfer<br>GD&amp;T Professional Cert. / CSWA Mechanical Design / CSWA Additive Manufacturing</p>
         </div>
       </div>
       <div class="exp-row">
-        <div><div class="exp-date">2021–2022</div><div class="exp-loc">RIT</div></div>
+        <div><div class="exp-date">2021-2022</div><div class="exp-loc">RIT</div></div>
         <div>
           <div class="exp-role">President, RIT VEX U Robotics</div>
-          <div class="exp-co">15+ member team · Innovate Award at World Championships</div>
-          <p style="font-size:0.9rem;color:var(--body)">Led hardware and software sub-teams. <a href="projects/robotics.html" style="color:var(--accent)">View project →</a></p>
+          <div class="exp-co">15+ member team / Innovate Award at World Championships</div>
+          <p style="font-size:0.9rem;color:var(--body)">Led hardware and software sub-teams. <a href="projects/robotics.html" style="color:var(--accent)">View project -></a></p>
         </div>
       </div>
       <div class="exp-row">
-        <div><div class="exp-date">2021–2023</div><div class="exp-loc">RIT</div></div>
+        <div><div class="exp-date">2021-2023</div><div class="exp-loc">RIT</div></div>
         <div>
           <div class="exp-role">Resident Advisor</div>
           <div class="exp-co">RIT Residence Life</div>
@@ -248,15 +274,15 @@
   <div class="content-section" id="contact">
     <div class="section-label">Get In Touch</div>
     <h2 class="section-h">Contact</h2>
-    <p style="max-width:480px;margin-bottom:2rem;">Open to R&amp;D, automation/robotics, and systems engineering roles — aerospace, defense, or automotive preferred. Connecticut-based, hybrid-friendly.</p>
+    <p style="max-width:480px;margin-bottom:2rem;">Open to R&amp;D, automation/robotics, and systems engineering roles - aerospace, defense, or automotive preferred. Connecticut-based, hybrid-friendly.</p>
     <div>
-      <a class="contact-link" href="mailto:mvas8037@gmail.com"><span class="cl-label">Email</span>mvas8037@gmail.com<span class="cl-arr">→</span></a>
-      <a class="contact-link" href="https://linkedin.com/in/michael-vasquez-me" target="_blank"><span class="cl-label">LinkedIn</span>linkedin.com/in/michael-vasquez-me<span class="cl-arr">→</span></a>
-      <a class="contact-link" href="tel:+12035712052"><span class="cl-label">Phone</span>(203) 571-2052<span class="cl-arr">→</span></a>
-      <a class="contact-link" href="resume.pdf" target="_blank"><span class="cl-label">Resume</span>Download PDF<span class="cl-arr">↓</span></a>
+      <a class="contact-link" href="mailto:mvas8037@gmail.com"><span class="cl-label">Email</span>mvas8037@gmail.com<span class="cl-arr">-></span></a>
+      <a class="contact-link" href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank"><span class="cl-label">LinkedIn</span>linkedin.com/in/michael-vasquez-573290206<span class="cl-arr">-></span></a>
+      <a class="contact-link" href="tel:+12035712052"><span class="cl-label">Phone</span>(203) 571-2052<span class="cl-arr">-></span></a>
+      <a class="contact-link" href="resume.pdf" target="_blank"><span class="cl-label">Resume</span>Download PDF<span class="cl-arr"><-</span></a>
     </div>
   </div>
 </div>
 
-<footer><span>© 2025 Michael Vasquez · Mechanical Engineer · Connecticut</span><div class="footer-links"><a href="index.html">Projects</a><a href="resume.pdf" target="_blank">Resume</a></div></footer>
+<footer><span>(c) 2025 Michael Vasquez / Mechanical Engineer / Connecticut</span><div class="footer-links"><a href="index.html">Projects</a><a href="resume.pdf" target="_blank">Resume</a></div></footer>
 </body></html>

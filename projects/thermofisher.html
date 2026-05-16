@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ThermoFisher Co-ops — Michael Vasquez</title>
+  <title>ThermoFisher Co-ops - Michael Vasquez</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
@@ -22,6 +22,13 @@
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { font-family: var(--mono); font-size: 0.68rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
+    .nav-item { position: relative; }
+    .project-menu { position: absolute; top: calc(100% + 0.75rem); left: 50%; transform: translateX(-50%) translateY(-6px); min-width: 230px; background: rgba(14,14,14,0.98); border: 1px solid var(--border); padding: 0.45rem; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; box-shadow: 0 18px 60px rgba(0,0,0,0.35); }
+    .project-menu::before { content: ''; position: absolute; left: 0; right: 0; top: -0.85rem; height: 0.85rem; }
+    .project-menu a { display: block; padding: 0.7rem 0.8rem; color: var(--body); border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .project-menu a:last-child { border-bottom: none; }
+    .project-menu a:hover { background: var(--card-hi); color: var(--accent); }
+    .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
     .eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
     .eyebrow-line { width: 28px; height: 1px; background: var(--accent); }
     .eyebrow-text { font-family: var(--mono); font-size: 0.66rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; }
@@ -56,7 +63,7 @@
     .hl { list-style: none; }
     .hl li { font-size: 0.92rem; color: var(--body); padding: 1rem 0 1rem 1.5rem; border-bottom: 1px solid var(--border); position: relative; }
     .hl li:first-child { border-top: 1px solid var(--border); }
-    .hl li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+    .hl li::before { content: '->'; position: absolute; left: 0; color: var(--accent); }
     .hl li strong { color: var(--heading); font-weight: 500; }
     /* Image placeholder */
     .img-ph { width: 100%; background: #0c0c0c; border: 1px dashed var(--border-hi); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; min-height: 180px; position: relative; margin: 1rem 0; }
@@ -65,6 +72,14 @@
     .img-ph-desc { font-family: var(--sans); font-size: 0.75rem; color: var(--subtle); text-align: center; max-width: 360px; position: relative; z-index: 1; font-style: italic; }
     .img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .img-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .project-media { margin: 1rem 0; border: 1px solid var(--border); background: #0c0c0c; overflow: hidden; }
+    .project-media img { width: 100%; height: clamp(240px, 45vw, 560px); display: block; object-fit: contain; background: #080808; filter: saturate(0.96) contrast(1.03); transition: filter 0.3s ease; }
+    .project-media:hover img { filter: saturate(1.04) contrast(1.06); }
+    .project-media figcaption { font-family: var(--mono); font-size: 0.62rem; color: var(--subtle); padding: 0.85rem 1rem; border-top: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.08em; }
+    .artifact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.25rem; }
+    .artifact-card { margin: 0; }
+    .artifact-card img, .artifact-card video { width: 100%; height: 220px; display: block; object-fit: contain; background: #080808; }
+    .artifact-card figcaption { min-height: 3.35rem; }
     /* Tools block */
     .tools-block { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
     .tools-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.75rem; }
@@ -95,13 +110,13 @@
     .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
     .footer-links a:hover { color: var(--accent); }
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1.25rem; }
+      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1rem; } .project-menu { left: auto; right: 0; transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu { transform: translateY(0); }
       .project-hero, .wrap, .proj-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
       .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
       .proj-stats { grid-template-columns: 1fr 1fr; }
       .proj-stat { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
       .two-col, .sp-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-      .img-row, .img-row-3 { grid-template-columns: 1fr; }
+      .img-row, .img-row-3, .artifact-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
     }
   </style>
@@ -118,11 +133,24 @@
 <body>
 <nav>
   <a class="nav-logo" href="../index.html">MV<span>.</span></a>
-  <ul class="nav-links"><li><a href="../index.html">Projects</a></li><li><a href="../about.html">About</a></li><li><a href="../resume.pdf" target="_blank">Resume</a></li><li><a href="../about.html#contact">Contact</a></li></ul>
+  <ul class="nav-links">
+    <li class="nav-item nav-projects"><a href="../index.html#projects">Projects</a>
+      <div class="project-menu" aria-label="Project links">
+        <a href="bone-printer.html">Bone 3D Printer</a>
+        <a href="fpv-drone.html">FPV Drone</a>
+        <a href="thermofisher.html">ThermoFisher Co-ops</a>
+        <a href="automated-desk.html">Automated Desk</a>
+        <a href="robotics.html">VEX Robotics</a>
+      </div>
+    </li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../resume.pdf" target="_blank">Resume</a></li>
+    <li><a href="../about.html#contact">Contact</a></li>
+  </ul>
 </nav>
 
 <div class="project-hero">
-  <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">03 · Industry · Jan 2023 – Aug 2024</span></div>
+  <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">03 / Industry / Jan 2023 - Aug 2024</span></div>
   <h1 class="proj-title">ThermoFisher Scientific<br>Co-op Engineering</h1>
   <p class="proj-subtitle">Two 8-month manufacturing engineering rotations on production lines for laboratory consumables. Owned ten projects spanning ergonomic safety machines, robot controls integration, ultrasonic weld process development, CMM programs, and full machine redesigns.</p>
   <div class="proj-stats">
@@ -133,8 +161,8 @@
   </div>
 </div>
 <div class="role-strip">
-  <span class="role-label">Manager →</span><span class="role-content">Chris VanQuekelberg</span>
-  <span class="role-label" style="margin-left:1.5rem;">Mentor →</span><span class="role-content">Ken Nogaj &nbsp;·&nbsp; Penfield, NY</span>
+  <span class="role-label">Manager -></span><span class="role-content">Chris VanQuekelberg</span>
+  <span class="role-label" style="margin-left:1.5rem;">Mentor -></span><span class="role-content">Ken Nogaj &nbsp;/&nbsp; Penfield, NY</span>
 </div>
 
 <div class="wrap">
@@ -142,7 +170,7 @@
   <div class="proj-index">
     <div class="proj-index-label">Projects on this page</div>
     <ul>
-      <li><a href="#rack-delatcher"><span>01</span>Rack Delatcher (V1→V2)</a></li>
+      <li><a href="#rack-delatcher"><span>01</span>Rack Delatcher (V1->V2)</a></li>
       <li><a href="#tube-cutting"><span>02</span>Tube Cutting Station</a></li>
       <li><a href="#gasket"><span>03</span>Closure Gasket Machine Redesign</a></li>
       <li><a href="#apex"><span>04</span>Apex DOE &amp; Capping Optimization</a></li>
@@ -157,195 +185,211 @@
 
   <!-- ====== ROTATION 2 ====== -->
   <div class="rotation-header">
-    <div class="rotation-tag">Rotation 02 · Jan–Aug 2024</div>
+    <div class="rotation-tag">Rotation 02 / Jan-Aug 2024</div>
     <h2 class="rotation-title">Robotics, Process Engineering &amp; Quality</h2>
-    <p class="rotation-sub">Higher complexity — controls integration, CMM/3D scanner programs, machine redesigns.</p>
+    <p class="rotation-sub">Higher complexity - controls integration, CMM/3D scanner programs, machine redesigns.</p>
   </div>
 
   <div class="subproject" id="rack-delatcher">
-    <div class="sp-num">01 · HEALTH &amp; SAFETY</div>
-    <h3 class="sp-title">Rack Delatcher Tool — V1 to V2</h3>
-    <div class="sp-meta">Ergonomic Safety Tool · Cam-Follower Mechanism · Two Iterations</div>
+    <div class="sp-num">01 / HEALTH &amp; SAFETY</div>
+    <h3 class="sp-title">Rack Delatcher Tool - V1 to V2</h3>
+    <div class="sp-meta">Ergonomic Safety Tool / Cam-Follower Mechanism / Two Iterations</div>
     <div class="sp-grid">
       <div>
-        <p><strong>Problem:</strong> Operators manually toggled side latches on tube racks dozens of times per shift. Non-ergonomic motion caused fatigue — reported as a Health &amp; Safety issue.</p>
+        <p><strong>Problem:</strong> Operators manually toggled side latches on tube racks dozens of times per shift. Non-ergonomic motion caused fatigue - reported as a Health &amp; Safety issue.</p>
         <p><strong>Solution:</strong> A bench-top tool that significantly reduces unlatching force, runs one-handed (operator never releases the rack), handles two rack heights in the same fixture. Mechanically driven by a cam-follower that converts a push motion into lateral latch actuation.</p>
-        <p><strong>V1 → V2:</strong> The original cam showed significant wear at the main contact surface. Diagnosed failure mode, replaced with a roller bearing and simplified cam profile, beefed up thin walls, added draft angle at the part entry for wider operator margin, added two linear rails for stability — all while improving manufacturability and reducing cost.</p>
+        <p><strong>V1 -> V2:</strong> The original cam showed significant wear at the main contact surface. Diagnosed failure mode, replaced with a roller bearing and simplified cam profile, beefed up thin walls, added draft angle at the part entry for wider operator margin, added two linear rails for stability - all while improving manufacturability and reducing cost.</p>
       </div>
       <div>
-        <div class="img-ph"><span class="img-ph-label">Image · V1 vs V2 Cam Follower</span><span class="img-ph-desc">Side-by-side of original cam follower and V2 roller bearing redesign.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · Final Tool Assembly</span><span class="img-ph-desc">V2 delatcher with linear rails and transparent cover showing internals.</span></div>
+        <figure class="project-media"><img src="../images/tf/tf-rack-delatcher-prototype-001.jpg" alt="Machined ThermoFisher rack delatcher prototype"><figcaption>Machined rack delatcher prototype used for manufacturing-line process improvement.</figcaption></figure>
+        <figure class="project-media"><img src="../images/tf/tf-production-machine-001.jpg" alt="ThermoFisher production machine assembly"><figcaption>Production-line machine context for fixture and mechanism integration work.</figcaption></figure>
       </div>
     </div>
   </div>
 
   <div class="subproject" id="tube-cutting">
-    <div class="sp-num">02 · PROCESS INSOURCING</div>
+    <div class="sp-num">02 / PROCESS INSOURCING</div>
     <h3 class="sp-title">Tube Cutting &amp; Reaming Station</h3>
-    <div class="sp-meta">Self-Contained Workstation · Custom Ergonomic Design</div>
+    <div class="sp-meta">Self-Contained Workstation / Custom Ergonomic Design</div>
     <div class="sp-grid">
       <div>
         <p><strong>Problem:</strong> Dispensing jug stems were made externally by Scott Industries. Bringing the process in-house required a safe, repeatable cutting and reaming operation.</p>
         <p><strong>Solution:</strong> Self-contained station with ergonomic table, swing-in powered cutting and reaming tools, storage shelf, and caster wheels. Four-step process: (1) swing cutter into work area, (2) feed tube to length and cut, (3) load into staging area and clamp, (4) activate drill and push to ream spout.</p>
       </div>
       <div>
-        <div class="img-ph"><span class="img-ph-label">Image · Full Cutting Station CAD</span><span class="img-ph-desc">Full station — table, cutter, reamer, storage shelf.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · Cutting / Reaming Process</span><span class="img-ph-desc">Step-by-step showing swing cutter and reaming operation.</span></div>
+        <figure class="project-media"><img src="../images/tf/tf-engineering-sketches-001.jpg" alt="ThermoFisher engineering sketches and station concepts"><figcaption>Engineering sketches and station concepts used to define operator workflow and tooling layout.</figcaption></figure>
+        <figure class="project-media"><img src="../images/tf/tf-stem-bender-panel-001.jpg" alt="ThermoFisher tooling panel prototype"><figcaption>Tooling-panel prototype representative of fixture layout and operator-interface decisions.</figcaption></figure>
       </div>
     </div>
   </div>
 
   <div class="subproject" id="gasket">
-    <div class="sp-num">03 · MACHINE REDESIGN</div>
-    <h3 class="sp-title">Closure Gasket Machine — Redesign</h3>
-    <div class="sp-meta">Multi-Station Redesign · 5 Tamping Tool Iterations · Controls Discovery</div>
+    <div class="sp-num">03 / MACHINE REDESIGN</div>
+    <h3 class="sp-title">Closure Gasket Machine - Redesign</h3>
+    <div class="sp-meta">Multi-Station Redesign / 5 Tamping Tool Iterations / Controls Discovery</div>
     <div class="sp-grid">
       <div>
         <p><strong>Stations redesigned:</strong> 3 &amp; 6 (orientation + gasket check), 5 (gasket seating), 8 (post-weld tamp), plus the part nests.</p>
-        <p><strong>Orientation Check:</strong> Replaced a shaft-collar + proximity switch system with an LVDT — easier to teach, reduced complexity.</p>
-        <p><strong>Gasket Seating — 5 iterations:</strong> Designed and tested five tamping tool iterations. Each incrementally improved seating. Root-cause analysis ultimately revealed the primary issue was concentricity and sharpness of the cutter — pivoted away from this approach. The iteration history is the evidence of a real engineering process, not a shortcoming.</p>
-        <p><strong>Secondary Tamp:</strong> Post-weld, gasket material caught on closure threads caused aesthetic failures. Designed a secondary post-weld tamp — adjustable along three axes, stainless steel only contacts the part. Successfully reduced high-gasket rate.</p>
+        <p><strong>Orientation Check:</strong> Replaced a shaft-collar + proximity switch system with an LVDT - easier to teach, reduced complexity.</p>
+        <p><strong>Gasket Seating - 5 iterations:</strong> Designed and tested five tamping tool iterations. Each incrementally improved seating. Root-cause analysis ultimately revealed the primary issue was concentricity and sharpness of the cutter - pivoted away from this approach. The iteration history is the evidence of a real engineering process, not a shortcoming.</p>
+        <p><strong>Secondary Tamp:</strong> Post-weld, gasket material caught on closure threads caused aesthetic failures. Designed a secondary post-weld tamp - adjustable along three axes, stainless steel only contacts the part. Successfully reduced high-gasket rate.</p>
         <p><strong>Nests:</strong> Redesigned to support closure underside for weld performance, with sliding action for consistent station-to-station height repeatability.</p>
         <p><strong>Controls discovery:</strong> Machine continued running hundreds of cycles after weld horn shut off. Traced via Part vs Force / Part vs Energy plots: weld horn over-traveled onto the nest (tooling-on-tooling), force spiked past feedback limits, horn shut off but machine kept running because the register wasn't catching it. Solution: enabled lower feedback limits in additional settings menu, verified PLC logic for welder output to machine register.</p>
       </div>
       <div>
-        <div class="img-ph"><span class="img-ph-label">Image · Tamping Tools V1–V5</span><span class="img-ph-desc">Five tamping tool iterations side by side.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · Secondary Tamp</span><span class="img-ph-desc">Post-weld tamp with 3-axis adjustability.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · Part vs Force Plot</span><span class="img-ph-desc">Controls discovery data — force spike showing tooling-on-tooling event.</span></div>
+        <figure class="project-media"><img src="../images/tf/tf-oring-tool-001.jpg" alt="ThermoFisher process tooling prototype"><figcaption>Process tooling prototype from the broader closure and seal-handling workstream.</figcaption></figure>
+        <figure class="project-media"><img src="../images/tf/tf-engineering-sketches-001.jpg" alt="ThermoFisher tamping tool iteration sketches"><figcaption>Iteration sketches used to converge on tooling geometry and adjustment strategy.</figcaption></figure>
+        <div class="img-ph"><span class="img-ph-label">Image / Part vs Force Plot</span><span class="img-ph-desc">Controls discovery data - force spike showing tooling-on-tooling event.</span></div>
       </div>
     </div>
   </div>
 
   <div class="subproject" id="apex">
-    <div class="sp-num">04 · DOE · +18% YIELD</div>
-    <h3 class="sp-title">Apex Capping — DOE &amp; LINMOT Optimization</h3>
-    <div class="sp-meta">Design of Experiments · Capping Speed Calculation · Particulate Investigation</div>
+    <div class="sp-num">04 / DOE / +18% YIELD</div>
+    <h3 class="sp-title">Apex Capping - DOE &amp; LINMOT Optimization</h3>
+    <div class="sp-meta">Design of Experiments / Capping Speed Calculation / Particulate Investigation</div>
     <div class="sp-grid">
       <div>
         <p><strong>Problem:</strong> Particulate on vials and thread stringing on closures were causing production stoppages.</p>
-        <p><strong>DOE:</strong> Varied capping parameters (linear speed, rotational speed, abort timer, positions, torques) to isolate what drove stringing. Discovered the LINMOT capper was running at the wrong linear-to-rotational ratio — rotation not matching the closure thread pitch.</p>
-        <p><strong>Calculation:</strong> Derived the correct rotational and linear speeds to match the pitch from the closure drawing. Due to machine speed limits, the full ideal rate couldn't be achieved — but updated settings were ~18% closer to ideal and produced a substantial decline in stringing and capping failures. Trial 1: ~17% bad parts. Trial 3 (optimized): ~1.2%.</p>
-        <p><strong>Particulate air knife:</strong> Designed and printed a 3D air knife to blow particulate into a reject chute. The design didn't succeed — particulate reduced after cleaning and LINMOT optimization. Productive failure: documented the approach and moved on.</p>
+        <p><strong>DOE:</strong> Varied capping parameters (linear speed, rotational speed, abort timer, positions, torques) to isolate what drove stringing. Discovered the LINMOT capper was running at the wrong linear-to-rotational ratio - rotation not matching the closure thread pitch.</p>
+        <p><strong>Calculation:</strong> Derived the correct rotational and linear speeds to match the pitch from the closure drawing. Due to machine speed limits, the full ideal rate couldn't be achieved - but updated settings were ~18% closer to ideal and produced a substantial decline in stringing and capping failures. Trial 1: ~17% bad parts. Trial 3 (optimized): ~1.2%.</p>
+        <p><strong>Particulate air knife:</strong> Designed and printed a 3D air knife to blow particulate into a reject chute. The design didn't succeed - particulate reduced after cleaning and LINMOT optimization. Productive failure: documented the approach and moved on.</p>
       </div>
       <div>
-        <div class="img-ph"><span class="img-ph-label">Image · Thread Stringing Close-Up</span><span class="img-ph-desc">Microscope view of the stringing defect on closure threads.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · DOE Trial Tables</span><span class="img-ph-desc">Trial 1 vs Trial 3 parameter tables showing yield improvement.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · Pitch Calculation</span><span class="img-ph-desc">Hand-written calc matching rotational rate to closure thread pitch.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / Thread Stringing Close-Up</span><span class="img-ph-desc">Microscope view of the stringing defect on closure threads.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / DOE Trial Tables</span><span class="img-ph-desc">Trial 1 vs Trial 3 parameter tables showing yield improvement.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / Pitch Calculation</span><span class="img-ph-desc">Hand-written calc matching rotational rate to closure thread pitch.</span></div>
       </div>
     </div>
   </div>
 
   <div class="subproject" id="shapegrabber">
-    <div class="sp-num">05 · 3D INSPECTION</div>
-    <h3 class="sp-title">ShapeGrabber Ai620 — Vial Inspection Method</h3>
-    <div class="sp-meta">3D Laser Scanning · 3 Fixture Concepts · 12+ Hours Training</div>
+    <div class="sp-num">05 / 3D INSPECTION</div>
+    <h3 class="sp-title">ShapeGrabber Ai620 - Vial Inspection Method</h3>
+    <div class="sp-meta">3D Laser Scanning / 3 Fixture Concepts / 12+ Hours Training</div>
     <div class="sp-grid">
       <div>
         <p><strong>Problem:</strong> Molded vial defects (flash, runout) were reaching automation lines. Needed an in-process inspection method to catch them earlier.</p>
         <p><strong>Training:</strong> 12+ hours with an OGP applications engineer. Characterized machine capabilities by scanning a drill bit and stitching a full point cloud.</p>
-        <p><strong>Concept 1:</strong> Two-stage fixture — mandrel for external features, counter-bore for internal. Captured both; workflow required two scans and stitching.</p>
+        <p><strong>Concept 1:</strong> Two-stage fixture - mandrel for external features, counter-bore for internal. Captured both; workflow required two scans and stitching.</p>
         <p><strong>Concept 2:</strong> Vertical fixture for single-scan capture. Promising geometry, but inconsistent scanning spray application and part handling introduced accuracy variability.</p>
-        <p><strong>Concept 3:</strong> Chain-link spray station with interchangeable mandrels carries parts through a linear spray path (no handling → uniform coating), then mounts on a circular stage within the scanner's field of view.</p>
+        <p><strong>Concept 3:</strong> Chain-link spray station with interchangeable mandrels carries parts through a linear spray path (no handling -> uniform coating), then mounts on a circular stage within the scanner's field of view.</p>
       </div>
       <div>
-        <div class="img-ph"><span class="img-ph-label">Image · ShapeGrabber + Drill Point Cloud</span><span class="img-ph-desc">Machine and resulting point cloud of the test drill.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · Concept 1 Mandrel Fixture</span><span class="img-ph-desc">Mandrel fixture for external feature scanning.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · Concept 3 Chain Spray</span><span class="img-ph-desc">Chain-link spray station and circular scanning stage.</span></div>
+        <figure class="project-media"><img src="../images/tf/tf-shapegrabber-results-001.jpg" alt="ShapeGrabber inspection results"><figcaption>ShapeGrabber inspection output with measured features called out on scanned geometry.</figcaption></figure>
+        <div class="img-ph"><span class="img-ph-label">Image / Concept 1 Mandrel Fixture</span><span class="img-ph-desc">Mandrel fixture for external feature scanning.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / Concept 3 Chain Spray</span><span class="img-ph-desc">Chain-link spray station and circular scanning stage.</span></div>
       </div>
     </div>
   </div>
 
   <div class="subproject" id="t225">
-    <div class="sp-num">06 · CMM PROGRAMMING</div>
-    <h3 class="sp-title">T225 Flask — CMM Program &amp; Gauge R&amp;R</h3>
-    <div class="sp-meta">Centerline Measurement · Datum Strategy Investigation · 0.020" Variability Root-Cause</div>
+    <div class="sp-num">06 / CMM PROGRAMMING</div>
+    <h3 class="sp-title">T225 Flask - CMM Program &amp; Gauge R&amp;R</h3>
+    <div class="sp-meta">Centerline Measurement / Datum Strategy Investigation / 0.020" Variability Root-Cause</div>
     <div class="sp-grid">
       <div>
         <p><strong>Problem:</strong> T225 flasks were failing burst tests. Investigation pointed to misalignment between energy director centerlines and lid groove centerlines. Needed a measurement program.</p>
-        <p><strong>CMM program:</strong> Developed with Daryl (Quality Engineer) to measure centerlines and determine part fitment. Program failed to pass a Type 2 Gauge R&amp;R — repeatability degraded progressively, up to 0.020" total variation measuring the same points on the same part.</p>
+        <p><strong>CMM program:</strong> Developed with Daryl (Quality Engineer) to measure centerlines and determine part fitment. Program failed to pass a Type 2 Gauge R&amp;R - repeatability degraded progressively, up to 0.020" total variation measuring the same points on the same part.</p>
         <p><strong>Investigation:</strong> Designed multiple staging fixtures referencing different datum surfaces (part feet vs. internal cavity) to isolate the source. Data analysis revealed variability came from the CMM <strong>alignment process itself</strong>, not the staging.</p>
         <p><strong>Resolution:</strong> Switched to SmartScope (optical comparator with user-input centerlines), which removed alignment-process variability entirely.</p>
       </div>
       <div>
-        <div class="img-ph"><span class="img-ph-label">Image · CMM Setup</span><span class="img-ph-desc">CMM with flask staged and probe path visible.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · Gauge R&amp;R Plot</span><span class="img-ph-desc">A Centerline measurement plot showing 0.020" scan-to-scan variability.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · Staging Fixtures V1/V2</span><span class="img-ph-desc">Two fixture iterations referencing different datum surfaces.</span></div>
+        <figure class="project-media"><img src="../images/tf/tf-matrix-tube-rack-001.jpg" alt="ThermoFisher Matrix tube rack inspection setup"><figcaption>Matrix tube rack inspection artifact tied to CMM and dimensional validation work.</figcaption></figure>
+        <div class="img-ph"><span class="img-ph-label">Image / Gauge R&amp;R Plot</span><span class="img-ph-desc">A Centerline measurement plot showing 0.020" scan-to-scan variability.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / Staging Fixtures V1/V2</span><span class="img-ph-desc">Two fixture iterations referencing different datum surfaces.</span></div>
       </div>
     </div>
   </div>
 
   <div class="subproject" id="line4">
-    <div class="sp-num">07 · LINE MOVE</div>
-    <h3 class="sp-title">Line 4 Move — Vision &amp; Robot Re-Teach</h3>
-    <div class="sp-meta">Production Line Relocation · Vision System · Fanuc/Epson Robot Path Update</div>
+    <div class="sp-num">07 / LINE MOVE</div>
+    <h3 class="sp-title">Line 4 Move - Vision &amp; Robot Re-Teach</h3>
+    <div class="sp-meta">Production Line Relocation / Vision System / Fanuc/Epson Robot Path Update</div>
     <div class="sp-grid">
       <div>
-        <p><strong>Project:</strong> Condensed Line 4 footprint to reduce operator travel between stations. After the move, the tubeloader vision system's bowl position fell outside its previously-taught reference threshold. Re-taught camera reference points and LVDT measurement positions. Tubeloader robot pick positions also needed re-teaching after its local coordinate system was adjusted by the vision offsets — re-taught all positions across three bowl sizes (96, 48, 24) and updated configuration code.</p>
+        <p><strong>Project:</strong> Condensed Line 4 footprint to reduce operator travel between stations. After the move, the tubeloader vision system's bowl position fell outside its previously-taught reference threshold. Re-taught camera reference points and LVDT measurement positions. Tubeloader robot pick positions also needed re-teaching after its local coordinate system was adjusted by the vision offsets - re-taught all positions across three bowl sizes (96, 48, 24) and updated configuration code.</p>
       </div>
       <div>
-        <div class="img-ph"><span class="img-ph-label">Image · Condensed Line 4</span><span class="img-ph-desc">Photo of the moved layout with reduced station-to-station travel.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · Vision Re-Teach Interface</span><span class="img-ph-desc">Computer UI showing camera reference re-teach process.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / Condensed Line 4</span><span class="img-ph-desc">Photo of the moved layout with reduced station-to-station travel.</span></div>
+        <figure class="project-media"><img src="../images/tf/tf-vision-reteach-001.jpg" alt="ThermoFisher robot vision reteach interface"><figcaption>Vision re-teach interface used after line movement shifted camera and robot reference positions.</figcaption></figure>
       </div>
     </div>
   </div>
 
   <!-- ====== ROTATION 1 ====== -->
   <div class="rotation-header" style="margin-top:4rem;">
-    <div class="rotation-tag">Rotation 01 · Jan–Aug 2023</div>
-    <h2 class="rotation-title">Foundation — Process Engineering &amp; Design</h2>
-    <p class="rotation-sub">First co-op — SolidWorks, process development, ergonomic safety design, GD&amp;T fundamentals.</p>
+    <div class="rotation-tag">Rotation 01 / Jan-Aug 2023</div>
+    <h2 class="rotation-title">Foundation - Process Engineering &amp; Design</h2>
+    <p class="rotation-sub">First co-op - SolidWorks, process development, ergonomic safety design, GD&amp;T fundamentals.</p>
   </div>
 
   <div class="subproject" id="mrbig">
-    <div class="sp-num">08 · PROCESS DEVELOPMENT · 98% YIELD</div>
-    <h3 class="sp-title">Mr. Big — Ultrasonic Weld Process</h3>
-    <div class="sp-meta">Process from Scratch · Leak Test DOE · Controls Development</div>
+    <div class="sp-num">08 / PROCESS DEVELOPMENT / 98% YIELD</div>
+    <h3 class="sp-title">Mr. Big - Ultrasonic Weld Process</h3>
+    <div class="sp-meta">Process from Scratch / Leak Test DOE / Controls Development</div>
     <div class="sp-grid">
       <div>
         <p><strong>Problem:</strong> Original process had operators eyeballing filter placement during ultrasonic welding of lid + closure + membrane. Not repeatable, not auditable.</p>
-        <p><strong>New process:</strong> Worked with Rochester Automation (integrator) to fabricate a welder frame and develop the controls system. Designed a hand-held wand vacuum holding the lid and filter, a part nest, and the full process flowchart — every automation cue documented from wand vacuum confirmation through light curtain clear and weld activation.</p>
+        <p><strong>New process:</strong> Worked with Rochester Automation (integrator) to fabricate a welder frame and develop the controls system. Designed a hand-held wand vacuum holding the lid and filter, a part nest, and the full process flowchart - every automation cue documented from wand vacuum confirmation through light curtain clear and weld activation.</p>
         <p><strong>Validation:</strong> Conducted a leak test DOE leading to a filter OD design change. Ran a 50+ part worst-case weld parameter study (tracking power, energy, force). Designed a force test staging fixture with Brandon (R&amp;D co-op). Outcome: <strong>98% yield</strong> on the new process with increased throughput.</p>
       </div>
       <div>
-        <div class="img-ph"><span class="img-ph-label">Image · Welder Frame + Wand Vacuum</span><span class="img-ph-desc">CAD and photo of the welder frame and prototype wand vacuum.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · Force Test Fixture</span><span class="img-ph-desc">Part staging fixture for force testing.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · DOE Plot</span><span class="img-ph-desc">Power/Energy/Force plot from the worst-case parameter study.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / Welder Frame + Wand Vacuum</span><span class="img-ph-desc">CAD and photo of the welder frame and prototype wand vacuum.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / Force Test Fixture</span><span class="img-ph-desc">Part staging fixture for force testing.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / DOE Plot</span><span class="img-ph-desc">Power/Energy/Force plot from the worst-case parameter study.</span></div>
       </div>
     </div>
   </div>
 
   <div class="subproject" id="qafixture">
-    <div class="sp-num">09 · INSPECTION FIXTURE</div>
-    <h3 class="sp-title">Closure Gasket — QA Inspection Fixture</h3>
-    <div class="sp-meta">Tolerance Stack-Up · Calibrated Mass + Dial Indicator · Functional Inspection</div>
+    <div class="sp-num">09 / INSPECTION FIXTURE</div>
+    <h3 class="sp-title">Closure Gasket - QA Inspection Fixture</h3>
+    <div class="sp-meta">Tolerance Stack-Up / Calibrated Mass + Dial Indicator / Functional Inspection</div>
     <div class="sp-grid">
       <div>
-        <p><strong>Problem:</strong> Current inspection used a vision system that didn't emulate the actual function of the part — it could pass parts that would functionally fail.</p>
+        <p><strong>Problem:</strong> Current inspection used a vision system that didn't emulate the actual function of the part - it could pass parts that would functionally fail.</p>
         <p><strong>Solution:</strong> QA fixture using a calibrated mass and dial indicator that emulates the new machine inspection process. Mass has a grab handle so operators can raise and lower it onto the part nest in a repeatable motion. Preceded by tolerance stack-up analysis defining the critical distance constraints in the closure cross-section.</p>
       </div>
       <div>
-        <div class="img-ph"><span class="img-ph-label">Image · QA Fixture</span><span class="img-ph-desc">Fixture with calibrated mass, dial indicator, and grab handle.</span></div>
-        <div class="img-ph"><span class="img-ph-label">Image · Tolerance Stack-Up</span><span class="img-ph-desc">Closure cross-section sketch with position and dimension constraints.</span></div>
+        <figure class="project-media"><img src="../images/tf/tf-rack-delatcher-prototype-001.jpg" alt="ThermoFisher machined QA and process fixture"><figcaption>Machined fixture work representative of QA/process tooling design and build quality.</figcaption></figure>
+        <div class="img-ph"><span class="img-ph-label">Image / Tolerance Stack-Up</span><span class="img-ph-desc">Closure cross-section sketch with position and dimension constraints.</span></div>
       </div>
     </div>
   </div>
 
   <div class="subproject" id="misc">
-    <div class="sp-num">10 · CROSS-FUNCTIONAL</div>
+    <div class="sp-num">10 / CROSS-FUNCTIONAL</div>
     <h3 class="sp-title">Tooling, Brackets &amp; Miscellaneous Design</h3>
-    <div class="sp-meta">~15+ Smaller Designs · Supported Other Engineers Throughout Both Rotations</div>
+    <div class="sp-meta">~15+ Smaller Designs / Supported Other Engineers Throughout Both Rotations</div>
     <ul class="hl">
-      <li><strong>Kinex Capper</strong> — designed a guard to eliminate a pinch point and a new mount for the lid proximity sensor</li>
-      <li><strong>Stem Bender diagnostics</strong> — diagnosed and replaced thermocouples and temperature readouts on a 27-year-old machine</li>
-      <li><strong>Tooling</strong> — check valve installation tool (LV200 pneumatic press), dowel pin install/disassembly tools, o-ring installation tool, propane tank holder</li>
-      <li><strong>Misc. FDM parts</strong> — QA vial holders, hot stamp rack lid with embossed letters, CG1 door bracket, Apex inline part tunnel, puck holder, countless tubeloader fingers</li>
+      <li><strong>Kinex Capper</strong> - designed a guard to eliminate a pinch point and a new mount for the lid proximity sensor</li>
+      <li><strong>Stem Bender diagnostics</strong> - diagnosed and replaced thermocouples and temperature readouts on a 27-year-old machine</li>
+      <li><strong>Tooling</strong> - check valve installation tool (LV200 pneumatic press), dowel pin install/disassembly tools, o-ring installation tool, propane tank holder</li>
+      <li><strong>Misc. FDM parts</strong> - QA vial holders, hot stamp rack lid with embossed letters, CG1 door bracket, Apex inline part tunnel, puck holder, countless tubeloader fingers</li>
     </ul>
   </div>
+  <div class="content-section">
+    <div class="section-label">Project Artifacts</div>
+    <h2 class="section-h">Additional ThermoFisher Engineering Artifacts</h2>
+    <p>Additional images from the original portfolio asset set, included so the project page carries the same visual depth as the Google Sites version while keeping the written case study concise.</p>
+    <div class="artifact-grid">
+      <figure class="project-media artifact-card"><img src="../images/tf/tf-engineering-sketches-001.jpg" alt="Tf Engineering Sketches 001"><figcaption>Tf Engineering Sketches 001</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/tf/tf-matrix-tube-rack-001.jpg" alt="Tf Matrix Tube Rack 001"><figcaption>Tf Matrix Tube Rack 001</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/tf/tf-oring-tool-001.jpg" alt="Tf Oring Tool 001"><figcaption>Tf Oring Tool 001</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/tf/tf-production-machine-001.jpg" alt="Tf Production Machine 001"><figcaption>Tf Production Machine 001</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/tf/tf-rack-delatcher-prototype-001.jpg" alt="Tf Rack Delatcher Prototype 001"><figcaption>Tf Rack Delatcher Prototype 001</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/tf/tf-shapegrabber-results-001.jpg" alt="Tf Shapegrabber Results 001"><figcaption>Tf Shapegrabber Results 001</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/tf/tf-stem-bender-panel-001.jpg" alt="Tf Stem Bender Panel 001"><figcaption>Tf Stem Bender Panel 001</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/tf/tf-vision-reteach-001.jpg" alt="Tf Vision Reteach 001"><figcaption>Tf Vision Reteach 001</figcaption></figure>
+    </div>
+  </div>
+
 
   <div class="content-section">
-    <div class="section-label">Engineering Tools — 16 Months</div>
+    <div class="section-label">Engineering Tools - 16 Months</div>
     <div class="tools-block">
-      <div class="tools-label">Software · Methods · Manufacturing · Standards</div>
+      <div class="tools-label">Software / Methods / Manufacturing / Standards</div>
       <div class="tag-row">
         <span class="tag tag-accent">SolidWorks (CSWA)</span><span class="tag tag-accent">GD&amp;T (Professional Cert.)</span>
         <span class="tag tag-blue">Epson Robot Controls</span><span class="tag tag-blue">PLC Logic</span>
@@ -359,6 +403,6 @@
 
 </div>
 
-<div class="proj-nav"><a href="fpv-drone.html">← FPV Drone</a><a href="automated-desk.html">Next: Automated Desk →</a></div>
-<footer><span>© 2025 Michael Vasquez</span><div class="footer-links"><a href="mailto:mvas8037@gmail.com">Email</a><a href="https://linkedin.com/in/michael-vasquez-me" target="_blank">LinkedIn</a></div></footer>
+<div class="proj-nav"><a href="fpv-drone.html"><- FPV Drone</a><a href="automated-desk.html">Next: Automated Desk -></a></div>
+<footer><span>(c) 2025 Michael Vasquez</span><div class="footer-links"><a href="mailto:mvas8037@gmail.com">Email</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank">LinkedIn</a></div></footer>
 </body></html>

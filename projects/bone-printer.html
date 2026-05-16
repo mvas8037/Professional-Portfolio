@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bone 3D Printer - Michael Vasquez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --surface: #111; --card: #141414; --card-hi: #1a1a1a;
+      --border: #1e1e1e; --border-hi: #2a2a2a; --muted: #3a3a3a; --subtle: #666;
+      --body: #b8b8b8; --heading: #f0f0f0; --accent: #c9a96e; --accent-dim: #7a6340;
+      --blue: #6b9fbd; --green: #7fb37f;
+      --syne: 'Syne', sans-serif; --mono: 'JetBrains Mono', monospace; --sans: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--body); font-family: var(--sans); font-weight: 300; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 2.5rem; background: rgba(10,10,10,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--syne); font-weight: 700; font-size: 1rem; color: var(--heading); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.68rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-item { position: relative; }
+    .project-menu { position: absolute; top: calc(100% + 0.75rem); left: 50%; transform: translateX(-50%) translateY(-6px); min-width: 230px; background: rgba(14,14,14,0.98); border: 1px solid var(--border); padding: 0.45rem; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; box-shadow: 0 18px 60px rgba(0,0,0,0.35); }
+    .project-menu::before { content: ''; position: absolute; left: 0; right: 0; top: -0.85rem; height: 0.85rem; }
+    .project-menu a { display: block; padding: 0.7rem 0.8rem; color: var(--body); border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .project-menu a:last-child { border-bottom: none; }
+    .project-menu a:hover { background: var(--card-hi); color: var(--accent); }
+    .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+    .eyebrow-line { width: 28px; height: 1px; background: var(--accent); }
+    .eyebrow-text { font-family: var(--mono); font-size: 0.66rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; }
+    /* Hero */
+    .project-hero { padding: 9rem 2.5rem 3rem; max-width: 980px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+    .proj-meta-tag { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; }
+    .proj-title { font-family: var(--syne); font-weight: 800; font-size: clamp(2.2rem, 5vw, 3.8rem); color: var(--heading); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+    .proj-subtitle { font-size: 1.05rem; color: var(--body); max-width: 620px; margin-bottom: 2rem; }
+    .proj-stats { display: grid; grid-template-columns: repeat(4, 1fr); padding: 1.5rem 0; border-top: 1px solid var(--border); }
+    .proj-stat { padding-right: 1.5rem; border-right: 1px solid var(--border); }
+    .proj-stat:last-child { border-right: none; }
+    .stat-val { font-family: var(--syne); font-size: 1.1rem; font-weight: 700; color: var(--heading); margin-bottom: 0.2rem; line-height: 1.2; }
+    .stat-label { font-family: var(--mono); font-size: 0.58rem; color: var(--subtle); text-transform: uppercase; letter-spacing: 0.1em; }
+    /* Role strip */
+    .role-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2.5rem; max-width: 980px; margin: 0 auto; display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    .role-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+    .role-content { font-size: 0.88rem; color: var(--body); }
+    /* Content */
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 2.5rem; }
+    .content-section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+    .content-section:last-child { border-bottom: none; }
+    .section-label { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.1rem; }
+    .section-h { font-family: var(--syne); font-size: 1.55rem; font-weight: 700; color: var(--heading); line-height: 1.2; margin-bottom: 1.2rem; }
+    .wrap p { font-size: 0.94rem; color: var(--body); margin-bottom: 1rem; }
+    .wrap p strong { color: var(--heading); font-weight: 500; }
+    .wrap p em { color: var(--body); font-style: italic; }
+    .lead { font-size: 1rem !important; }
+    /* two-col */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1.5rem; }
+    .col-head { font-family: var(--mono); font-size: 0.6rem; color: var(--blue); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.7rem; }
+    /* Highlight list */
+    .hl { list-style: none; }
+    .hl li { font-size: 0.92rem; color: var(--body); padding: 1rem 0 1rem 1.5rem; border-bottom: 1px solid var(--border); position: relative; }
+    .hl li:first-child { border-top: 1px solid var(--border); }
+    .hl li::before { content: '->'; position: absolute; left: 0; color: var(--accent); }
+    .hl li strong { color: var(--heading); font-weight: 500; }
+    /* Image placeholder */
+    .img-ph { width: 100%; background: #0c0c0c; border: 1px dashed var(--border-hi); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; min-height: 180px; position: relative; margin: 1rem 0; }
+    .img-ph::before { content:''; position:absolute; inset:0; background-image: linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px); background-size:24px 24px; pointer-events:none; }
+    .img-ph-label { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem; position: relative; z-index: 1; }
+    .img-ph-desc { font-family: var(--sans); font-size: 0.75rem; color: var(--subtle); text-align: center; max-width: 360px; position: relative; z-index: 1; font-style: italic; }
+    .img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .img-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .project-media { margin: 1rem 0; border: 1px solid var(--border); background: #0c0c0c; overflow: hidden; }
+    .project-media img { width: 100%; height: clamp(240px, 45vw, 560px); display: block; object-fit: contain; background: #080808; filter: saturate(0.96) contrast(1.03); transition: filter 0.3s ease; }
+    .project-media:hover img { filter: saturate(1.04) contrast(1.06); }
+    .project-media figcaption { font-family: var(--mono); font-size: 0.62rem; color: var(--subtle); padding: 0.85rem 1rem; border-top: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.08em; }
+    .artifact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.25rem; }
+    .artifact-card { margin: 0; }
+    .artifact-card img, .artifact-card video { width: 100%; height: 220px; display: block; object-fit: contain; background: #080808; }
+    .artifact-card figcaption { min-height: 3.35rem; }
+    /* Tools block */
+    .tools-block { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .tools-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { display: inline-block; font-family: var(--mono); font-size: 0.6rem; color: var(--subtle); border: 1px solid var(--border); padding: 0.3rem 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .tag-accent { color: var(--accent); border-color: var(--accent-dim); }
+    .tag-blue { color: var(--blue); border-color: rgba(107,159,189,0.35); }
+    /* Sub-projects */
+    .subproject { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .subproject:last-child { border-bottom: none; }
+    .sp-num { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.18em; margin-bottom: 0.6rem; }
+    .sp-title { font-family: var(--syne); font-size: 1.25rem; font-weight: 700; color: var(--heading); margin-bottom: 0.4rem; line-height: 1.2; }
+    .sp-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
+    .sp-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2.5rem; align-items: start; }
+    /* Rotation header */
+    .rotation-header { padding: 3rem 0 2rem; border-bottom: 2px solid var(--accent-dim); margin-bottom: 0; }
+    .rotation-tag { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .rotation-title { font-family: var(--syne); font-size: 1.75rem; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; margin-bottom: 0.4rem; }
+    .rotation-sub { font-size: 0.9rem; color: var(--subtle); }
+    /* Project nav */
+    .proj-nav { display: flex; justify-content: space-between; align-items: center; padding: 2.5rem; max-width: 980px; margin: 0 auto 2rem; }
+    .proj-nav a { font-family: var(--mono); font-size: 0.65rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+    .proj-nav a:hover { color: var(--accent); }
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; max-width: 980px; margin: 1rem auto 0; display: flex; align-items: center; justify-content: space-between; }
+    footer span { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--accent); }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1rem; } .project-menu { left: auto; right: 0; transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu { transform: translateY(0); }
+      .project-hero, .wrap, .proj-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .proj-stats { grid-template-columns: 1fr 1fr; }
+      .proj-stat { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+      .two-col, .sp-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .img-row, .img-row-3, .artifact-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="../index.html">MV<span>.</span></a>
+  <ul class="nav-links">
+    <li class="nav-item nav-projects"><a href="../index.html#projects">Projects</a>
+      <div class="project-menu" aria-label="Project links">
+        <a href="bone-printer.html">Bone 3D Printer</a>
+        <a href="fpv-drone.html">FPV Drone</a>
+        <a href="thermofisher.html">ThermoFisher Co-ops</a>
+        <a href="automated-desk.html">Automated Desk</a>
+        <a href="robotics.html">VEX Robotics</a>
+      </div>
+    </li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../resume.pdf" target="_blank">Resume</a></li>
+    <li><a href="../about.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="project-hero">
+  <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">01 / Senior Capstone / Aug 2024 - Apr 2025</span></div>
+  <h1 class="proj-title">Binder-Ink Jet<br>Bone 3D Printer</h1>
+  <p class="proj-subtitle">Senior capstone with seven other engineering students, partnered with <strong>RevBio</strong> - the biotech behind <em>Tetranite</em>, a regenerative bone adhesive. Platform based on the open-source <a href="https://yrtec3d.com/oasis-3dp/" target="_blank" style="color:var(--accent)">OASIS binder jet printer</a>.</p>
+  <div class="proj-stats">
+    <div class="proj-stat"><div class="stat-val">8-Person</div><div class="stat-label">Cross-disciplinary team</div></div>
+    <div class="proj-stat"><div class="stat-val">RevBio</div><div class="stat-label">Industry sponsor</div></div>
+    <div class="proj-stat"><div class="stat-val">2-DoF</div><div class="stat-label">Compliant coupling</div></div>
+    <div class="proj-stat"><div class="stat-val">FDM</div><div class="stat-label">In-house fabrication</div></div>
+  </div>
+</div>
+<div class="role-strip">
+  <span class="role-label">My Scope -></span>
+  <span class="role-content"><strong style="color:var(--heading)">Z-axis sub-assembly</strong> / <strong style="color:var(--heading)">base plate</strong> / <strong style="color:var(--heading)">piston outer sleeve redesign</strong> - owned mechanical design, prototyping, and validation for these subsystems.</span>
+</div>
+
+<div class="wrap">
+  <div class="content-section">
+    <div class="section-label">Project Overview</div>
+    <h2 class="section-h">Engineering Bone Material Onto a 3D Printing Platform</h2>
+    <p class="lead">Tetranite is a regenerative bone adhesive that, when extruded as a binder onto bone-like powder, can build patient-specific structural scaffolds. Our team's job: take the OASIS open-source binder jet platform and adapt it to handle RevBio's material chemistry and process requirements.</p>
+    <p>I owned the Z-axis motion system, base plate, and powder containment subsystem.</p>
+    <div class="img-row">
+      <figure class="project-media"><img src="../images/home/home-005.jpg" alt="Michael Vasquez standing next to the binder-jet bone printer"><figcaption>Final capstone platform presented with the completed printer assembly.</figcaption></figure>
+      <figure class="project-media"><img src="../images/home/home-002.jpg" alt="CAD model of the binder-jet bone printer"><figcaption>Full CAD model used to coordinate frame, motion, powder-bed, and enclosure interfaces.</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="section-label">Subsystem 01</div>
+    <h2 class="section-h">Z-Axis Redesign &amp; 2-DoF Compliant Coupling</h2>
+    <p>The original Z-axis used precision-machined linear bearing mounts to keep the print head aligned through travel. This added cost, tight tolerance stack-ups, and a single failure point.</p>
+    <p><strong>My approach</strong>: instead of demanding rigid perfection, design a mechanism that flexes just enough to absorb misalignment in the directions that don't matter - a 2-DoF compliant coupling with no bearings, no backlash, fewer parts, and zero cost of precision mounting.</p>
+    <div class="img-row">
+      <figure class="project-media"><img src="../images/bone/bone-assembly-007.jpg" alt="Bone printer CAD assembly with Z-axis and powder bed"><figcaption>CAD assembly view used to reason through the Z-axis and powder-bed layout.</figcaption></figure>
+      <figure class="project-media"><img src="../images/bone/bone-assembly-015.jpg" alt="Bone printer compliant coupling subassembly"><figcaption>Compliant coupling subassembly replacing the precision-machined bearing mount approach.</figcaption></figure>
+    </div>
+    <div class="two-col">
+      <div><div class="col-head">Why Compliant?</div><p>Flexure absorbs angular misalignment in two rotational DoF - exactly the failure mode precision mounts existed to prevent. No bearings to wear, zero backlash.</p></div>
+      <div><div class="col-head">Outcome</div><p>Eliminated precision-machined mounts entirely. Significantly reduced cost and assembly complexity while improving Z-axis linear motion quality.</p></div>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="section-label">Subsystem 02</div>
+    <h2 class="section-h">Piston Outer Sleeve Redesign</h2>
+    <p>The original piston sleeve was designed without accounting for tolerance stack-up - it bound against the piston head during testing and hindered Z-axis linear motion.</p>
+    <p>I redesigned it as a <strong>split-half assembly</strong>: two FDM-printable halves that clamp around the piston with adjustable compression, converting a manufacturing constraint into a tunable parameter. Powder seal compression can now be dialed in post-assembly without disassembling the printer.</p>
+    <div class="img-row">
+      <figure class="project-media"><img src="../images/bone/bone-assembly-016.jpg" alt="Bone printer piston sleeve prototype"><figcaption>Piston sleeve prototype for improving powder containment and reducing binding.</figcaption></figure>
+      <figure class="project-media"><img src="../images/bone/bone-assembly-020.jpg" alt="Bone printer split sleeve redesign"><figcaption>Redesigned sleeve concept with more controlled sealing and service access.</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="section-label">Subsystem 03</div>
+    <h2 class="section-h">Piston Head &amp; Drive Sizing</h2>
+    <p>The original piston head's build volume and powder reservoir were too small for RevBio's print sizes. I ran length-to-diameter ratio calculations for piston stability under load, redesigned the piston head to expand capacity, and upgraded the drive system to a <strong>stronger stepper motor with a finer-pitch lead screw</strong> - giving greater torque multiplication and improved Z-resolution.</p>
+    <div class="img-row-3">
+      <figure class="project-media"><img src="../images/bone/bone-assembly-017.jpg" alt="Bone printer leadscrew and motion hardware"><figcaption>Motion hardware and leadscrew packaging for the piston system.</figcaption></figure>
+      <figure class="project-media"><img src="../images/bone/bone-assembly-022.jpg" alt="Bone printer piston bed assembly"><figcaption>Piston bed assembly detail showing the containment and motion-interface hardware.</figcaption></figure>
+      <figure class="project-media"><img src="../images/bone/bone-assembly-001.jpg" alt="Final bone printer assembly"><figcaption>Final assembled printer platform with the powder-bed subsystem installed.</figcaption></figure>
+    </div>
+  </div>
+  <div class="content-section">
+    <div class="section-label">Project Artifacts</div>
+    <h2 class="section-h">Additional Bone Printer Build Artifacts</h2>
+    <p>Additional images from the original portfolio asset set, included so the project page carries the same visual depth as the Google Sites version while keeping the written case study concise.</p>
+    <div class="artifact-grid">
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-animation-001.gif" alt="Bone Animation 001"><figcaption>Bone Animation 001</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-001.jpg" alt="Bone Assembly 001"><figcaption>Bone Assembly 001</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-002.jpg" alt="Bone Assembly 002"><figcaption>Bone Assembly 002</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-003.jpg" alt="Bone Assembly 003"><figcaption>Bone Assembly 003</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-004.jpg" alt="Bone Assembly 004"><figcaption>Bone Assembly 004</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-005.jpg" alt="Bone Assembly 005"><figcaption>Bone Assembly 005</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-006.jpg" alt="Bone Assembly 006"><figcaption>Bone Assembly 006</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-007.jpg" alt="Bone Assembly 007"><figcaption>Bone Assembly 007</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-008.jpg" alt="Bone Assembly 008"><figcaption>Bone Assembly 008</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-009.jpg" alt="Bone Assembly 009"><figcaption>Bone Assembly 009</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-010.jpg" alt="Bone Assembly 010"><figcaption>Bone Assembly 010</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-011.jpg" alt="Bone Assembly 011"><figcaption>Bone Assembly 011</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-012.jpg" alt="Bone Assembly 012"><figcaption>Bone Assembly 012</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-013.jpg" alt="Bone Assembly 013"><figcaption>Bone Assembly 013</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-014.jpg" alt="Bone Assembly 014"><figcaption>Bone Assembly 014</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-015.jpg" alt="Bone Assembly 015"><figcaption>Bone Assembly 015</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-016.jpg" alt="Bone Assembly 016"><figcaption>Bone Assembly 016</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-017.jpg" alt="Bone Assembly 017"><figcaption>Bone Assembly 017</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-018.jpg" alt="Bone Assembly 018"><figcaption>Bone Assembly 018</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-019.jpg" alt="Bone Assembly 019"><figcaption>Bone Assembly 019</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-020.jpg" alt="Bone Assembly 020"><figcaption>Bone Assembly 020</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-021.jpg" alt="Bone Assembly 021"><figcaption>Bone Assembly 021</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-022.jpg" alt="Bone Assembly 022"><figcaption>Bone Assembly 022</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-023.jpg" alt="Bone Assembly 023"><figcaption>Bone Assembly 023</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/bone-wire-label-001.jpg" alt="Bone Wire Label 001"><figcaption>Bone Wire Label 001</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/screenshot-2025-02-22-164123.png" alt="Screenshot 2025 02 22 164123"><figcaption>Screenshot 2025 02 22 164123</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/screenshot-2025-02-22-164622.png" alt="Screenshot 2025 02 22 164622"><figcaption>Screenshot 2025 02 22 164622</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/screenshot-2025-02-22-165305.png" alt="Screenshot 2025 02 22 165305"><figcaption>Screenshot 2025 02 22 165305</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/screenshot-2025-02-22-171255.png" alt="Screenshot 2025 02 22 171255"><figcaption>Screenshot 2025 02 22 171255</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/bone/screenshot-2025-02-22-171340.png" alt="Screenshot 2025 02 22 171340"><figcaption>Screenshot 2025 02 22 171340</figcaption></figure>
+    </div>
+  </div>
+
+
+  <div class="content-section">
+    <div class="section-label">Engineering Tools</div>
+    <div class="tools-block">
+      <div class="tools-label">Software / Methods / Manufacturing</div>
+      <div class="tag-row">
+        <span class="tag tag-accent">SolidWorks</span>
+        <span class="tag">Compliant Mechanism Design</span>
+        <span class="tag">Tolerance Stack-Up</span>
+        <span class="tag">Stepper Motor Sizing</span>
+        <span class="tag">Lead Screw Calc.</span>
+        <span class="tag">DFM for FDM</span>
+        <span class="tag">Bench Validation</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="proj-nav">
+  <a href="../index.html"><- All Projects</a>
+  <a href="fpv-drone.html">Next: FPV Drone -></a>
+</div>
+<footer>
+  <span>(c) 2025 Michael Vasquez</span>
+  <div class="footer-links"><a href="mailto:mvas8037@gmail.com">Email</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank">LinkedIn</a></div>
+</footer>
+</body>
+</html>

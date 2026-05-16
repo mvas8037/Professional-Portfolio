@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VEX U Robotics — Michael Vasquez</title>
+  <title>VEX U Robotics - Michael Vasquez</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
@@ -22,6 +22,13 @@
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { font-family: var(--mono); font-size: 0.68rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
+    .nav-item { position: relative; }
+    .project-menu { position: absolute; top: calc(100% + 0.75rem); left: 50%; transform: translateX(-50%) translateY(-6px); min-width: 230px; background: rgba(14,14,14,0.98); border: 1px solid var(--border); padding: 0.45rem; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; box-shadow: 0 18px 60px rgba(0,0,0,0.35); }
+    .project-menu::before { content: ''; position: absolute; left: 0; right: 0; top: -0.85rem; height: 0.85rem; }
+    .project-menu a { display: block; padding: 0.7rem 0.8rem; color: var(--body); border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .project-menu a:last-child { border-bottom: none; }
+    .project-menu a:hover { background: var(--card-hi); color: var(--accent); }
+    .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
     .eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
     .eyebrow-line { width: 28px; height: 1px; background: var(--accent); }
     .eyebrow-text { font-family: var(--mono); font-size: 0.66rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; }
@@ -56,7 +63,7 @@
     .hl { list-style: none; }
     .hl li { font-size: 0.92rem; color: var(--body); padding: 1rem 0 1rem 1.5rem; border-bottom: 1px solid var(--border); position: relative; }
     .hl li:first-child { border-top: 1px solid var(--border); }
-    .hl li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+    .hl li::before { content: '->'; position: absolute; left: 0; color: var(--accent); }
     .hl li strong { color: var(--heading); font-weight: 500; }
     /* Image placeholder */
     .img-ph { width: 100%; background: #0c0c0c; border: 1px dashed var(--border-hi); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; min-height: 180px; position: relative; margin: 1rem 0; }
@@ -65,6 +72,14 @@
     .img-ph-desc { font-family: var(--sans); font-size: 0.75rem; color: var(--subtle); text-align: center; max-width: 360px; position: relative; z-index: 1; font-style: italic; }
     .img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .img-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .project-media { margin: 1rem 0; border: 1px solid var(--border); background: #0c0c0c; overflow: hidden; }
+    .project-media img { width: 100%; height: clamp(240px, 45vw, 560px); display: block; object-fit: contain; background: #080808; filter: saturate(0.96) contrast(1.03); transition: filter 0.3s ease; }
+    .project-media:hover img { filter: saturate(1.04) contrast(1.06); }
+    .project-media figcaption { font-family: var(--mono); font-size: 0.62rem; color: var(--subtle); padding: 0.85rem 1rem; border-top: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.08em; }
+    .artifact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.25rem; }
+    .artifact-card { margin: 0; }
+    .artifact-card img, .artifact-card video { width: 100%; height: 220px; display: block; object-fit: contain; background: #080808; }
+    .artifact-card figcaption { min-height: 3.35rem; }
     /* Tools block */
     .tools-block { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
     .tools-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.75rem; }
@@ -95,72 +110,113 @@
     .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
     .footer-links a:hover { color: var(--accent); }
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1.25rem; }
+      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1rem; } .project-menu { left: auto; right: 0; transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu { transform: translateY(0); }
       .project-hero, .wrap, .proj-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
       .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
       .proj-stats { grid-template-columns: 1fr 1fr; }
       .proj-stat { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
       .two-col, .sp-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-      .img-row, .img-row-3 { grid-template-columns: 1fr; }
+      .img-row, .img-row-3, .artifact-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
     }
   </style>
 </head>
 <body>
-<nav><a class="nav-logo" href="../index.html">MV<span>.</span></a><ul class="nav-links"><li><a href="../index.html">Projects</a></li><li><a href="../about.html">About</a></li><li><a href="../resume.pdf" target="_blank">Resume</a></li><li><a href="../about.html#contact">Contact</a></li></ul></nav>
+<nav>
+  <a class="nav-logo" href="../index.html">MV<span>.</span></a>
+  <ul class="nav-links">
+    <li class="nav-item nav-projects"><a href="../index.html#projects">Projects</a>
+      <div class="project-menu" aria-label="Project links">
+        <a href="bone-printer.html">Bone 3D Printer</a>
+        <a href="fpv-drone.html">FPV Drone</a>
+        <a href="thermofisher.html">ThermoFisher Co-ops</a>
+        <a href="automated-desk.html">Automated Desk</a>
+        <a href="robotics.html">VEX Robotics</a>
+      </div>
+    </li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../resume.pdf" target="_blank">Resume</a></li>
+    <li><a href="../about.html#contact">Contact</a></li>
+  </ul>
+</nav>
 <div class="project-hero">
-  <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">05 · Leadership · 2019 – 2022</span></div>
+  <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">05 / Leadership / 2019 - 2022</span></div>
   <h1 class="proj-title">VEX U<br>Competition Robot</h1>
-  <p class="proj-subtitle">Multi-year competition robotics — 4-bar linkage with intake rollers, pivoting deposit tray, drivetrain with independent odometry wheels, and PID controllers for autonomous position correction. <strong>Innovate Award</strong> at World Championships, 3rd in qualification rounds. Led 15+ member team as President of RIT VEX U Robotics.</p>
+  <p class="proj-subtitle">Multi-year competition robotics - 4-bar linkage with intake rollers, pivoting deposit tray, drivetrain with independent odometry wheels, and PID controllers for autonomous position correction. <strong>Innovate Award</strong> at World Championships, 3rd in qualification rounds. Led 15+ member team as President of RIT VEX U Robotics.</p>
   <div class="proj-stats">
-    <div class="proj-stat"><div class="stat-val">1st</div><div class="stat-label">Innovate Award · Worlds</div></div>
+    <div class="proj-stat"><div class="stat-val">1st</div><div class="stat-label">Innovate Award / Worlds</div></div>
     <div class="proj-stat"><div class="stat-val">3rd</div><div class="stat-label">Qualification rank</div></div>
     <div class="proj-stat"><div class="stat-val">15+</div><div class="stat-label">Team members led</div></div>
     <div class="proj-stat"><div class="stat-val">3 Seasons</div><div class="stat-label">Active design history</div></div>
   </div>
 </div>
-<div class="role-strip"><span class="role-label">Role →</span><span class="role-content">President, RIT VEX U Robotics · Hardware sub-team lead · Cross-functional with software and autonomous programming teams.</span></div>
+<div class="role-strip"><span class="role-label">Role -></span><span class="role-content">President, RIT VEX U Robotics / Hardware sub-team lead / Cross-functional with software and autonomous programming teams.</span></div>
 <div class="wrap">
   <div class="content-section">
     <div class="section-label">Project Overview</div>
     <h2 class="section-h">Designed End-to-End</h2>
-    <p class="lead">VEX U is the college-level competition where teams design, build, and program two robots that work in parallel during a match. The 2021–2022 season — the year we won the Innovate Award — I developed a robot end-to-end, which taught me more about mechatronic integration than any class I've taken.</p>
-    <div class="img-ph"><span class="img-ph-label">Image · Competition Robot</span><span class="img-ph-desc">Main scoring robot showing the 4-bar linkage and intake assembly.</span></div>
+    <p class="lead">VEX U is the college-level competition where teams design, build, and program two robots that work in parallel during a match. The 2021-2022 season - the year we won the Innovate Award - I developed a robot end-to-end, which taught me more about mechatronic integration than any class I've taken.</p>
+    <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-001.jpg" alt="VEX U competition robot at World Championships"><figcaption>Competition robot at Worlds, showing mechanism packaging and service access.</figcaption></figure>
   </div>
   <div class="content-section">
     <div class="section-label">Mechanism Design</div>
     <h2 class="section-h">4-Bar Linkage + Intake Rollers + Pivoting Tray</h2>
     <p>A <strong>4-bar linkage</strong> elevates the intake-and-deposit assembly to scoring height, maintaining the tray parallel to the ground throughout travel so game pieces can't tip out. <strong>Intake rollers</strong> mounted on the linkage pull game pieces in; a <strong>pivoting tray</strong> deposits them in a stack rather than dropping them individually.</p>
-    <p>Each subsystem — linkage geometry, roller drive ratio, tray pivot — was designed iteratively to balance speed, reliability, and weight within the VEX motor budget.</p>
+    <p>Each subsystem - linkage geometry, roller drive ratio, tray pivot - was designed iteratively to balance speed, reliability, and weight within the VEX motor budget.</p>
     <div class="img-row">
-      <div class="img-ph"><span class="img-ph-label">Image · 4-Bar Linkage Detail</span><span class="img-ph-desc">CAD or photo of the 4-bar with intake assembly mounted.</span></div>
-      <div class="img-ph"><span class="img-ph-label">Image · Pivoting Tray + Stack Deposit</span><span class="img-ph-desc">Tray pivoting to place a stack of game pieces at scoring height.</span></div>
+      <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-002.jpg" alt="VEX U four-bar linkage detail"><figcaption>Four-bar linkage and intake packaging on the competition robot.</figcaption></figure>
+      <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-003.jpg" alt="VEX U scoring mechanism detail"><figcaption>Scoring mechanism detail showing how the robot packaged lift, intake, and deposit functions.</figcaption></figure>
     </div>
   </div>
   <div class="content-section">
     <div class="section-label">Drivetrain &amp; Autonomy</div>
     <h2 class="section-h">Independent Odometry + PID Position Control</h2>
-    <p>The drivetrain uses <strong>independent free-spinning tracking wheels</strong> for odometry — separated from the powered wheels so they give a clean position signal regardless of slip or contact with other robots.</p>
+    <p>The drivetrain uses <strong>independent free-spinning tracking wheels</strong> for odometry - separated from the powered wheels so they give a clean position signal regardless of slip or contact with other robots.</p>
     <p>I wrote <strong>parallel PID controllers</strong> using the odometry feedback to automatically correct the robot's position whenever a disturbance occurs during autonomous. This kept autonomous routines hitting scoring positions even through collisions and unplanned field events.</p>
     <div class="img-row">
-      <div class="img-ph"><span class="img-ph-label">Image · Drivetrain Underside</span><span class="img-ph-desc">Powered wheels and independent odometry tracking wheels.</span></div>
-      <div class="img-ph"><span class="img-ph-label">Image · Autonomous PID Run</span><span class="img-ph-desc">Video still showing position correction during an autonomous routine.</span></div>
+      <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-007.jpg" alt="VEX U drivetrain and mechanism view"><figcaption>Drivetrain and mechanism view used to package powered motion and tracking hardware.</figcaption></figure>
+      <figure class="project-media"><img src="../images/vex/vex-u/screenshot-2025-02-22-165644.png" alt="VEX robotics autonomous or controls reference"><figcaption>Controls/autonomous reference artifact for tuning repeatable robot behavior.</figcaption></figure>
     </div>
     <div class="two-col">
-      <div><div class="col-head">Why Independent Odometry?</div><p>Powered wheels slip under acceleration and robot contact. Independent tracking wheels give a clean position signal regardless of drive state — necessary for closing PID loops on actual position.</p></div>
-      <div><div class="col-head">Why PID Correction?</div><p>Open-loop autonomous fails when anything unexpected happens — and something always does. Closed-loop PID on odometry made our autonomous survive contact and still reach scoring positions.</p></div>
+      <div><div class="col-head">Why Independent Odometry?</div><p>Powered wheels slip under acceleration and robot contact. Independent tracking wheels give a clean position signal regardless of drive state - necessary for closing PID loops on actual position.</p></div>
+      <div><div class="col-head">Why PID Correction?</div><p>Open-loop autonomous fails when anything unexpected happens - and something always does. Closed-loop PID on odometry made our autonomous survive contact and still reach scoring positions.</p></div>
     </div>
   </div>
   <div class="content-section">
     <div class="section-label">Leadership</div>
     <h2 class="section-h">Managing 15+ Engineers Across Sub-Teams</h2>
-    <p>As President I ran the technical program for two robots simultaneously — organized hardware and software sub-teams, led design reviews, made final architectural calls, and bridged mechanical design with the autonomous programming team. This is where I learned to delegate, mentor, and communicate technical decisions to a non-uniform audience.</p>
-    <div class="img-ph"><span class="img-ph-label">Image · Team at Worlds</span><span class="img-ph-desc">Team photo at the World Championships — robots on display.</span></div>
+    <p>As President I ran the technical program for two robots simultaneously - organized hardware and software sub-teams, led design reviews, made final architectural calls, and bridged mechanical design with the autonomous programming team. This is where I learned to delegate, mentor, and communicate technical decisions to a non-uniform audience.</p>
+    <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-001.jpg" alt="VEX U robot pit work at World Championships"><figcaption>Worlds pit work and system access during competition support.</figcaption></figure>
   </div>
+  <div class="content-section">
+    <div class="section-label">Project Artifacts</div>
+    <h2 class="section-h">Additional Robotics Build Artifacts</h2>
+    <p>Additional images from the original portfolio asset set, included so the project page carries the same visual depth as the Google Sites version while keeping the written case study concise.</p>
+    <div class="artifact-grid">
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-high-school/screenshot-2025-02-22-165347.png" alt="Screenshot 2025 02 22 165347"><figcaption>Screenshot 2025 02 22 165347</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-high-school/screenshot-2025-02-22-165458.png" alt="Screenshot 2025 02 22 165458"><figcaption>Screenshot 2025 02 22 165458</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-high-school/screenshot-2025-02-22-171550.png" alt="Screenshot 2025 02 22 171550"><figcaption>Screenshot 2025 02 22 171550</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-high-school/vex-robot-004.jpg" alt="Vex Robot 004"><figcaption>Vex Robot 004</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-high-school/vex-robot-006.jpg" alt="Vex Robot 006"><figcaption>Vex Robot 006</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-high-school/vex-robot-012.jpg" alt="Vex Robot 012"><figcaption>Vex Robot 012</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-robot-011.jpg" alt="Vex Robot 011"><figcaption>Vex Robot 011</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/screenshot-2025-02-22-165644.png" alt="Screenshot 2025 02 22 165644"><figcaption>Screenshot 2025 02 22 165644</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-001.jpg" alt="Vex Robot 001"><figcaption>Vex Robot 001</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-002.jpg" alt="Vex Robot 002"><figcaption>Vex Robot 002</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-003.jpg" alt="Vex Robot 003"><figcaption>Vex Robot 003</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-005.jpg" alt="Vex Robot 005"><figcaption>Vex Robot 005</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-007.jpg" alt="Vex Robot 007"><figcaption>Vex Robot 007</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-008.jpg" alt="Vex Robot 008"><figcaption>Vex Robot 008</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-009.jpg" alt="Vex Robot 009"><figcaption>Vex Robot 009</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-010.jpg" alt="Vex Robot 010"><figcaption>Vex Robot 010</figcaption></figure>
+      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-013.jpg" alt="Vex Robot 013"><figcaption>Vex Robot 013</figcaption></figure>
+    </div>
+  </div>
+
   <div class="content-section">
     <div class="section-label">Engineering Tools</div>
     <div class="tools-block">
-      <div class="tools-label">Software · Methods · Manufacturing</div>
+      <div class="tools-label">Software / Methods / Manufacturing</div>
       <div class="tag-row">
         <span class="tag tag-accent">SolidWorks</span>
         <span class="tag tag-blue">PID Controls</span><span class="tag tag-blue">Odometry Localization</span>
@@ -170,6 +226,6 @@
     </div>
   </div>
 </div>
-<div class="proj-nav"><a href="automated-desk.html">← Automated Desk</a><a href="../index.html">All Projects →</a></div>
-<footer><span>© 2025 Michael Vasquez</span><div class="footer-links"><a href="mailto:mvas8037@gmail.com">Email</a><a href="https://linkedin.com/in/michael-vasquez-me" target="_blank">LinkedIn</a></div></footer>
+<div class="proj-nav"><a href="automated-desk.html"><- Automated Desk</a><a href="../index.html">All Projects -></a></div>
+<footer><span>(c) 2025 Michael Vasquez</span><div class="footer-links"><a href="mailto:mvas8037@gmail.com">Email</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank">LinkedIn</a></div></footer>
 </body></html>
