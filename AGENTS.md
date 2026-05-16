@@ -4,7 +4,7 @@ This repository is shared between the user, Codex, and Claude Desktop. Treat thi
 
 ## Source of Truth
 
-- The shared workspace is `G:\My Drive\AI\GitHub\Portfolio\Professional Portfolio`.
+- The shared workspace is `G:\My Drive\Projects\AI\GitHub\Portfolio\HTML Files`.
 - Files in this repository are the source of truth. Chat history in any one app is not shared unless it is written here.
 - Before making edits, inspect the current files you plan to touch.
 - Do not overwrite changes you did not make. If a file changed unexpectedly, pause and reconcile the current file contents.
