@@ -72,6 +72,15 @@
     .img-ph-desc { font-family: var(--sans); font-size: 0.75rem; color: var(--subtle); text-align: center; max-width: 360px; position: relative; z-index: 1; font-style: italic; }
     .img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .img-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .story-block { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr); gap: 2rem; align-items: center; padding: 2rem 0; border-top: 1px solid var(--border); }
+    .story-block:first-of-type { border-top: none; padding-top: 0; }
+    .story-block.reverse { grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1.05fr); }
+    .story-block.reverse .story-copy { order: 2; }
+    .story-block.reverse .story-media { order: 1; }
+    .story-kicker { font-family: var(--mono); font-size: 0.6rem; color: var(--blue); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.7rem; }
+    .story-title { font-family: var(--syne); font-size: 1.18rem; font-weight: 700; color: var(--heading); line-height: 1.2; margin-bottom: 0.8rem; }
+    .story-media { display: grid; gap: 1rem; }
+    .story-media .project-media img { height: auto; max-height: 520px; }
     .project-media { margin: 1rem 0; border: 1px solid var(--border); background: #0c0c0c; overflow: hidden; }
     .project-media img { width: 100%; height: clamp(240px, 45vw, 560px); display: block; object-fit: contain; background: #080808; filter: saturate(0.96) contrast(1.03); transition: filter 0.3s ease; }
     .project-media:hover img { filter: saturate(1.04) contrast(1.06); }
@@ -115,7 +124,8 @@
       .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
       .proj-stats { grid-template-columns: 1fr 1fr; }
       .proj-stat { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
-      .two-col, .sp-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .two-col, .sp-grid, .story-block, .story-block.reverse { grid-template-columns: 1fr; gap: 1.5rem; }
+      .story-block.reverse .story-copy, .story-block.reverse .story-media { order: initial; }
       .img-row, .img-row-3, .artifact-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
     }
@@ -189,27 +199,52 @@
     <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-001.jpg" alt="VEX U robot pit work at World Championships"><figcaption>Worlds pit work and system access during competition support.</figcaption></figure>
   </div>
   <div class="content-section">
-    <div class="section-label">Project Artifacts</div>
-    <h2 class="section-h">Additional Robotics Build Artifacts</h2>
-    <p>Additional images from the original portfolio asset set, included so the project page carries the same visual depth as the Google Sites version while keeping the written case study concise.</p>
-    <div class="artifact-grid">
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-high-school/screenshot-2025-02-22-165347.png" alt="Screenshot 2025 02 22 165347"><figcaption>Screenshot 2025 02 22 165347</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-high-school/screenshot-2025-02-22-165458.png" alt="Screenshot 2025 02 22 165458"><figcaption>Screenshot 2025 02 22 165458</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-high-school/screenshot-2025-02-22-171550.png" alt="Screenshot 2025 02 22 171550"><figcaption>Screenshot 2025 02 22 171550</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-high-school/vex-robot-004.jpg" alt="Vex Robot 004"><figcaption>Vex Robot 004</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-high-school/vex-robot-006.jpg" alt="Vex Robot 006"><figcaption>Vex Robot 006</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-high-school/vex-robot-012.jpg" alt="Vex Robot 012"><figcaption>Vex Robot 012</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-robot-011.jpg" alt="Vex Robot 011"><figcaption>Vex Robot 011</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/screenshot-2025-02-22-165644.png" alt="Screenshot 2025 02 22 165644"><figcaption>Screenshot 2025 02 22 165644</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-001.jpg" alt="Vex Robot 001"><figcaption>Vex Robot 001</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-002.jpg" alt="Vex Robot 002"><figcaption>Vex Robot 002</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-003.jpg" alt="Vex Robot 003"><figcaption>Vex Robot 003</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-005.jpg" alt="Vex Robot 005"><figcaption>Vex Robot 005</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-007.jpg" alt="Vex Robot 007"><figcaption>Vex Robot 007</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-008.jpg" alt="Vex Robot 008"><figcaption>Vex Robot 008</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-009.jpg" alt="Vex Robot 009"><figcaption>Vex Robot 009</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-010.jpg" alt="Vex Robot 010"><figcaption>Vex Robot 010</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/vex/vex-u/vex-robot-013.jpg" alt="Vex Robot 013"><figcaption>Vex Robot 013</figcaption></figure>
+    <div class="section-label">Original Flow</div>
+    <h2 class="section-h">Competition Robotics Across Three Seasons</h2>
+    <div class="story-block">
+      <div class="story-copy">
+        <div class="story-kicker">Competition Overview</div>
+        <div class="story-title">VEX rewards fast mechanical iteration under real match pressure.</div>
+        <p>VEX Robotics Competition is built around yearly game objectives where teams design, build, and program robots to score against other teams. VEX U is the university division, with fewer design restrictions and more room for custom fabricated parts and advanced programming.</p>
+        <p>I competed from sophomore year of high school through junior year at RIT. Most seasons, I led the mechanical design work and helped bridge hardware decisions with the programming team's autonomous strategy.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-005.jpg" alt="VEX U robot competition setup"><figcaption>Competition robot packaging from the VEX U season.</figcaption></figure>
+      </div>
+    </div>
+    <div class="story-block reverse">
+      <div class="story-copy">
+        <div class="story-kicker">2021-2022 Season</div>
+        <div class="story-title">VEX U robot with lift, intake, deposit tray, and closed-loop positioning.</div>
+        <p>The university robot combined a four-bar lift, intake rollers, a pivoting deposit tray, and independent odometry wheels. The design earned the Innovate Award at the VEX World Championship and ranked third in qualifications.</p>
+        <p>This season became the strongest example of full-system design: mechanism packaging, drivetrain constraints, autonomous positioning, and service access all had to work together under match conditions.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-008.jpg" alt="VEX U robot side mechanism view"><figcaption>2021-2022 robot mechanism package.</figcaption></figure>
+        <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-009.jpg" alt="VEX U robot drivetrain and linkage view"><figcaption>Drivetrain, linkage, and intake integration.</figcaption></figure>
+      </div>
+    </div>
+    <div class="story-block">
+      <div class="story-copy">
+        <div class="story-kicker">2020-2021 Season</div>
+        <div class="story-title">A transitional season focused on mechanism packaging and reliability.</div>
+        <p>The 2020-2021 robot work emphasized compact mechanism layout and fast iteration. These builds are where I refined the habits that carried into VEX U: simplify the load path, make service access obvious, and test mechanisms before the full robot is complete.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/vex/vex-high-school/vex-robot-012.jpg" alt="2020-2021 VEX robot mechanism"><figcaption>Mechanism and packaging work from the 2020-2021 season.</figcaption></figure>
+        <figure class="project-media"><img src="../images/vex/vex-robot-011.jpg" alt="VEX robot iteration from high school competition"><figcaption>Design iteration used to validate scoring geometry.</figcaption></figure>
+      </div>
+    </div>
+    <div class="story-block reverse">
+      <div class="story-copy">
+        <div class="story-kicker">2019-2020 Season</div>
+        <div class="story-title">Early competition builds built the foundation for later leadership.</div>
+        <p>The high-school seasons were the foundation: drivetrain layout, structure, lift geometry, driver serviceability, and the discipline of designing around a changing game strategy. They also gave me early experience leading mechanical decisions with a team depending on the outcome.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/vex/vex-high-school/vex-robot-004.jpg" alt="2019-2020 VEX robot build"><figcaption>Early competition robot build from the high-school seasons.</figcaption></figure>
+        <figure class="project-media"><img src="../images/vex/vex-high-school/vex-robot-006.jpg" alt="High-school VEX robot mechanism detail"><figcaption>Mechanism detail from an earlier VEX build.</figcaption></figure>
+      </div>
     </div>
   </div>
 

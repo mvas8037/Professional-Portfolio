@@ -72,6 +72,15 @@
     .img-ph-desc { font-family: var(--sans); font-size: 0.75rem; color: var(--subtle); text-align: center; max-width: 360px; position: relative; z-index: 1; font-style: italic; }
     .img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .img-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .story-block { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr); gap: 2rem; align-items: center; padding: 2rem 0; border-top: 1px solid var(--border); }
+    .story-block:first-of-type { border-top: none; padding-top: 0; }
+    .story-block.reverse { grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1.05fr); }
+    .story-block.reverse .story-copy { order: 2; }
+    .story-block.reverse .story-media { order: 1; }
+    .story-kicker { font-family: var(--mono); font-size: 0.6rem; color: var(--blue); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.7rem; }
+    .story-title { font-family: var(--syne); font-size: 1.18rem; font-weight: 700; color: var(--heading); line-height: 1.2; margin-bottom: 0.8rem; }
+    .story-media { display: grid; gap: 1rem; }
+    .story-media .project-media img { height: auto; max-height: 520px; }
     .project-media { margin: 1rem 0; border: 1px solid var(--border); background: #0c0c0c; overflow: hidden; }
     .project-media img { width: 100%; height: clamp(240px, 45vw, 560px); display: block; object-fit: contain; background: #080808; filter: saturate(0.96) contrast(1.03); transition: filter 0.3s ease; }
     .project-media:hover img { filter: saturate(1.04) contrast(1.06); }
@@ -115,7 +124,8 @@
       .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
       .proj-stats { grid-template-columns: 1fr 1fr; }
       .proj-stat { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
-      .two-col, .sp-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .two-col, .sp-grid, .story-block, .story-block.reverse { grid-template-columns: 1fr; gap: 1.5rem; }
+      .story-block.reverse .story-copy, .story-block.reverse .story-media { order: initial; }
       .img-row, .img-row-3, .artifact-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
     }
@@ -201,33 +211,54 @@
     </div>
   </div>
   <div class="content-section">
-    <div class="section-label">Project Artifacts</div>
-    <h2 class="section-h">Additional FPV Drone Design Artifacts</h2>
-    <p>Additional images from the original portfolio asset set, included so the project page carries the same visual depth as the Google Sites version while keeping the written case study concise.</p>
-    <div class="artifact-grid">
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-build-001.jpg" alt="Drone Build 001"><figcaption>Drone Build 001</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-build-002.jpg" alt="Drone Build 002"><figcaption>Drone Build 002</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-build-003.jpg" alt="Drone Build 003"><figcaption>Drone Build 003</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-build-004.jpg" alt="Drone Build 004"><figcaption>Drone Build 004</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-build-005.jpg" alt="Drone Build 005"><figcaption>Drone Build 005</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-build-006.jpg" alt="Drone Build 006"><figcaption>Drone Build 006</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-build-007.jpg" alt="Drone Build 007"><figcaption>Drone Build 007</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-build-008.jpg" alt="Drone Build 008"><figcaption>Drone Build 008</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-build-009.jpg" alt="Drone Build 009"><figcaption>Drone Build 009</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-build-010.jpg" alt="Drone Build 010"><figcaption>Drone Build 010</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-calc-001.jpg" alt="Drone Calc 001"><figcaption>Drone Calc 001</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-calc-002.jpg" alt="Drone Calc 002"><figcaption>Drone Calc 002</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-calc-003.jpg" alt="Drone Calc 003"><figcaption>Drone Calc 003</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-calc-004.jpg" alt="Drone Calc 004"><figcaption>Drone Calc 004</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-calc-005.jpg" alt="Drone Calc 005"><figcaption>Drone Calc 005</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-calc-006.jpg" alt="Drone Calc 006"><figcaption>Drone Calc 006</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-calc-007.png" alt="Drone Calc 007"><figcaption>Drone Calc 007</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-calc-008.png" alt="Drone Calc 008"><figcaption>Drone Calc 008</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-matlab-sim-001.jpg" alt="Drone Matlab Sim 001"><figcaption>Drone Matlab Sim 001</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-motor-characteristic-001.jpg" alt="Drone Motor Characteristic 001"><figcaption>Drone Motor Characteristic 001</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-range-estimator-001.jpg" alt="Drone Range Estimator 001"><figcaption>Drone Range Estimator 001</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-velocity-accel-sim-001.jpg" alt="Drone Velocity Accel Sim 001"><figcaption>Drone Velocity Accel Sim 001</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/drone/drone-xcopter-calc-001.png" alt="Drone Xcopter Calc 001"><figcaption>Drone Xcopter Calc 001</figcaption></figure>
+    <div class="section-label">Frame Geometry</div>
+    <h2 class="section-h">Compact 5-Inch Layout With Predictable Failure</h2>
+    <div class="story-block">
+      <div class="story-copy">
+        <div class="story-kicker">Packaging</div>
+        <div class="story-title">The frame centers mass and keeps the arms mutually braced.</div>
+        <p>The frame is sized around 5-inch propellers, a useful middle ground between agility, thrust, and battery-carrying efficiency. I kept the frame as compact as possible so the center of gravity stays low and near the vehicle center.</p>
+        <p>The arms brace against each other in an X pattern to increase rigidity while pockets remove material where it does not contribute much stiffness.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/drone/drone-build-005.jpg" alt="FPV drone X-frame geometry"><figcaption>X-frame geometry with compact body packaging and braced arms.</figcaption></figure>
+      </div>
+    </div>
+    <div class="story-block reverse">
+      <div class="story-copy">
+        <div class="story-kicker">FEA Iteration</div>
+        <div class="story-title">Initial simulations showed where the arm wanted to bend and fracture.</div>
+        <p>The first arm geometry was loaded in side and bending cases based on the flight simulation outputs. These studies exposed high-stress regions around the arm transition and motor mount area.</p>
+        <p>Those results drove the next geometry pass, with material redistributed to raise stiffness while preserving a preferred failure location outside the central electronics bay.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/drone/drone-calc-001.jpg" alt="Initial FPV arm side-load FEA setup"><figcaption>Initial arm side-load setup.</figcaption></figure>
+        <figure class="project-media"><img src="../images/drone/drone-calc-002.jpg" alt="Initial FPV arm stress result"><figcaption>Initial side-load stress results.</figcaption></figure>
+        <figure class="project-media"><img src="../images/drone/drone-calc-003.jpg" alt="Initial FPV arm deformation result"><figcaption>Exaggerated deformation from the first arm geometry.</figcaption></figure>
+      </div>
+    </div>
+    <div class="story-block">
+      <div class="story-copy">
+        <div class="story-kicker">Final Arm</div>
+        <div class="story-title">The final arm geometry targets a factor of safety near 2.</div>
+        <p>After several FEA passes, the final arm geometry reached the target strength while keeping the likely fracture point outside the central frame. The goal is not indestructibility; it is an inexpensive, replaceable arm protecting expensive electronics.</p>
+        <p>I also checked maximum acceleration loading. Deflection was negligible under that case, which supports stable flight and predictable control response.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/drone/drone-calc-004.jpg" alt="Final FPV arm FEA setup"><figcaption>Final arm setup after geometry iteration.</figcaption></figure>
+        <figure class="project-media"><img src="../images/drone/drone-calc-005.jpg" alt="Final FPV arm stress result"><figcaption>Final arm stress result under impact-derived load.</figcaption></figure>
+        <figure class="project-media"><img src="../images/drone/drone-calc-006.jpg" alt="Final FPV arm deflection result"><figcaption>Final deflection result with exaggerated displacement.</figcaption></figure>
+      </div>
+    </div>
+    <div class="story-block reverse">
+      <div class="story-copy">
+        <div class="story-kicker">Final Assembly</div>
+        <div class="story-title">Mocked electronics confirmed the frame envelope.</div>
+        <p>The final assembly model includes mocked electronics so the stack height, battery placement, prop clearance, and service access can be checked before fabrication.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/drone/drone-build-010.jpg" alt="FPV drone assembly with mocked electronics"><figcaption>Final drone assembly with mocked-up electronics and frame packaging.</figcaption></figure>
+      </div>
     </div>
   </div>
 

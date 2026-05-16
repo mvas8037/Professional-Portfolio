@@ -74,6 +74,15 @@
     .img-ph-desc { font-family: var(--sans); font-size: 0.75rem; color: var(--subtle); text-align: center; max-width: 360px; position: relative; z-index: 1; font-style: italic; }
     .img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .img-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .story-block { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr); gap: 2rem; align-items: center; padding: 2rem 0; border-top: 1px solid var(--border); }
+    .story-block:first-of-type { border-top: none; padding-top: 0; }
+    .story-block.reverse { grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1.05fr); }
+    .story-block.reverse .story-copy { order: 2; }
+    .story-block.reverse .story-media { order: 1; }
+    .story-kicker { font-family: var(--mono); font-size: 0.6rem; color: var(--blue); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.7rem; }
+    .story-title { font-family: var(--syne); font-size: 1.18rem; font-weight: 700; color: var(--heading); line-height: 1.2; margin-bottom: 0.8rem; }
+    .story-media { display: grid; gap: 1rem; }
+    .story-media .project-media img { height: auto; max-height: 520px; }
     .project-media { margin: 1rem 0; border: 1px solid var(--border); background: #0c0c0c; overflow: hidden; }
     .project-media img { width: 100%; height: clamp(240px, 45vw, 560px); display: block; object-fit: contain; background: #080808; filter: saturate(0.96) contrast(1.03); transition: filter 0.3s ease; }
     .project-media:hover img { filter: saturate(1.04) contrast(1.06); }
@@ -117,7 +126,8 @@
       .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
       .proj-stats { grid-template-columns: 1fr 1fr; }
       .proj-stat { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
-      .two-col, .sp-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .two-col, .sp-grid, .story-block, .story-block.reverse { grid-template-columns: 1fr; gap: 1.5rem; }
+      .story-block.reverse .story-copy, .story-block.reverse .story-media { order: initial; }
       .img-row, .img-row-3, .artifact-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
     }
@@ -162,22 +172,68 @@
   <div class="content-section">
     <div class="section-label">Project Overview</div>
     <h2 class="section-h">Engineering Bone Material Onto a 3D Printing Platform</h2>
-    <p class="lead">Tetranite is a regenerative bone adhesive that, when extruded as a binder onto bone-like powder, can build patient-specific structural scaffolds. Our team's job: take the OASIS open-source binder jet platform and adapt it to handle RevBio's material chemistry and process requirements.</p>
-    <p>I owned the Z-axis motion system, base plate, and powder containment subsystem.</p>
-    <div class="img-row">
-      <figure class="project-media"><img src="../images/home/home-005.jpg" alt="Michael Vasquez standing next to the binder-jet bone printer"><figcaption>Final capstone platform presented with the completed printer assembly.</figcaption></figure>
-      <figure class="project-media"><img src="../images/home/home-002.jpg" alt="CAD model of the binder-jet bone printer"><figcaption>Full CAD model used to coordinate frame, motion, powder-bed, and enclosure interfaces.</figcaption></figure>
+    <div class="story-block">
+      <div class="story-copy">
+        <div class="story-kicker">Original Challenge</div>
+        <div class="story-title">Scale an open-source binder jet printer for RevBio's bone-scaffold material.</div>
+        <p class="lead">For senior design, our eight-person team adapted the open-source OASIS binder-jet platform to print bone scaffolds using RevBio's Tetranite material. Tetranite is a bioactive injectable adhesive that hardens in place, making it promising for minimally invasive bone repair and implant support.</p>
+        <p>The starting printer was too small for the client's intended scaffold sizes, so the platform had to be scaled up and redesigned around the material handling, powder containment, and tolerance realities of mostly 3D-printed hardware.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/home/home-005.jpg" alt="Michael Vasquez standing next to the completed binder-jet bone printer"><figcaption>Completed capstone printer presented at the final review.</figcaption></figure>
+      </div>
+    </div>
+    <div class="story-block reverse">
+      <div class="story-copy">
+        <div class="story-kicker">Platform Architecture</div>
+        <div class="story-title">A larger printer with redesigned frame, motion, powder-bed, and enclosure interfaces.</div>
+        <p>The CAD model became the coordination tool for every subsystem interface: scaled frame members, printhead travel, recoater clearance, the enlarged powder bed, and service access around the Z-axis. My main ownership was the Z-axis sub-assembly, base plate, piston head, and sleeve system.</p>
+        <p>Compared with the original OASIS concept, the redesigned printer increased the usable build area while keeping fabrication costs down through FDM parts and off-the-shelf motion hardware.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/home/home-002.jpg" alt="Full CAD assembly of the binder-jet bone printer"><figcaption>Full CAD assembly used to coordinate the scaled printer.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-007.jpg" alt="Orange redesigned printer next to the blue original printer design"><figcaption>Scaled redesign shown against the original OASIS-sized layout.</figcaption></figure>
+      </div>
+    </div>
+    <div class="story-block">
+      <div class="story-copy">
+        <div class="story-kicker">Process</div>
+        <div class="story-title">Binder jetting builds the scaffold layer by layer.</div>
+        <p>Binder jetting selectively deposits a liquid activator onto a thin layer of Tetranite powder. The powder particles bind wherever the activator lands, then a new powder layer is spread and the process repeats until the scaffold is complete.</p>
+        <p>Because both slicer settings and material properties affect the final structure, the printer needed smooth Z motion, repeatable powder-layer geometry, and enough build volume to support the client's scaffold experiments.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/bone/bone-animation-001.gif" alt="Animation of the binder jetting layer process"><figcaption>Layer-by-layer binder jetting process used for scaffold fabrication.</figcaption></figure>
+      </div>
     </div>
   </div>
 
   <div class="content-section">
     <div class="section-label">Subsystem 01</div>
-    <h2 class="section-h">Z-Axis Redesign &amp; 2-DoF Compliant Coupling</h2>
-    <p>The original Z-axis used precision-machined linear bearing mounts to keep the print head aligned through travel. This added cost, tight tolerance stack-ups, and a single failure point.</p>
-    <p><strong>My approach</strong>: instead of demanding rigid perfection, design a mechanism that flexes just enough to absorb misalignment in the directions that don't matter - a 2-DoF compliant coupling with no bearings, no backlash, fewer parts, and zero cost of precision mounting.</p>
-    <div class="img-row">
-      <figure class="project-media"><img src="../images/bone/bone-assembly-007.jpg" alt="Bone printer CAD assembly with Z-axis and powder bed"><figcaption>CAD assembly view used to reason through the Z-axis and powder-bed layout.</figcaption></figure>
-      <figure class="project-media"><img src="../images/bone/bone-assembly-015.jpg" alt="Bone printer compliant coupling subassembly"><figcaption>Compliant coupling subassembly replacing the precision-machined bearing mount approach.</figcaption></figure>
+    <h2 class="section-h">Z-Axis Redesign</h2>
+    <p class="lead">The original print bed and powder reservoir were too small for RevBio's requirements, so the Z-axis had to scale by roughly 75%. That exposed the core design problem: tolerance stack-up in FDM parts gets worse as the printer gets larger.</p>
+    <div class="story-block">
+      <div class="story-copy">
+        <div class="story-kicker">Original Piston Sleeve</div>
+        <div class="story-title">The first sleeve constrained the piston instead of guiding it.</div>
+        <p>The original sleeve did not leave enough room for manufacturing and assembly variation. During testing, the piston head bound against the sleeve and resisted linear travel, creating inconsistent Z-axis motion.</p>
+        <p>Rather than forcing every printed part to be perfect, the redesign needed to tolerate small alignment errors and still move cleanly.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/bone/bone-assembly-022.jpg" alt="Original piston sleeve and Z-axis reservoir assembly"><figcaption>Original piston sleeve area where tolerance stack-up caused binding.</figcaption></figure>
+      </div>
+    </div>
+    <div class="story-block reverse">
+      <div class="story-copy">
+        <div class="story-kicker">Redesigned Piston Sleeve</div>
+        <div class="story-title">A 2-DoF compliant coupling lets the piston self-align.</div>
+        <p>I redesigned the sleeve around a compliant coupling that can pivot slightly about two axes. That small motion accommodates imperfections from printed parts and assembly without adding precision-machined bearing mounts.</p>
+        <p>The result was lower cost, fewer sensitive interfaces, and much smoother piston travel through the Z-axis stroke.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/bone/bone-assembly-020.jpg" alt="Redesigned piston sleeve with compliant interface"><figcaption>Redesigned piston sleeve and compliant interface for smoother motion.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-017.jpg" alt="Compliant coupling section view with linear bearings"><figcaption>Section view of the coupling and bearing package.</figcaption></figure>
+      </div>
     </div>
     <div class="two-col">
       <div><div class="col-head">Why Compliant?</div><p>Flexure absorbs angular misalignment in two rotational DoF - exactly the failure mode precision mounts existed to prevent. No bearings to wear, zero backlash.</p></div>
@@ -188,59 +244,85 @@
   <div class="content-section">
     <div class="section-label">Subsystem 02</div>
     <h2 class="section-h">Piston Outer Sleeve Redesign</h2>
-    <p>The original piston sleeve was designed without accounting for tolerance stack-up - it bound against the piston head during testing and hindered Z-axis linear motion.</p>
-    <p>I redesigned it as a <strong>split-half assembly</strong>: two FDM-printable halves that clamp around the piston with adjustable compression, converting a manufacturing constraint into a tunable parameter. Powder seal compression can now be dialed in post-assembly without disassembling the printer.</p>
-    <div class="img-row">
-      <figure class="project-media"><img src="../images/bone/bone-assembly-016.jpg" alt="Bone printer piston sleeve prototype"><figcaption>Piston sleeve prototype for improving powder containment and reducing binding.</figcaption></figure>
-      <figure class="project-media"><img src="../images/bone/bone-assembly-020.jpg" alt="Bone printer split sleeve redesign"><figcaption>Redesigned sleeve concept with more controlled sealing and service access.</figcaption></figure>
+    <div class="story-block">
+      <div class="story-copy">
+        <div class="story-kicker">Off-The-Shelf Constraint</div>
+        <div class="story-title">The UHMW tube looked perfect on paper, but arrived out of round.</div>
+        <p>The outer sleeve was originally based on an off-the-shelf UHMW tube because the material offered strong chemical resistance and the listed dimensions matched the design. In practice, the tube did not meet the advertised dimensional accuracy and was slightly elliptical.</p>
+        <p>That small shape error was enough to create friction, fitment issues, and another tolerance stack-up problem in the piston assembly.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/bone/bone-assembly-012.jpg" alt="Outer sleeve tube issue and piston fitment"><figcaption>Outer sleeve fitment issue caused by dimensional variation in the UHMW tube.</figcaption></figure>
+      </div>
+    </div>
+    <div class="story-block reverse">
+      <div class="story-copy">
+        <div class="story-kicker">Iteration 01</div>
+        <div class="story-title">Expandable wedges tried to force the tube back into shape.</div>
+        <p>My first solution was an expandable wedge inserted into the tube to stretch the inner diameter toward the target geometry. Because the polymer rebounds after deformation, the wedge could be oversized to compensate for elastic recovery.</p>
+        <p>The second version wrapped more of the circumference, but the approach still could not hold the precision needed for reliable piston motion.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/bone/bone-assembly-014.jpg" alt="Expandable wedge concept for the piston sleeve"><figcaption>First expandable wedge concept for correcting the sleeve shape.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-008.jpg" alt="Second expandable wedge iteration around the sleeve"><figcaption>Second iteration increased circumferential contact but still lacked precision.</figcaption></figure>
+      </div>
+    </div>
+    <div class="story-block">
+      <div class="story-copy">
+        <div class="story-kicker">Final Direction</div>
+        <div class="story-title">The sleeve became a split, shim-adjustable printed assembly.</div>
+        <p>After the wedge concepts failed to meet precision requirements, I redesigned the sleeve as a fully 3D-printed split assembly. Shims can be inserted between the two halves to tune the final dimension after printing.</p>
+        <p>That adjustability matters in prototyping: it saves time, avoids repeatedly reprinting large parts, and lets the assembly be tuned around real hardware instead of ideal CAD dimensions.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/bone/bone-assembly-015.jpg" alt="Split outer sleeve redesign for shim adjustability"><figcaption>Final split sleeve concept with shim-adjustable geometry.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-006.jpg" alt="Outer sleeve installed into the bone printer piston assembly"><figcaption>Installed sleeve and piston interface after redesign.</figcaption></figure>
+      </div>
     </div>
   </div>
 
   <div class="content-section">
     <div class="section-label">Subsystem 03</div>
     <h2 class="section-h">Piston Head &amp; Drive Sizing</h2>
-    <p>The original piston head's build volume and powder reservoir were too small for RevBio's print sizes. I ran length-to-diameter ratio calculations for piston stability under load, redesigned the piston head to expand capacity, and upgraded the drive system to a <strong>stronger stepper motor with a finer-pitch lead screw</strong> - giving greater torque multiplication and improved Z-resolution.</p>
-    <div class="img-row-3">
-      <figure class="project-media"><img src="../images/bone/bone-assembly-017.jpg" alt="Bone printer leadscrew and motion hardware"><figcaption>Motion hardware and leadscrew packaging for the piston system.</figcaption></figure>
-      <figure class="project-media"><img src="../images/bone/bone-assembly-022.jpg" alt="Bone printer piston bed assembly"><figcaption>Piston bed assembly detail showing the containment and motion-interface hardware.</figcaption></figure>
-      <figure class="project-media"><img src="../images/bone/bone-assembly-001.jpg" alt="Final bone printer assembly"><figcaption>Final assembled printer platform with the powder-bed subsystem installed.</figcaption></figure>
+    <div class="story-block">
+      <div class="story-copy">
+        <div class="story-kicker">Original Piston Head</div>
+        <div class="story-title">The build volume and powder reservoir had to grow with the printer.</div>
+        <p>The original piston head raised and lowered the build volume and powder reservoir, but it was too small for the scaled printer. I sized a new design using length-to-diameter ratio checks to keep the piston stable under load.</p>
+        <p>The redesign preserved smooth vertical travel while supporting the larger powder volume needed for RevBio's scaffold experiments.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/bone/bone-assembly-004.jpg" alt="Original piston head design for the bone printer"><figcaption>Original piston head used as the baseline for sizing.</figcaption></figure>
+      </div>
+    </div>
+    <div class="story-block reverse">
+      <div class="story-copy">
+        <div class="story-kicker">Redesigned Drive</div>
+        <div class="story-title">A stronger stepper and finer lead screw improved torque and Z resolution.</div>
+        <p>The new piston head uses a stronger stepper motor and a finer-pitch lead screw for greater torque multiplication and finer Z-axis resolution. A flexible coupling aligns the lead screw with the lead nut, reducing sensitivity to small angular offsets.</p>
+        <p>The section views also show how the motor is packaged inside the piston head to keep the mechanism compact and serviceable.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/bone/bone-assembly-010.jpg" alt="Redesigned piston head with embedded stepper motor"><figcaption>Redesigned piston head with embedded stepper motor.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-009.jpg" alt="Section view of lead screw and flexible coupling"><figcaption>Lead screw, lead nut, and flexible coupling alignment detail.</figcaption></figure>
+      </div>
     </div>
   </div>
+
   <div class="content-section">
-    <div class="section-label">Project Artifacts</div>
-    <h2 class="section-h">Additional Bone Printer Build Artifacts</h2>
-    <p>Additional images from the original portfolio asset set, included so the project page carries the same visual depth as the Google Sites version while keeping the written case study concise.</p>
-    <div class="artifact-grid">
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-animation-001.gif" alt="Bone Animation 001"><figcaption>Bone Animation 001</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-001.jpg" alt="Bone Assembly 001"><figcaption>Bone Assembly 001</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-002.jpg" alt="Bone Assembly 002"><figcaption>Bone Assembly 002</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-003.jpg" alt="Bone Assembly 003"><figcaption>Bone Assembly 003</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-004.jpg" alt="Bone Assembly 004"><figcaption>Bone Assembly 004</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-005.jpg" alt="Bone Assembly 005"><figcaption>Bone Assembly 005</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-006.jpg" alt="Bone Assembly 006"><figcaption>Bone Assembly 006</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-007.jpg" alt="Bone Assembly 007"><figcaption>Bone Assembly 007</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-008.jpg" alt="Bone Assembly 008"><figcaption>Bone Assembly 008</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-009.jpg" alt="Bone Assembly 009"><figcaption>Bone Assembly 009</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-010.jpg" alt="Bone Assembly 010"><figcaption>Bone Assembly 010</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-011.jpg" alt="Bone Assembly 011"><figcaption>Bone Assembly 011</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-012.jpg" alt="Bone Assembly 012"><figcaption>Bone Assembly 012</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-013.jpg" alt="Bone Assembly 013"><figcaption>Bone Assembly 013</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-014.jpg" alt="Bone Assembly 014"><figcaption>Bone Assembly 014</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-015.jpg" alt="Bone Assembly 015"><figcaption>Bone Assembly 015</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-016.jpg" alt="Bone Assembly 016"><figcaption>Bone Assembly 016</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-017.jpg" alt="Bone Assembly 017"><figcaption>Bone Assembly 017</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-018.jpg" alt="Bone Assembly 018"><figcaption>Bone Assembly 018</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-019.jpg" alt="Bone Assembly 019"><figcaption>Bone Assembly 019</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-020.jpg" alt="Bone Assembly 020"><figcaption>Bone Assembly 020</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-021.jpg" alt="Bone Assembly 021"><figcaption>Bone Assembly 021</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-022.jpg" alt="Bone Assembly 022"><figcaption>Bone Assembly 022</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-assembly-023.jpg" alt="Bone Assembly 023"><figcaption>Bone Assembly 023</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/bone-wire-label-001.jpg" alt="Bone Wire Label 001"><figcaption>Bone Wire Label 001</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/screenshot-2025-02-22-164123.png" alt="Screenshot 2025 02 22 164123"><figcaption>Screenshot 2025 02 22 164123</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/screenshot-2025-02-22-164622.png" alt="Screenshot 2025 02 22 164622"><figcaption>Screenshot 2025 02 22 164622</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/screenshot-2025-02-22-165305.png" alt="Screenshot 2025 02 22 165305"><figcaption>Screenshot 2025 02 22 165305</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/screenshot-2025-02-22-171255.png" alt="Screenshot 2025 02 22 171255"><figcaption>Screenshot 2025 02 22 171255</figcaption></figure>
-      <figure class="project-media artifact-card"><img src="../images/bone/screenshot-2025-02-22-171340.png" alt="Screenshot 2025 02 22 171340"><figcaption>Screenshot 2025 02 22 171340</figcaption></figure>
+    <div class="section-label">Subsystem 04</div>
+    <h2 class="section-h">Base Plate &amp; Serviceability</h2>
+    <div class="story-block">
+      <div class="story-copy">
+        <div class="story-kicker">Maintenance Access</div>
+        <div class="story-title">The Z-axis mounting structure became easier to remove, align, and repeat.</div>
+        <p>The original Z-axis mounting configuration was redesigned for robustness and accessibility. I created an H-frame that supports the underside of the pistons while allowing the assembly to be removed more easily for maintenance.</p>
+        <p>The base plate was pocketed on the underside to improve positional repeatability, so service work could happen without losing the alignment the printer depends on.</p>
+      </div>
+      <div class="story-media">
+        <figure class="project-media"><img src="../images/bone/bone-assembly-016.jpg" alt="H-frame base plate support under the piston assembly"><figcaption>H-frame support and base plate packaging for the Z-axis assembly.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-023.jpg" alt="Base plate pocketing and underside locating features"><figcaption>Pocketed underside features improve service repeatability.</figcaption></figure>
+      </div>
     </div>
   </div>
 

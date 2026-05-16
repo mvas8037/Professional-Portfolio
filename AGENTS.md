@@ -67,13 +67,20 @@ Recent changes:
 - Updated homepage tagline to "designs, develops, delivers.", replaced the Targeting status cell with Location: Danbury, Connecticut and Role: Mechanical Engineer, and fixed the LinkedIn URL to the resume-listed profile.
 - Cleaned mojibake/special-character artifacts across homepage, About, and project pages.
 - Updated Bone 3D Printer page so the first project images show Michael standing next to the printer and the full CAD model, with CAD/process images moved prominently near the top.
+- Reworked project-page content flow to better match the original Google Sites pages:
+  - Bone 3D Printer now follows the archived source sequence: project overview, binder jetting process, Z-axis redesign, original/redesigned piston sleeve, outer sleeve iterations, piston head, and base plate/serviceability. The old dumped artifact gallery was removed.
+  - FPV Drone now keeps the original flow around frame geometry, flight simulation, arm optimization, FEA iterations, acceleration check, and final assembly. The old generic artifact gallery was replaced with narrative image blocks.
+  - Automated Desk now follows the archived source sequence: initial manual crank, torque/motor decision, first gearbox iteration, final helical gearbox, controller faceplate, desk interface, and motion test. The old generic artifact gallery was replaced with narrative image blocks.
+  - Robotics now follows the archived source sequence: competition overview plus 2021-2022, 2020-2021, and 2019-2020 season sections. The old generic artifact gallery was replaced with narrative image blocks.
+  - ThermoFisher had no matching archived source page in the local export; its duplicate bottom artifact gallery was removed so remaining images stay attached to individual co-op stories.
 
 Open questions:
 
 - Git CLI is not available on PATH in this shell, so commit/status verification will need Git availability resolved before final commit.
 - 13 specific image placeholders remain on `projects/thermofisher.html`; broader ThermoFisher artifacts are represented in the new gallery, but those exact plot/defect/test-fixture visuals are not clearly identifiable in the current asset filenames.
-- Browser visual QA was attempted through the Browser plugin and bundled Playwright, but both were blocked by the local Node/browser runtime failing to initialize in this sandboxed session. Static local reference checks passed.
+- Browser visual QA through the Browser plugin and bundled Playwright remained blocked by the local Node/browser runtime failing to initialize.
+- Chrome headless visual QA succeeded for desktop screenshots of updated Bone, FPV Drone, Automated Desk, and Robotics project pages. Mobile screenshot attempt was blocked by the app usage-limit approval gate before it could run.
 
 Next steps:
 
-- Next stage: preview the site visually in a browser, tune homepage grid/card cropping and mobile spacing if needed, resolve/replace the remaining ThermoFisher placeholders if matching assets are identified, then prepare for user-approved commit.
+- Next stage: run a mobile browser QA pass when tooling is available, tune any project-page spacing/cropping that appears on mobile, resolve/replace the remaining ThermoFisher placeholders if matching assets are identified, then prepare for user-approved commit.
