@@ -1,448 +1,763 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Michael Vasquez, mechanical engineer portfolio featuring compliant mechanisms, FEA, robotics, manufacturing engineering, and mechatronics projects." />
   <title>Michael Vasquez - Mechanical Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <script>
+    window.tailwind = window.tailwind || {};
+    window.tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            bg: '#0a0a0a',
+            surface: '#111111',
+            card: '#141414',
+            line: '#1e1e1e',
+            accent: '#c9a96e'
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #0a0a0a; --surface: #111; --card: #141414; --card-hi: #1a1a1a;
-      --border: #1e1e1e; --muted: #3a3a3a; --subtle: #666;
-      --body: #b8b8b8; --heading: #f0f0f0;
-      --accent: #c9a96e; --accent-dim: #7a6340;
-      --blue: #6b9fbd; --green: #7fb37f;
-      --syne: 'Syne', sans-serif; --mono: 'JetBrains Mono', monospace; --sans: 'Inter', sans-serif;
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --card: #141414;
+      --border: #1e1e1e;
+      --text-primary: #f0f0f0;
+      --text-secondary: #b8b8b8;
+      --text-muted: #666666;
+      --accent: #c9a96e;
+      --accent-soft: rgba(201, 169, 110, 0.15);
     }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--body); font-family: var(--sans); font-weight: 300; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-    /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 2.5rem; background: rgba(10,10,10,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: var(--syne); font-weight: 700; font-size: 1rem; color: var(--heading); text-decoration: none; }
-    .nav-logo span { color: var(--accent); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-family: var(--mono); font-size: 0.68rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--accent); }
-    .nav-item { position: relative; }
-    .project-menu { position: absolute; top: calc(100% + 0.75rem); left: 50%; transform: translateX(-50%) translateY(-6px); min-width: 230px; background: rgba(14,14,14,0.98); border: 1px solid var(--border); padding: 0.45rem; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; box-shadow: 0 18px 60px rgba(0,0,0,0.35); }
-    .project-menu::before { content: ''; position: absolute; left: 0; right: 0; top: -0.85rem; height: 0.85rem; }
-    .project-menu a { display: block; padding: 0.7rem 0.8rem; color: var(--body); border-bottom: 1px solid var(--border); white-space: nowrap; }
-    .project-menu a:last-child { border-bottom: none; }
-    .project-menu a:hover { background: var(--card-hi); color: var(--accent); }
-    .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.015), transparent 18rem),
+        var(--bg);
+      color: var(--text-secondary);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.55;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-    /* HERO */
-    #hero { padding: 9rem 2.5rem 5rem; max-width: 1100px; margin: 0 auto; }
-    .hero-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 4rem; align-items: start; }
-    .hero-h1 { font-family: var(--syne); font-size: clamp(2.6rem, 6vw, 4.6rem); font-weight: 800; color: var(--heading); line-height: 1.02; letter-spacing: -0.03em; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.6s 0.15s ease forwards; }
-    .hero-h1 em { font-style: italic; font-weight: 400; color: var(--subtle); }
-    .hero-sub { font-size: 1rem; color: var(--body); max-width: 460px; margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.6s 0.3s ease forwards; }
-    .avail-strip { display: grid; grid-template-columns: auto auto auto; gap: 0 2rem; padding: 1.25rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); opacity: 0; animation: fadeUp 0.6s 0.45s ease forwards; }
-    .avail-cell { display: flex; flex-direction: column; gap: 0.3rem; }
-    .avail-label { font-family: var(--mono); font-size: 0.58rem; color: var(--subtle); letter-spacing: 0.14em; text-transform: uppercase; }
-    .avail-val { font-family: var(--syne); font-size: 0.9rem; color: var(--heading); font-weight: 500; }
-    .avail-val.green { color: var(--green); }
-    .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green); margin-right: 0.4rem; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    ::selection { background: rgba(201, 169, 110, 0.32); color: var(--text-primary); }
 
-    /* RESUME THUMBNAIL */
-    .hero-right { opacity: 0; animation: fadeUp 0.6s 0.5s ease forwards; }
-    .resume-card { background: linear-gradient(145deg, var(--card), #101010); border: 1px solid var(--border); padding: 1rem; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; text-decoration: none; display: block; box-shadow: 0 18px 60px rgba(0,0,0,0.22); }
-    .resume-card:hover { border-color: var(--accent-dim); transform: translateY(-4px) rotate(0.4deg); box-shadow: 0 22px 70px rgba(0,0,0,0.36); }
-    .resume-thumb { width: 100%; aspect-ratio: 8.5/11; background: #f5f5f5; margin-bottom: 0.9rem; overflow: hidden; position: relative; }
-    .resume-thumb img { width: 100%; height: 100%; display: block; object-fit: cover; }
-    .resume-card-meta { display: flex; justify-content: space-between; align-items: center; }
-    .resume-card-label { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; }
-    .resume-card-dl { font-family: var(--mono); font-size: 0.6rem; color: var(--subtle); }
-    .resume-card:hover .resume-card-dl { color: var(--accent); }
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      mix-blend-mode: screen;
+    }
 
-    /* PROJECTS */
-    #projects { padding: 0 2.5rem 5rem; max-width: 1180px; margin: 0 auto; }
-    .projects-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2.5rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--border); }
-    .projects-title { font-family: var(--syne); font-size: 0.78rem; font-weight: 600; color: var(--heading); letter-spacing: 0.12em; text-transform: uppercase; }
-    .projects-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--subtle); }
-    .project-list { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+    .nav-link {
+      position: relative;
+      color: var(--text-muted);
+      transition: color 180ms ease;
+    }
 
-    /* PROJECT CARD */
-    .pcard { display: grid; grid-template-rows: minmax(230px, 34vw) auto; grid-column: span 3; background: var(--card); border: 1px solid var(--border); text-decoration: none; transition: background 0.2s, border-color 0.2s, transform 0.2s; overflow: hidden; min-height: 100%; }
-    .pcard:first-child { grid-column: span 6; grid-template-columns: 1.15fr 0.85fr; grid-template-rows: minmax(390px, 42vw); }
-    .pcard:hover { background: var(--card-hi); border-color: var(--accent-dim); transform: translateY(-5px); }
-    .pcard:hover .pcard-arrow { opacity: 1; transform: translateX(0); }
-    .pcard-vis { background: #0c0c0c; position: relative; overflow: hidden; isolation: isolate; min-height: 230px; }
-    .pcard-vis::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,10,0.05), rgba(10,10,10,0.72)); z-index: 1; pointer-events: none; }
-    .pcard-vis::after { content: 'Open project'; position: absolute; left: 1rem; bottom: 1rem; z-index: 2; font-family: var(--mono); font-size: 0.58rem; color: var(--accent); border: 1px solid rgba(201,169,110,0.35); background: rgba(10,10,10,0.66); padding: 0.35rem 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0; transform: translateY(6px); transition: opacity 0.2s, transform 0.2s; }
-    .pcard:hover .pcard-vis::after { opacity: 1; transform: translateY(0); }
-    .pcard-vis svg { display: none; }
-    .thumb-carousel { position: absolute; inset: 0; z-index: 0; background: #0c0c0c; }
-    .thumb-carousel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: carouselFade 18s infinite; }
-    .thumb-carousel img:nth-child(1) { animation-delay: 0s; }
-    .thumb-carousel img:nth-child(2) { animation-delay: 4.5s; }
-    .thumb-carousel img:nth-child(3) { animation-delay: 9s; }
-    .thumb-carousel img:nth-child(4) { animation-delay: 13.5s; }
-    .pcard:hover .thumb-carousel img { animation-play-state: paused; }
-    @keyframes carouselFade { 0%, 20% { opacity: 1; } 25%, 95% { opacity: 0; } 100% { opacity: 1; } }
-    .pcard-body { padding: 1.75rem; display: flex; flex-direction: column; justify-content: center; position: relative; }
-    .pcard:first-child .pcard-body { padding: 2.4rem; }
-    .pcard-num { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.18em; margin-bottom: 0.8rem; }
-    .pcard-title { font-family: var(--syne); font-size: 1.4rem; font-weight: 700; color: var(--heading); line-height: 1.15; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
-    .pcard-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
-    .pcard-desc { font-size: 0.88rem; color: var(--body); margin-bottom: 1.2rem; max-width: 500px; }
-    .pcard-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem; }
-    .tag { display: inline-block; font-family: var(--mono); font-size: 0.6rem; color: var(--subtle); border: 1px solid var(--border); padding: 0.3rem 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; }
-    .tag-accent { color: var(--accent); border-color: var(--accent-dim); }
-    .tag-blue { color: var(--blue); border-color: rgba(107,159,189,0.35); }
-    .pcard-arrow { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; opacity: 0.72; transform: translateX(-4px); transition: all 0.25s; margin-top: auto; padding-top: 1rem; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -0.35rem;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 180ms ease;
+    }
 
-    /* FOOTER */
-    footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; max-width: 1100px; margin: 3rem auto 0; display: flex; align-items: center; justify-content: space-between; }
-    footer span { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
-    .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
-    .footer-links a:hover { color: var(--accent); }
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      color: var(--accent);
+      outline: none;
+    }
 
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    .nav-link:hover::after,
+    .nav-link:focus-visible::after {
+      transform: scaleX(1);
+    }
 
-    @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 3rem; } .hero-right { max-width: 300px; } .avail-strip { grid-template-columns: 1fr; gap: 1rem; } }
-    @media (max-width: 720px) {
-      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1rem; } .project-menu { left: auto; right: 0; transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu { transform: translateY(0); }
-      #hero { padding: 8rem 1.25rem 3rem; } #projects { padding: 0 1.25rem 3rem; }
-      .project-list { grid-template-columns: 1fr; }
-      .pcard, .pcard:first-child { grid-column: auto; grid-template-columns: 1fr; grid-template-rows: auto auto; min-height: auto; }
-      .pcard-vis { aspect-ratio: 16/10; border-right: none; border-bottom: 1px solid var(--border); }
-      .pcard-body { padding: 1.5rem; }
-      .pcard-arrow { opacity: 1; transform: none; margin-top: 1rem; }
-      footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
+    .project-menu {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translate(-50%, -8px);
+      transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+    }
+
+    .nav-projects:hover .project-menu,
+    .nav-projects:focus-within .project-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translate(-50%, 0);
+    }
+
+    .hero-kicker {
+      color: var(--accent);
+      letter-spacing: 0.16em;
+    }
+
+    .hero-name {
+      color: var(--text-primary);
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .hero-copy-line {
+      color: var(--text-secondary);
+      text-wrap: pretty;
+    }
+
+    .wave-canvas {
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    .metric {
+      border: 1px solid var(--border);
+      background: rgba(17, 17, 17, 0.72);
+      backdrop-filter: blur(12px);
+    }
+
+    .helix-section {
+      min-height: 100svh;
+      background:
+        linear-gradient(180deg, rgba(10,10,10,0.2), var(--bg) 10%, var(--bg) 88%, rgba(17,17,17,0.65)),
+        radial-gradient(circle at 50% 50%, rgba(201,169,110,0.07), transparent 34%);
+    }
+
+    .helix-shell {
+      perspective: 1200px;
+      perspective-origin: 50% 48%;
+      touch-action: pan-y;
+    }
+
+    .helix-world {
+      position: relative;
+      width: min(64vw, 820px);
+      height: min(66vh, 620px);
+      min-height: 460px;
+      margin: 0 auto;
+      transform-style: preserve-3d;
+    }
+
+    .helix-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(340px, 26vw);
+      min-height: 290px;
+      margin-left: calc(min(340px, 26vw) / -2);
+      margin-top: -145px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      background: var(--card);
+      box-shadow: 0 26px 80px rgba(0,0,0,0.42);
+      transform-style: preserve-3d;
+      transition: border-color 180ms ease, box-shadow 180ms ease, opacity 180ms ease, filter 180ms ease;
+      will-change: transform, opacity;
+    }
+
+    .helix-card:hover,
+    .helix-card:focus-visible {
+      border-color: var(--accent);
+      box-shadow: 0 28px 100px rgba(0,0,0,0.58), 0 0 0 1px rgba(201,169,110,0.18), 0 0 42px rgba(201,169,110,0.12);
+      outline: none;
+    }
+
+    .helix-card.is-dimmed {
+      opacity: 0.2;
+      filter: saturate(0.55);
+    }
+
+    .helix-card.is-focused {
+      border-color: var(--accent);
+      box-shadow: 0 34px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,169,110,0.28), 0 0 54px rgba(201,169,110,0.16);
+    }
+
+    .project-image {
+      height: 128px;
+      width: 100%;
+      object-fit: cover;
+      border-bottom: 1px solid var(--border);
+      filter: grayscale(0.18) contrast(1.04) brightness(0.82);
+    }
+
+    .tag {
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      padding: 0.42rem 0.54rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tag-accent {
+      border-color: rgba(201,169,110,0.42);
+      color: var(--accent);
+    }
+
+    .detail-panel {
+      transform: translateX(105%);
+      transition: transform 320ms cubic-bezier(.22,.8,.2,1);
+      box-shadow: -32px 0 120px rgba(0,0,0,0.54);
+    }
+
+    .detail-panel.is-open {
+      transform: translateX(0);
+    }
+
+    .backdrop {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+    }
+
+    .backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .focus-ring:focus-visible {
+      outline: 1px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .wave-canvas {
+        display: none;
+      }
+
+      .nav-projects .project-menu {
+        display: none;
+      }
+
+      .helix-section {
+        min-height: auto;
+      }
+
+      .helix-shell {
+        perspective: none;
+        touch-action: auto;
+        transform: none;
+      }
+
+      .helix-world {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        display: grid;
+        gap: 1rem;
+        transform: none;
+      }
+
+      .helix-card {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        min-height: 0;
+        margin: 0;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+      }
+
+      .project-image {
+        height: 190px;
+      }
+
+      .detail-panel {
+        width: min(100vw, 480px);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .helix-shell {
+        transform: translateX(clamp(6rem, 9vw, 10rem));
+      }
     }
   </style>
 </head>
-<body>
+<body class="bg-[#0a0a0a] text-[#b8b8b8]">
+  <div class="noise" aria-hidden="true"></div>
 
-<nav>
-  <a class="nav-logo" href="index.html">MV<span>.</span></a>
-  <ul class="nav-links">
-    <li class="nav-item nav-projects"><a href="index.html#projects">Projects</a>
-      <div class="project-menu" aria-label="Project links">
-        <a href="projects/bone-printer.html">Bone 3D Printer</a>
-        <a href="projects/fpv-drone.html">FPV Drone</a>
-        <a href="projects/thermofisher.html">ThermoFisher Co-ops</a>
-        <a href="projects/automated-desk.html">Automated Desk</a>
-        <a href="projects/robotics.html">VEX Robotics</a>
-      </div>
-    </li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="resume.pdf" target="_blank">Resume</a></li>
-    <li><a href="about.html#contact">Contact</a></li>
-  </ul>
-</nav>
+  <nav class="fixed inset-x-0 top-0 z-50 border-b border-[#1e1e1e] bg-[#0a0a0a]/90 px-5 py-4 backdrop-blur-xl md:px-10">
+    <div class="mx-auto flex max-w-7xl items-center justify-between">
+      <a class="font-display text-base font-bold text-[#f0f0f0] focus-ring" href="index.html" aria-label="Michael Vasquez home">MV<span class="text-[#c9a96e]">.</span></a>
+      <ul class="flex items-center gap-4 font-mono text-[0.64rem] uppercase tracking-[0.14em] md:gap-8">
+        <li class="nav-projects relative">
+          <a class="nav-link focus-ring" href="#projects">Projects</a>
+          <div class="project-menu absolute left-1/2 top-[calc(100%+0.95rem)] w-64 border border-[#1e1e1e] bg-[#0e0e0e]/95 p-2 shadow-2xl backdrop-blur-xl" aria-label="Project links">
+            <a class="block border-b border-[#1e1e1e] px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="projects/bone-printer.html">Bone 3D Printer</a>
+            <a class="block border-b border-[#1e1e1e] px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="projects/fpv-drone.html">FPV Drone</a>
+            <a class="block border-b border-[#1e1e1e] px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="projects/thermofisher.html">ThermoFisher Co-op</a>
+            <a class="block border-b border-[#1e1e1e] px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="projects/automated-desk.html">Standing Desk</a>
+            <a class="block px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="projects/robotics.html">VEX Robotics</a>
+          </div>
+        </li>
+        <li><a class="nav-link focus-ring" href="about.html">About</a></li>
+        <li><a class="nav-link focus-ring" href="resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+        <li><a class="nav-link focus-ring" href="about.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
 
-<section id="hero">
-  <div class="hero-grid">
-    <div>
-      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;opacity:0;animation:fadeUp 0.5s 0.05s ease forwards;">
-        <div style="width:28px;height:1px;background:var(--accent);"></div>
-        <span style="font-family:var(--mono);font-size:0.66rem;color:var(--accent);letter-spacing:0.16em;text-transform:uppercase;">Mechanical Engineer / B.S. RIT 2025</span>
+  <main>
+    <section id="hero" class="relative h-screen w-full overflow-hidden">
+      <canvas id="waveCanvas" class="wave-canvas absolute inset-0 z-0 h-full w-full" aria-hidden="true"></canvas>
+      <div class="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,#0a0a0a_0%,rgba(10,10,10,.86)_23%,rgba(10,10,10,.38)_55%,#0a0a0a_100%)]" aria-hidden="true"></div>
+
+      <div class="absolute left-5 right-5 top-[17vh] z-10 md:left-10 md:right-10">
+        <div class="mx-auto max-w-7xl">
+          <div class="mb-5 flex flex-wrap items-center gap-3 font-mono text-[0.66rem] uppercase hero-kicker">
+            <span class="h-px w-8 bg-[#c9a96e]"></span>
+            <span>Mechanical Engineer / B.S. RIT 2025</span>
+            <span class="hidden text-[#666666] sm:inline">Danbury, Connecticut</span>
+          </div>
+          <h1 class="hero-name max-w-5xl font-display text-[clamp(3.35rem,10.5vw,10rem)] font-extrabold leading-[0.84]">
+            Michael<br>Vasquez
+          </h1>
+          <p class="hero-copy-line mt-6 max-w-3xl text-base font-light md:text-xl">
+            designs, develops, delivers. From compliant mechanisms and FEA-validated structures to production-line robotics.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a class="focus-ring inline-flex items-center border border-[#c9a96e] bg-[#c9a96e] px-5 py-3 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-black transition hover:bg-transparent hover:text-[#c9a96e]" href="#projects">Explore Work</a>
+            <a class="focus-ring inline-flex items-center border border-[#1e1e1e] bg-[#111111]/70 px-5 py-3 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-[#f0f0f0] transition hover:border-[#c9a96e] hover:text-[#c9a96e]" href="resume.pdf" target="_blank" rel="noopener">Resume PDF</a>
+          </div>
+        </div>
       </div>
-      <h1 class="hero-h1">Michael Vasquez<br><em>designs, develops, delivers.</em></h1>
-      <p class="hero-sub">From compliant mechanisms and FEA-validated structures to production-line robotics - engineering work across the full design cycle.</p>
-      <div class="avail-strip">
-        <div class="avail-cell">
-          <span class="avail-label">Status</span>
-          <span class="avail-val green"><span class="dot"></span>Open to opportunities</span>
+
+      <div class="absolute bottom-6 left-5 right-5 z-10 md:left-10 md:right-10">
+        <div class="mx-auto grid max-w-7xl gap-3 md:grid-cols-[1fr_auto] md:items-end">
+          <div class="grid grid-cols-2 gap-3 md:max-w-xl">
+            <div class="metric px-4 py-3">
+              <div class="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#666666]">Status</div>
+              <div class="mt-1 font-display text-sm font-medium text-[#f0f0f0]">Open to opportunities</div>
+            </div>
+            <div class="metric px-4 py-3">
+              <div class="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#666666]">Index</div>
+              <div class="mt-1 font-display text-sm font-medium text-[#f0f0f0]">5 featured projects</div>
+            </div>
+          </div>
+          <div class="hidden font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[#c9a96e] md:block">Move cursor over waveform</div>
         </div>
-        <div class="avail-cell">
-          <span class="avail-label">Location</span>
-          <span class="avail-val">Danbury, Connecticut</span>
+      </div>
+    </section>
+
+    <section id="projects" class="helix-section relative overflow-hidden px-5 py-20 md:px-10 md:py-0">
+      <div class="mx-auto grid min-h-[100svh] max-w-7xl items-center gap-8 md:grid-cols-[0.76fr_1.24fr]">
+        <aside class="relative z-10 max-w-lg self-center">
+          <div class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[#c9a96e]">Project Index / Helix View</div>
+          <h2 class="mt-4 font-display text-4xl font-bold leading-none text-[#f0f0f0] md:text-6xl">Selected mechanical systems.</h2>
+          <p class="mt-5 text-sm text-[#b8b8b8] md:text-base">
+            Five builds across biomedical hardware, flight structures, production automation, mechatronics, and competition robotics.
+          </p>
+          <div class="mt-8 hidden border-y border-[#1e1e1e] py-4 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-[#666666] md:grid md:grid-cols-2 md:gap-4">
+            <span>Drag to spin</span>
+            <span>Click card for details</span>
+            <span>Esc to close</span>
+            <span>Auto rotate 6 deg/s</span>
+          </div>
+          <a class="focus-ring mt-8 inline-flex border border-[#1e1e1e] px-4 py-3 font-mono text-[0.64rem] uppercase tracking-[0.14em] text-[#f0f0f0] transition hover:border-[#c9a96e] hover:text-[#c9a96e]" href="about.html#contact">Start a Conversation</a>
+        </aside>
+
+        <div id="helixShell" class="helix-shell relative z-10 py-2 md:py-10" aria-label="Interactive project helix">
+          <div id="helixWorld" class="helix-world"></div>
         </div>
-        <div class="avail-cell">
-          <span class="avail-label">Role</span>
-          <span class="avail-val">Mechanical Engineer</span>
-        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-[#1e1e1e] px-5 py-7 md:px-10">
+    <div class="mx-auto flex max-w-7xl flex-col gap-4 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-[#666666] md:flex-row md:items-center md:justify-between">
+      <span>&copy; 2026 Michael Vasquez / Mechanical Engineer</span>
+      <div class="flex gap-5">
+        <a class="transition hover:text-[#c9a96e]" href="mailto:mvas8037@gmail.com">Email</a>
+        <a class="transition hover:text-[#c9a96e]" href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="transition hover:text-[#c9a96e]" href="resume.pdf" target="_blank" rel="noopener">Resume</a>
       </div>
     </div>
+  </footer>
 
-    <div class="hero-right">
-      <a class="resume-card" href="resume.pdf" target="_blank">
-        <div class="resume-thumb"><img src="images/resume-preview.png" alt="Preview of Michael Vasquez resume"></div>
-        <div class="resume-card-meta">
-          <span class="resume-card-label">Resume.pdf</span>
-          <span class="resume-card-dl">Download PDF</span>
-        </div>
-      </a>
+  <div id="panelBackdrop" class="backdrop fixed inset-0 z-[70] bg-black/55 backdrop-blur-sm" aria-hidden="true"></div>
+  <aside id="detailPanel" class="detail-panel fixed bottom-0 right-0 top-0 z-[90] flex w-full max-w-[520px] flex-col border-l border-[#1e1e1e] bg-[#0f0f0f]" aria-hidden="true" aria-labelledby="detailTitle">
+    <div class="flex items-center justify-between border-b border-[#1e1e1e] px-5 py-4">
+      <div class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[#c9a96e]" id="detailEyebrow">Project</div>
+      <button id="closePanel" class="focus-ring border border-[#1e1e1e] px-3 py-2 font-mono text-xs uppercase tracking-[0.12em] text-[#f0f0f0] transition hover:border-[#c9a96e] hover:text-[#c9a96e]" type="button" aria-label="Close project detail">X</button>
     </div>
-  </div>
-</section>
+    <div class="flex-1 overflow-y-auto px-5 py-6 md:px-7">
+      <img id="detailImage" class="mb-6 h-56 w-full border border-[#1e1e1e] object-cover" src="" alt="">
+      <div id="detailNumber" class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[#666666]"></div>
+      <h3 id="detailTitle" class="mt-3 font-display text-4xl font-bold leading-[0.96] text-[#f0f0f0]"></h3>
+      <div id="detailMeta" class="mt-4 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-[#c9a96e]"></div>
+      <p id="detailDescription" class="mt-5 text-sm leading-7 text-[#b8b8b8]"></p>
+      <div id="detailTags" class="mt-6 flex flex-wrap gap-2"></div>
+      <a id="detailLink" class="focus-ring mt-8 inline-flex border border-[#c9a96e] px-5 py-3 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-[#c9a96e] transition hover:bg-[#c9a96e] hover:text-black" href="#">Open Full Project</a>
+    </div>
+  </aside>
 
-<section id="projects">
-  <div class="projects-header">
-    <span class="projects-title">Selected Projects</span>
-    <span class="projects-meta">5 projects / sorted by relevance</span>
-  </div>
+  <script>
+    const projects = [
+      {
+        title: 'Binder-Ink Jet Bone 3D Printer',
+        shortTitle: 'Binder-Ink Jet Bone 3D Printer',
+        number: '01',
+        type: 'Senior Capstone',
+        meta: 'Aug 2024 - Apr 2025 / 8-person team / RevBio',
+        href: 'projects/bone-printer.html',
+        image: 'images/bone/bone-assembly-020.jpg',
+        tags: ['Compliant Mechanisms', 'SolidWorks', 'DFM'],
+        description: 'Redesigned the Z-axis sub-assembly and powder containment for a regenerative bone-printing platform built on the open-source OASIS architecture, partnered with RevBio. Replaced precision-machined linear bearing mounts with a 2-DoF compliant coupling, reducing tolerance stack-up and simplifying fabrication.'
+      },
+      {
+        title: 'Custom FPV Drone',
+        shortTitle: 'Custom FPV Drone',
+        number: '02',
+        type: 'Personal R&D',
+        meta: 'Dec 2024 - Present / From-scratch design',
+        href: 'projects/fpv-drone.html',
+        image: 'images/drone/drone-build-001.jpg',
+        tags: ['FEA/Ansys', 'MATLAB', 'Sacrificial Design'],
+        description: 'Built a custom MATLAB flight simulation, validated it against an external simulator, then used predicted impact forces as FEA inputs. Designed the arms as intentionally sacrificial structural elements so the frame fails in a controlled way before the flight controller stack takes the hit.'
+      },
+      {
+        title: 'ThermoFisher Scientific Co-op',
+        shortTitle: 'ThermoFisher Scientific Co-op',
+        number: '03',
+        type: 'Industry / 16 months',
+        meta: 'Jan 2023 - Aug 2024 / Manufacturing Engineering',
+        href: 'projects/thermofisher.html',
+        image: 'images/tf/tf-rack-delatcher-prototype-001.jpg',
+        tags: ['Production Engineering', 'Robot Controls', 'CMM'],
+        description: 'Completed two co-op rotations on production lines for laboratory consumables, delivering ten engineering projects from scratch. Work included Epson robot controls integration, ultrasonic weld process improvement, CMM programs, machine redesigns, ShapeGrabber vial inspection, and DOEs on capping failures.'
+      },
+      {
+        title: 'Standing Desk Automation',
+        shortTitle: 'Standing Desk Automation',
+        number: '04',
+        type: 'Mechatronics',
+        meta: 'Dec 2023 - Aug 2024 / End-to-end build',
+        href: 'projects/automated-desk.html',
+        image: 'images/desk/desk-build-013.jpg',
+        tags: ['Gear Design', 'System Dynamics', 'Mechatronics'],
+        description: 'Built a custom standing desk drive using a 3D-printed helical planetary gearbox sized from system dynamics calculations, a motor controller circuit with potentiometer speed control, direction switching, and voltage readout, plus a bracket that used existing tapped holes.'
+      },
+      {
+        title: 'VEX U Competition Robot',
+        shortTitle: 'VEX U Competition Robot',
+        number: '05',
+        type: 'Leadership',
+        meta: '2019 - 2022 / President, RIT VEX U Robotics',
+        href: 'projects/robotics.html',
+        image: 'images/vex/vex-u/vex-robot-001.jpg',
+        tags: ['Mechanism Design', 'PID Controls', 'Odometry'],
+        description: 'Led multi-year competition robotics work across mechanical and software sub-teams. The robot used a 4-bar linkage with intake rollers, pivoting deposit tray, drivetrain odometry, and PID controllers for autonomous position correction, earning an Innovate Award at World Championships.'
+      }
+    ];
 
-  <div class="project-list">
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    <!-- 01 BONE PRINTER -->
-    <a class="pcard" href="projects/bone-printer.html">
-      <div class="pcard-vis">
-        <div class="thumb-carousel" aria-hidden="true">
-          <img src="images/home/home-005.jpg" alt="">
-          <img src="images/home/home-002.jpg" alt="">
-          <img src="images/bone/bone-assembly-015.jpg" alt="">
-          <img src="images/bone/screenshot-2025-02-22-164123.png" alt="">
-        </div><svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-          <rect width="560" height="340" fill="#0c0c0c"/>
-          <g stroke="#161616" stroke-width="1"><line x1="0" y1="68" x2="560" y2="68"/><line x1="0" y1="136" x2="560" y2="136"/><line x1="0" y1="204" x2="560" y2="204"/><line x1="0" y1="272" x2="560" y2="272"/><line x1="112" y1="0" x2="112" y2="340"/><line x1="224" y1="0" x2="224" y2="340"/><line x1="336" y1="0" x2="336" y2="340"/><line x1="448" y1="0" x2="448" y2="340"/></g>
-          <rect x="105" y="55" width="8" height="230" fill="#222"/><rect x="447" y="55" width="8" height="230" fill="#222"/>
-          <rect x="105" y="55" width="350" height="8" fill="#222"/><rect x="105" y="277" width="350" height="8" fill="#222"/>
-          <line x1="275" y1="63" x2="275" y2="277" stroke="#333" stroke-width="3"/>
-          <rect x="195" y="135" width="160" height="28" rx="2" fill="#1a1a1a" stroke="#444" stroke-width="1.5"/>
-          <rect x="258" y="110" width="34" height="22" rx="2" fill="#181818" stroke="#c9a96e" stroke-width="1.5"/>
-          <text x="275" y="103" text-anchor="middle" fill="#c9a96e" font-family="JetBrains Mono,monospace" font-size="8" letter-spacing="0.5">2-DOF COUPLING</text>
-          <line x1="235" y1="163" x2="235" y2="208" stroke="#666" stroke-width="1" stroke-dasharray="3 2"/><line x1="275" y1="163" x2="275" y2="208" stroke="#666" stroke-width="1" stroke-dasharray="3 2"/><line x1="315" y1="163" x2="315" y2="208" stroke="#666" stroke-width="1" stroke-dasharray="3 2"/>
-          <rect x="178" y="213" width="195" height="10" fill="#1c1c1c" stroke="#c9a96e" stroke-width="1"/>
-          <rect x="148" y="228" width="13" height="48" fill="#1a1a1a" stroke="#c9a96e" stroke-width="1"/><rect x="163" y="228" width="13" height="48" fill="#1a1a1a" stroke="#c9a96e" stroke-width="1"/>
-          <rect x="376" y="228" width="13" height="48" fill="#1a1a1a" stroke="#c9a96e" stroke-width="1"/><rect x="391" y="228" width="13" height="48" fill="#1a1a1a" stroke="#c9a96e" stroke-width="1"/>
-          <text x="22" y="26" fill="#333" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1.5">BINDER-JET BONE PRINTER / REVBIO PARTNERSHIP</text>
-        </svg>
-      </div>
-      <div class="pcard-body">
-        <div class="pcard-num">01 / SENIOR CAPSTONE</div>
-        <h3 class="pcard-title">Binder-Ink Jet<br>Bone 3D Printer</h3>
-        <div class="pcard-meta">Aug 2024 - Apr 2025 / 8-person team / RevBio</div>
-        <p class="pcard-desc">Redesigned the Z-axis sub-assembly and powder containment for a regenerative bone-printing platform built on the open-source OASIS architecture, partnered with RevBio (Tetranite biotech). Replaced precision-machined linear bearing mounts with a 2-DoF compliant coupling - eliminating cost and tolerance stack-up simultaneously.</p>
-        <div class="pcard-tags">
-          <span class="tag tag-accent">Compliant Mechanisms</span>
-          <span class="tag">SolidWorks</span>
-          <span class="tag">DFM</span>
-          <span class="tag">Biomedical R&amp;D</span>
-        </div>
-        <span class="pcard-arrow">VIEW PROJECT -></span>
-      </div>
-    </a>
+    function initWaveform() {
+      const canvas = document.getElementById('waveCanvas');
+      if (!canvas) return;
 
-    <!-- 02 FPV DRONE -->
-    <a class="pcard" href="projects/fpv-drone.html">
-      <div class="pcard-vis">
-        <div class="thumb-carousel" aria-hidden="true">
-          <img src="images/drone/drone-build-001.jpg" alt="">
-          <img src="images/drone/drone-range-estimator-001.jpg" alt="">
-          <img src="images/drone/drone-velocity-accel-sim-001.jpg" alt="">
-          <img src="images/drone/drone-build-003.jpg" alt="">
-        </div><svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-          <rect width="560" height="340" fill="#0c0c0c"/>
-          <g stroke="#161616" stroke-width="1"><line x1="0" y1="68" x2="560" y2="68"/><line x1="0" y1="136" x2="560" y2="136"/><line x1="0" y1="204" x2="560" y2="204"/><line x1="0" y1="272" x2="560" y2="272"/><line x1="112" y1="0" x2="112" y2="340"/><line x1="224" y1="0" x2="224" y2="340"/><line x1="336" y1="0" x2="336" y2="340"/><line x1="448" y1="0" x2="448" y2="340"/></g>
-          <!-- X frame -->
-          <line x1="195" y1="95" x2="365" y2="245" stroke="#3a3a3a" stroke-width="13" stroke-linecap="round"/>
-          <line x1="365" y1="95" x2="195" y2="245" stroke="#3a3a3a" stroke-width="13" stroke-linecap="round"/>
-          <!-- sacrificial arm dash highlight -->
-          <line x1="195" y1="95" x2="365" y2="245" stroke="#c9a96e" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.5"/>
-          <!-- center plate -->
-          <rect x="248" y="143" width="64" height="54" rx="3" fill="#161616" stroke="#444" stroke-width="1.5"/>
-          <text x="280" y="174" text-anchor="middle" fill="#555" font-family="JetBrains Mono,monospace" font-size="7">FC</text>
-          <!-- motors -->
-          <circle cx="195" cy="95" r="20" fill="#181818" stroke="#555" stroke-width="1.5"/>
-          <circle cx="365" cy="95" r="20" fill="#181818" stroke="#555" stroke-width="1.5"/>
-          <circle cx="195" cy="245" r="20" fill="#181818" stroke="#555" stroke-width="1.5"/>
-          <circle cx="365" cy="245" r="20" fill="#181818" stroke="#555" stroke-width="1.5"/>
-          <!-- props -->
-          <ellipse cx="195" cy="95" rx="38" ry="6" fill="none" stroke="#3a3a3a" stroke-width="0.8" opacity="0.6"/>
-          <ellipse cx="365" cy="95" rx="38" ry="6" fill="none" stroke="#3a3a3a" stroke-width="0.8" opacity="0.6"/>
-          <ellipse cx="195" cy="245" rx="38" ry="6" fill="none" stroke="#3a3a3a" stroke-width="0.8" opacity="0.6"/>
-          <ellipse cx="365" cy="245" rx="38" ry="6" fill="none" stroke="#3a3a3a" stroke-width="0.8" opacity="0.6"/>
-          <!-- FEA stress dots -->
-          <circle cx="290" cy="178" r="5" fill="#c9a96e" opacity="0.7"/>
-          <circle cx="306" cy="190" r="3" fill="#7fb37f" opacity="0.6"/>
-          <circle cx="274" cy="166" r="3" fill="#7fb37f" opacity="0.6"/>
-          <!-- MATLAB label -->
-          <rect x="410" y="105" width="110" height="36" fill="#111" stroke="#1e1e1e" rx="2"/>
-          <text x="465" y="120" text-anchor="middle" fill="#6b9fbd" font-family="JetBrains Mono,monospace" font-size="7.5" letter-spacing="0.5">MATLAB SIM</text>
-          <text x="465" y="133" text-anchor="middle" fill="#555" font-family="JetBrains Mono,monospace" font-size="7">v = validated</text>
-          <text x="22" y="26" fill="#333" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1.5">CUSTOM FPV / FEA + MATLAB SIM / SACRIFICIAL ARMS</text>
-        </svg>
-      </div>
-      <div class="pcard-body">
-        <div class="pcard-num">02 / PERSONAL R&amp;D</div>
-        <h3 class="pcard-title">Custom FPV Drone</h3>
-        <div class="pcard-meta">Dec 2024 - Present / From-scratch design</div>
-        <p class="pcard-desc">Built a custom MATLAB flight simulation, validated against an established external simulator, then used predicted impact forces as FEA inputs. Designed the arms as intentionally <em>sacrificial</em> structural elements - engineering them to fail first and controlled on impact, protecting the flight controller stack.</p>
-        <div class="pcard-tags">
-          <span class="tag tag-blue">FEA / Ansys</span>
-          <span class="tag tag-blue">MATLAB</span>
-          <span class="tag">SolidWorks</span>
-          <span class="tag">Sacrificial Design</span>
-        </div>
-        <span class="pcard-arrow">VIEW PROJECT -></span>
-      </div>
-    </a>
+      const ctx = canvas.getContext('2d');
+      const state = {
+        width: 0,
+        height: 0,
+        dpr: 1,
+        pointerAmp: 28,
+        targetAmp: 28,
+        phase: 0
+      };
 
-    <!-- 03 THERMOFISHER -->
-    <a class="pcard" href="projects/thermofisher.html">
-      <div class="pcard-vis">
-        <div class="thumb-carousel" aria-hidden="true">
-          <img src="images/tf/tf-rack-delatcher-prototype-001.jpg" alt="">
-          <img src="images/tf/tf-shapegrabber-results-001.jpg" alt="">
-          <img src="images/tf/tf-vision-reteach-001.jpg" alt="">
-          <img src="images/tf/tf-engineering-sketches-001.jpg" alt="">
-        </div><svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-          <rect width="560" height="340" fill="#0c0c0c"/>
-          <g stroke="#161616" stroke-width="1"><line x1="0" y1="68" x2="560" y2="68"/><line x1="0" y1="136" x2="560" y2="136"/><line x1="0" y1="204" x2="560" y2="204"/><line x1="0" y1="272" x2="560" y2="272"/><line x1="112" y1="0" x2="112" y2="340"/><line x1="224" y1="0" x2="224" y2="340"/><line x1="336" y1="0" x2="336" y2="340"/><line x1="448" y1="0" x2="448" y2="340"/></g>
-          <!-- conveyor -->
-          <rect x="50" y="258" width="270" height="14" fill="#161616" stroke="#2a2a2a" stroke-width="1"/>
-          <!-- bottles -->
-          <rect x="75" y="232" width="20" height="28" rx="2" fill="#181818" stroke="#333" stroke-width="1"/><rect x="84" y="222" width="8" height="13" rx="1" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
-          <rect x="135" y="232" width="20" height="28" rx="2" fill="#181818" stroke="#333" stroke-width="1"/><rect x="144" y="222" width="8" height="13" rx="1" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
-          <rect x="195" y="232" width="20" height="28" rx="2" fill="#181818" stroke="#333" stroke-width="1"/><rect x="204" y="222" width="8" height="13" rx="1" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
-          <!-- robot arm -->
-          <rect x="93" y="186" width="14" height="48" fill="#1c1c1c" stroke="#3a3a3a" stroke-width="1.5"/>
-          <rect x="75" y="168" width="48" height="22" rx="2" fill="#181818" stroke="#6b9fbd" stroke-width="1.5"/>
-          <text x="99" y="182" text-anchor="middle" fill="#6b9fbd" font-family="JetBrains Mono,monospace" font-size="6">EPSON</text>
-          <circle cx="100" cy="232" r="8" fill="#1a1a1a" stroke="#c9a96e" stroke-width="1.2"/>
-          <!-- CMM -->
-          <rect x="340" y="160" width="90" height="75" fill="#0e0e0e" stroke="#2a2a2a" stroke-width="1"/>
-          <rect x="356" y="178" width="58" height="38" fill="none" stroke="#444" stroke-width="1"/>
-          <line x1="366" y1="174" x2="416" y2="174" stroke="#3a3a3a" stroke-width="2"/>
-          <circle cx="385" cy="197" r="4" fill="none" stroke="#c9a96e" stroke-width="1"/><line x1="385" y1="174" x2="385" y2="193" stroke="#c9a96e" stroke-width="1" stroke-dasharray="2 2"/>
-          <text x="385" y="248" text-anchor="middle" fill="#555" font-family="JetBrains Mono,monospace" font-size="6.5">CMM / GD&amp;T</text>
-          <!-- yield bars -->
-          <rect x="462" y="188" width="14" height="58" fill="#1e1e1e" stroke="#333" stroke-width="1"/>
-          <rect x="462" y="202" width="14" height="44" fill="#444"/>
-          <rect x="480" y="188" width="14" height="58" fill="#1e1e1e" stroke="#333" stroke-width="1"/>
-          <rect x="480" y="195" width="14" height="51" fill="#c9a96e"/>
-          <text x="473" y="260" text-anchor="middle" fill="#c9a96e" font-family="JetBrains Mono,monospace" font-size="7.5">+18%</text>
-          <text x="22" y="26" fill="#333" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1.5">THERMOFISHER / 2 CO-OPS / 16 MONTHS / 10+ PROJECTS</text>
-        </svg>
-      </div>
-      <div class="pcard-body">
-        <div class="pcard-num">03 / INDUSTRY / 16 MONTHS</div>
-        <h3 class="pcard-title">ThermoFisher Scientific<br>Co-op Engineering</h3>
-        <div class="pcard-meta">Jan 2023 - Aug 2024 / Manufacturing Engineering</div>
-        <p class="pcard-desc">Two co-op rotations on production lines for laboratory consumables - ten projects from scratch. Epson robot controls integration (+18% yield), ultrasonic weld process to 98% yield, CMM programs, machine redesigns with 5-iteration tamping tools, ShapeGrabber vial inspection development, and DOEs on capping failures.</p>
-        <div class="pcard-tags">
-          <span class="tag tag-accent">Production Engineering</span>
-          <span class="tag">Robot Controls</span>
-          <span class="tag">CMM / GD&amp;T</span>
-          <span class="tag">DOE</span>
-        </div>
-        <span class="pcard-arrow">VIEW PROJECT -></span>
-      </div>
-    </a>
+      function isMobileCanvasDisabled() {
+        return window.matchMedia('(max-width: 767px)').matches;
+      }
 
-    <!-- 04 DESK -->
-    <a class="pcard" href="projects/automated-desk.html">
-      <div class="pcard-vis">
-        <div class="thumb-carousel" aria-hidden="true">
-          <img src="images/desk/desk-build-001.jpg" alt="">
-          <img src="images/desk/desk-build-013.jpg" alt="">
-          <img src="images/desk/desk-build-004.jpg" alt="">
-          <img src="images/desk/desk-build-014.jpg" alt="">
-        </div><svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-          <rect width="560" height="340" fill="#0c0c0c"/>
-          <g stroke="#161616" stroke-width="1"><line x1="0" y1="68" x2="560" y2="68"/><line x1="0" y1="136" x2="560" y2="136"/><line x1="0" y1="204" x2="560" y2="204"/><line x1="0" y1="272" x2="560" y2="272"/><line x1="112" y1="0" x2="112" y2="340"/><line x1="224" y1="0" x2="224" y2="340"/><line x1="336" y1="0" x2="336" y2="340"/><line x1="448" y1="0" x2="448" y2="340"/></g>
-          <!-- planetary -->
-          <circle cx="195" cy="170" r="95" fill="none" stroke="#2a2a2a" stroke-width="10"/>
-          <circle cx="195" cy="170" r="95" fill="none" stroke="#c9a96e" stroke-width="0.7" stroke-dasharray="5 3" opacity="0.4"/>
-          <circle cx="195" cy="108" r="25" fill="#161616" stroke="#444" stroke-width="1.5"/>
-          <circle cx="248" cy="200" r="25" fill="#161616" stroke="#444" stroke-width="1.5"/>
-          <circle cx="142" cy="200" r="25" fill="#161616" stroke="#444" stroke-width="1.5"/>
-          <circle cx="195" cy="170" r="25" fill="#1a1a1a" stroke="#c9a96e" stroke-width="1.5"/>
-          <circle cx="195" cy="170" r="9" fill="#c9a96e" opacity="0.25"/>
-          <line x1="195" y1="170" x2="195" y2="108" stroke="#2a2a2a" stroke-width="3"/>
-          <line x1="195" y1="170" x2="248" y2="200" stroke="#2a2a2a" stroke-width="3"/>
-          <line x1="195" y1="170" x2="142" y2="200" stroke="#2a2a2a" stroke-width="3"/>
-          <g stroke="#c9a96e" stroke-width="0.7" opacity="0.6"><line x1="182" y1="149" x2="186" y2="154"/><line x1="190" y1="146" x2="194" y2="151"/><line x1="198" y1="146" x2="202" y2="151"/><line x1="206" y1="149" x2="210" y2="154"/></g>
-          <!-- controller -->
-          <rect x="348" y="118" width="162" height="110" rx="2" fill="#0e0e0e" stroke="#1e1e1e" stroke-width="1"/>
-          <text x="429" y="137" text-anchor="middle" fill="#555" font-family="JetBrains Mono,monospace" font-size="7">MOTOR CONTROLLER</text>
-          <circle cx="376" cy="168" r="14" fill="#1a1a1a" stroke="#6b9fbd" stroke-width="1.2"/>
-          <line x1="376" y1="158" x2="382" y2="163" stroke="#6b9fbd" stroke-width="1.5"/>
-          <text x="376" y="190" text-anchor="middle" fill="#444" font-family="JetBrains Mono,monospace" font-size="6">SPEED</text>
-          <rect x="406" y="158" width="18" height="18" rx="1" fill="#181818" stroke="#6b9fbd" stroke-width="1.2"/>
-          <text x="415" y="190" text-anchor="middle" fill="#444" font-family="JetBrains Mono,monospace" font-size="6">DIR</text>
-          <rect x="440" y="152" width="48" height="26" fill="#0a0a0a" stroke="#6b9fbd" stroke-width="1"/>
-          <text x="464" y="169" text-anchor="middle" fill="#7fb37f" font-family="JetBrains Mono,monospace" font-size="8" font-weight="bold">12.4V</text>
-          <text x="464" y="192" text-anchor="middle" fill="#444" font-family="JetBrains Mono,monospace" font-size="6">READOUT</text>
-          <text x="22" y="26" fill="#333" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1.5">DESK AUTOMATION / MECHATRONICS</text>
-        </svg>
-      </div>
-      <div class="pcard-body">
-        <div class="pcard-num">04 / MECHATRONICS</div>
-        <h3 class="pcard-title">Standing Desk<br>Automation</h3>
-        <div class="pcard-meta">Dec 2023 - Aug 2024 / End-to-end build</div>
-        <p class="pcard-desc">Custom 3D-printed helical planetary gearbox sized via system dynamics calculations, paired with a from-scratch motor controller circuit (potentiometer speed control, direction switch, voltage readout), and a bracket designed to mate with existing tapped holes - no new drilling.</p>
-        <div class="pcard-tags">
-          <span class="tag">Gear Design</span>
-          <span class="tag">System Dynamics</span>
-          <span class="tag tag-blue">Electronics</span>
-          <span class="tag">FDM</span>
-        </div>
-        <span class="pcard-arrow">VIEW PROJECT -></span>
-      </div>
-    </a>
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        state.dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+        state.width = rect.width;
+        state.height = rect.height;
+        canvas.width = Math.floor(rect.width * state.dpr);
+        canvas.height = Math.floor(rect.height * state.dpr);
+        ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
+      }
 
-    <!-- 05 ROBOTICS -->
-    <a class="pcard" href="projects/robotics.html">
-      <div class="pcard-vis">
-        <div class="thumb-carousel" aria-hidden="true">
-          <img src="images/vex/vex-u/vex-robot-001.jpg" alt="">
-          <img src="images/vex/vex-u/vex-robot-002.jpg" alt="">
-          <img src="images/vex/vex-u/vex-robot-003.jpg" alt="">
-          <img src="images/vex/vex-u/vex-robot-007.jpg" alt="">
-        </div><svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-          <rect width="560" height="340" fill="#0c0c0c"/>
-          <g stroke="#161616" stroke-width="1"><line x1="0" y1="68" x2="560" y2="68"/><line x1="0" y1="136" x2="560" y2="136"/><line x1="0" y1="204" x2="560" y2="204"/><line x1="0" y1="272" x2="560" y2="272"/><line x1="112" y1="0" x2="112" y2="340"/><line x1="224" y1="0" x2="224" y2="340"/><line x1="336" y1="0" x2="336" y2="340"/><line x1="448" y1="0" x2="448" y2="340"/></g>
-          <!-- 4-bar linkage -->
-          <g stroke="#c9a96e" stroke-width="2" fill="none">
-            <line x1="115" y1="230" x2="195" y2="110"/>
-            <line x1="195" y1="110" x2="315" y2="110"/>
-            <line x1="315" y1="110" x2="235" y2="230"/>
-            <line x1="115" y1="230" x2="235" y2="230"/>
-          </g>
-          <circle cx="115" cy="230" r="5" fill="#c9a96e"/><circle cx="195" cy="110" r="5" fill="#c9a96e"/>
-          <circle cx="315" cy="110" r="5" fill="#c9a96e"/><circle cx="235" cy="230" r="5" fill="#c9a96e"/>
-          <text x="215" y="93" text-anchor="middle" fill="#c9a96e" font-family="JetBrains Mono,monospace" font-size="8">4-BAR LINKAGE</text>
-          <!-- intake roller -->
-          <circle cx="315" cy="110" r="16" fill="none" stroke="#6b9fbd" stroke-width="1.5"/>
-          <text x="340" y="105" fill="#6b9fbd" font-family="JetBrains Mono,monospace" font-size="6.5">INTAKE</text>
-          <!-- chassis -->
-          <rect x="125" y="234" width="240" height="55" rx="3" fill="#161616" stroke="#444" stroke-width="1.5"/>
-          <circle cx="158" cy="295" r="13" fill="#111" stroke="#555" stroke-width="2"/><circle cx="338" cy="295" r="13" fill="#111" stroke="#555" stroke-width="2"/>
-          <!-- award badge -->
-          <g transform="translate(442,130)">
-            <polygon points="0,0 16,28 46,28 24,48 32,80 0,60 -32,80 -24,48 -46,28 -16,28" fill="none" stroke="#c9a96e" stroke-width="1.2" opacity="0.8"/>
-            <text x="0" y="44" text-anchor="middle" fill="#c9a96e" font-family="JetBrains Mono,monospace" font-size="8" font-weight="500">1ST</text>
-          </g>
-          <text x="22" y="26" fill="#333" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1.5">VEX U / WORLD CHAMPIONSHIPS / INNOVATE AWARD</text>
-        </svg>
-      </div>
-      <div class="pcard-body">
-        <div class="pcard-num">05 / LEADERSHIP</div>
-        <h3 class="pcard-title">VEX U Competition<br>Robot</h3>
-        <div class="pcard-meta">2019 - 2022 / President, RIT VEX U Robotics</div>
-        <p class="pcard-desc">Multi-year competition robotics - 4-bar linkage with intake rollers, pivoting deposit tray, drivetrain with independent odometry wheels, and PID controllers for autonomous position correction. Innovate Award at World Championships. Led 15+ member team across hardware and software sub-teams.</p>
-        <div class="pcard-tags">
-          <span class="tag">Mechanism Design</span>
-          <span class="tag tag-blue">PID Controls</span>
-          <span class="tag tag-blue">Odometry</span>
-          <span class="tag">Team Lead</span>
-        </div>
-        <span class="pcard-arrow">VIEW PROJECT -></span>
-      </div>
-    </a>
+      const resizeObserver = new ResizeObserver(resize);
+      resizeObserver.observe(canvas);
+      resize();
 
-  </div>
-</section>
+      function setAmplitudeFromPointer(clientY) {
+        const rect = canvas.getBoundingClientRect();
+        const y = Math.max(0, Math.min(rect.height, clientY - rect.top));
+        const normalized = Math.abs((y / rect.height) - 0.5) * 2;
+        state.targetAmp = 22 + normalized * 82;
+      }
 
-<footer>
-  <span>(c) 2025 Michael Vasquez / Mechanical Engineer</span>
-  <div class="footer-links">
-    <a href="mailto:mvas8037@gmail.com">Email</a>
-    <a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank">LinkedIn</a>
-    <a href="resume.pdf" target="_blank">Resume</a>
-  </div>
-</footer>
+      canvas.addEventListener('mousemove', (event) => setAmplitudeFromPointer(event.clientY));
+      canvas.addEventListener('pointermove', (event) => setAmplitudeFromPointer(event.clientY));
+      canvas.addEventListener('pointerleave', () => {
+        state.targetAmp = 34;
+      });
 
+      function draw() {
+        if (isMobileCanvasDisabled()) {
+          requestAnimationFrame(draw);
+          return;
+        }
+
+        state.phase += prefersReducedMotion ? 0 : 0.014;
+        state.pointerAmp += (state.targetAmp - state.pointerAmp) * 0.045;
+
+        ctx.clearRect(0, 0, state.width, state.height);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(201, 169, 110, 0.15)';
+
+        const waveCount = 6;
+        const startY = state.height * 0.48;
+        const spacing = Math.max(36, state.height * 0.062);
+        const wavelength = Math.max(360, state.width * 0.54);
+
+        for (let i = 0; i < waveCount; i += 1) {
+          const baseY = startY + (i - (waveCount - 1) / 2) * spacing;
+          const amp = state.pointerAmp * (0.72 + i * 0.07);
+          const offset = state.phase * (1 + i * 0.06) + i * 0.78;
+
+          ctx.beginPath();
+          for (let x = -8; x <= state.width + 8; x += 8) {
+            const y = baseY
+              + Math.sin((x / wavelength) * Math.PI * 2 + offset) * amp
+              + Math.sin((x / (wavelength * 0.47)) * Math.PI * 2 - offset * 0.72) * (amp * 0.22);
+
+            if (x === -8) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    function initHelix() {
+      const shell = document.getElementById('helixShell');
+      const world = document.getElementById('helixWorld');
+      const panel = document.getElementById('detailPanel');
+      const backdrop = document.getElementById('panelBackdrop');
+      const closeButton = document.getElementById('closePanel');
+      const detailImage = document.getElementById('detailImage');
+      const detailNumber = document.getElementById('detailNumber');
+      const detailTitle = document.getElementById('detailTitle');
+      const detailMeta = document.getElementById('detailMeta');
+      const detailDescription = document.getElementById('detailDescription');
+      const detailTags = document.getElementById('detailTags');
+      const detailLink = document.getElementById('detailLink');
+
+      if (!shell || !world || !panel) return;
+
+      let rotation = 0;
+      let velocity = 0;
+      let lastTime = performance.now();
+      let isDragging = false;
+      let dragStartX = 0;
+      let dragStartRotation = 0;
+      let dragMoved = false;
+      let dragCardIndex = -1;
+      let focusedIndex = -1;
+      let activePointerId = null;
+      let isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+      projects.forEach((project, index) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'helix-card text-left focus-ring';
+        card.dataset.index = String(index);
+        card.innerHTML = `
+          <img class="project-image" src="${project.image}" alt="${project.title}">
+          <div class="flex flex-1 flex-col p-5">
+            <div class="flex items-center justify-between gap-3 font-mono text-[0.6rem] uppercase tracking-[0.16em]">
+              <span class="text-[#666666]">No. ${project.number}</span>
+              <span class="text-[#c9a96e]">${project.type}</span>
+            </div>
+            <h3 class="mt-4 font-display text-2xl font-bold leading-none text-[#f0f0f0]">${project.shortTitle}</h3>
+            <p class="mt-4 line-clamp-3 text-sm text-[#b8b8b8]">${project.description}</p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              ${project.tags.map((tag, tagIndex) => `<span class="tag ${tagIndex === 0 ? 'tag-accent' : ''}">${tag}</span>`).join('')}
+            </div>
+          </div>
+        `;
+        card.addEventListener('click', () => {
+          if (dragMoved) return;
+          openProject(index);
+        });
+        world.appendChild(card);
+      });
+
+      const cards = Array.from(world.querySelectorAll('.helix-card'));
+
+      function renderCards() {
+        if (isMobile) {
+          cards.forEach((card) => {
+            card.style.transform = 'none';
+            card.classList.toggle('is-focused', Number(card.dataset.index) === focusedIndex);
+            card.classList.remove('is-dimmed');
+          });
+          return;
+        }
+
+        const count = cards.length;
+        cards.forEach((card, index) => {
+          const baseAngle = (360 / count) * index;
+          const theta = rotation + baseAngle;
+          const radians = theta * Math.PI / 180;
+          const ringY = focusedIndex === index ? 0 : Math.sin(radians * 1.2) * 94;
+          const z = focusedIndex === index ? 485 : 360;
+
+          card.style.transform = `rotateY(${theta}deg) translateZ(${z}px) translateY(${ringY}px) rotateY(${-theta}deg)`;
+          card.classList.toggle('is-focused', focusedIndex === index);
+          card.classList.toggle('is-dimmed', focusedIndex !== -1 && focusedIndex !== index);
+        });
+      }
+
+      function animate(now) {
+        const dt = Math.min(0.05, (now - lastTime) / 1000);
+        lastTime = now;
+
+        if (!isMobile && !isDragging && focusedIndex === -1 && !prefersReducedMotion) {
+          rotation += 6 * dt;
+          rotation += velocity * dt;
+          velocity *= 0.94;
+        }
+
+        renderCards();
+        requestAnimationFrame(animate);
+      }
+
+      function openProject(index) {
+        const project = projects[index];
+        focusedIndex = index;
+        detailImage.src = project.image;
+        detailImage.alt = project.title;
+        detailNumber.textContent = `No. ${project.number} / ${project.type}`;
+        detailTitle.textContent = project.title;
+        detailMeta.textContent = project.meta;
+        detailDescription.textContent = project.description;
+        detailTags.innerHTML = project.tags.map((tag, tagIndex) => `<span class="tag ${tagIndex === 0 ? 'tag-accent' : ''}">${tag}</span>`).join('');
+        detailLink.href = project.href;
+        panel.classList.add('is-open');
+        backdrop.classList.add('is-open');
+        panel.setAttribute('aria-hidden', 'false');
+        renderCards();
+      }
+
+      function closeProject() {
+        focusedIndex = -1;
+        panel.classList.remove('is-open');
+        backdrop.classList.remove('is-open');
+        panel.setAttribute('aria-hidden', 'true');
+        renderCards();
+      }
+
+      shell.addEventListener('pointerdown', (event) => {
+        if (isMobile) return;
+        const card = event.target.closest('.helix-card');
+        dragCardIndex = card ? Number(card.dataset.index) : -1;
+        activePointerId = event.pointerId;
+        shell.setPointerCapture(activePointerId);
+        isDragging = true;
+        dragMoved = false;
+        dragStartX = event.clientX;
+        dragStartRotation = rotation;
+        velocity = 0;
+      });
+
+      shell.addEventListener('pointermove', (event) => {
+        if (!isDragging || event.pointerId !== activePointerId || isMobile) return;
+        const dx = event.clientX - dragStartX;
+        if (Math.abs(dx) > 4) dragMoved = true;
+        rotation = dragStartRotation + dx * 0.28;
+      });
+
+      function endDrag(event) {
+        if (!isDragging || event.pointerId !== activePointerId) return;
+        const dx = event.clientX - dragStartX;
+        velocity = dx * 0.018;
+        if (!dragMoved && dragCardIndex !== -1) {
+          openProject(dragCardIndex);
+        }
+        isDragging = false;
+        activePointerId = null;
+        dragCardIndex = -1;
+        window.setTimeout(() => {
+          dragMoved = false;
+        }, 0);
+      }
+
+      shell.addEventListener('pointerup', endDrag);
+      shell.addEventListener('pointercancel', endDrag);
+
+      closeButton.addEventListener('click', closeProject);
+      backdrop.addEventListener('click', closeProject);
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeProject();
+      });
+
+      window.addEventListener('resize', () => {
+        isMobile = window.matchMedia('(max-width: 767px)').matches;
+        renderCards();
+      });
+
+      renderCards();
+      requestAnimationFrame(animate);
+    }
+
+    initWaveform();
+    initHelix();
+  </script>
 </body>
 </html>
