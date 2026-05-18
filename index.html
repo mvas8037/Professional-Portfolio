@@ -444,21 +444,24 @@
 
     .project-quick-links a {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 0.6rem;
       color: var(--text-secondary);
       font-family: 'JetBrains Mono', monospace;
       font-size: clamp(0.54rem, 1.25vw, 0.62rem);
+      line-height: 1.35;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       transition: color 160ms ease;
-      white-space: nowrap;
+      white-space: normal;
+      overflow-wrap: anywhere;
     }
 
     .project-quick-links a::before {
       content: '';
       width: 0.7rem;
       height: 1px;
+      margin-top: 0.58em;
       background: currentColor;
       opacity: 0.35;
       flex-shrink: 0;
@@ -546,65 +549,171 @@
       outline: none;
     }
 
-    .helix-shell {
+    /* === Carousel === */
+    .carousel-shell {
       position: relative;
       z-index: 2;
       min-width: 0;
       min-height: 0;
-      align-self: stretch;
-      perspective: 1200px;
-      perspective-origin: 50% 50%;
-      touch-action: none;
-    }
-
-    .helix-world {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: min(90vw, 900px);
-      height: min(clamp(390px, 54svh, 580px), 100%);
-      transform-style: preserve-3d;
-      overflow: visible;
-    }
-
-    .helix-card {
-      position: absolute;
-      top: 50%;
-      left: 50%;
+      align-self: center;
       display: flex;
       flex-direction: column;
-      width: clamp(250px, 24vw, 300px);
-      min-height: 254px;
-      overflow: hidden;
-      border: 2px solid var(--border);
-      background: var(--card);
-      box-shadow: 0 26px 80px rgba(0, 0, 0, 0.42);
-      transform-style: preserve-3d;
-      transition: border-color 180ms ease, box-shadow 180ms ease, opacity 180ms ease, filter 180ms ease;
-      will-change: transform, opacity;
+      justify-content: center;
+      gap: 0.65rem;
+      touch-action: pan-y;
     }
 
-    .helix-card:hover,
-    .helix-card:focus-visible {
-      border-color: var(--accent);
-      box-shadow: 0 28px 96px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(201, 169, 110, 0.18), 0 0 42px rgba(201, 169, 110, 0.12);
-      outline: none;
+    .carousel-viewport {
+      position: relative;
+      overflow: hidden;
+      flex: 0 0 auto;
+      height: auto;
+      max-height: none;
+      min-height: 0;
+      width: 100%;
+    }
+
+    .carousel-track {
+      display: flex;
+      align-items: flex-start;
+      height: auto;
+      transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .project-card {
+      flex: 0 0 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      background: var(--card);
+      overflow: hidden;
     }
 
     .project-image {
       width: 100%;
-      height: 112px;
+      height: clamp(210px, 30svh, 320px);
       object-fit: cover;
+      object-position: center;
+      display: block;
+      flex-shrink: 0;
+      background: #080808;
       border-bottom: 1px solid var(--border);
-      filter: grayscale(0.15) contrast(1.04) brightness(0.84);
+      filter: grayscale(0.12) contrast(1.04) brightness(0.86);
+    }
+
+    .project-image[data-fit="contain"] {
+      object-fit: contain;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: calc(clamp(210px, 30svh, 320px) + 5.4rem);
+      transform: translateY(-50%);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      border: 0;
+      background: transparent;
+      color: rgba(240, 240, 240, 0.78);
+      cursor: pointer;
+      font-size: 1.72rem;
+      line-height: 1;
+      transition: color 160ms ease, text-shadow 160ms ease, transform 160ms ease;
+    }
+
+    .carousel-arrow:hover {
+      color: var(--accent);
+      text-shadow: 0 0 18px rgba(201, 169, 110, 0.42);
+      transform: translateY(-50%) scale(1.16);
+    }
+
+    .carousel-arrow:focus-visible {
+      color: var(--accent);
+      text-shadow: 0 0 18px rgba(201, 169, 110, 0.42);
+      transform: translateY(-50%) scale(1.16);
+      outline: none;
+    }
+
+    .carousel-arrow-prev { left: 0.5rem; }
+    .carousel-arrow-next { right: 0.5rem; }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .carousel-dot {
+      height: 3px;
+      width: 20px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 220ms ease, width 220ms ease;
+      border: none;
+      padding: 0;
+    }
+
+    .carousel-dot.is-active {
+      background: var(--accent);
+      width: 32px;
+    }
+
+    .card-bottom {
+      margin-top: 0.68rem;
+      padding-top: 0;
+      min-width: 0;
+    }
+
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.38rem;
+      margin-top: 0.52rem;
+      padding: 0.58rem 0.84rem;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #050505;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.54rem, 1.2vw, 0.62rem);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 160ms ease, color 160ms ease, background 160ms ease, transform 160ms ease;
+      white-space: nowrap;
+    }
+
+    .card-cta:hover,
+    .card-cta:focus-visible {
+      border-color: var(--accent);
+      background: #f0d184;
+      color: #050505;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .card-cta-arrow {
+      display: inline-block;
+      animation: ctaArrowPulse 1.15s ease-in-out infinite;
+    }
+
+    @keyframes ctaArrowPulse {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(0.32rem); }
     }
 
     .card-body {
       display: flex;
-      flex: 1;
+      flex: 0 0 auto;
       flex-direction: column;
-      padding: 1rem;
+      min-height: 0;
+      padding: 1rem clamp(4.25rem, 5vw, 4.5rem) 1rem;
     }
 
     .card-meta {
@@ -619,6 +728,10 @@
       text-transform: uppercase;
     }
 
+    .card-meta span {
+      min-width: 0;
+    }
+
     .card-title {
       margin-top: 0.85rem;
       color: var(--text-primary);
@@ -626,6 +739,7 @@
       font-size: clamp(1.18rem, 2.2vw, 1.48rem);
       font-weight: 700;
       line-height: 0.98;
+      overflow-wrap: anywhere;
     }
 
     .card-description {
@@ -643,8 +757,6 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.42rem;
-      margin-top: auto;
-      padding-top: 0.9rem;
     }
 
     .tag {
@@ -675,15 +787,40 @@
         max-width: 33rem;
       }
 
-      .helix-world {
-        width: clamp(560px, 100%, 860px);
-        height: min(clamp(500px, 72svh, 700px), 100%);
+      .carousel-viewport {
+        height: auto;
+        min-height: 0;
       }
     }
 
     @media (max-width: 900px) {
       .project-hints {
         grid-template-columns: repeat(2, max-content);
+      }
+    }
+
+    @media (max-width: 1239px) {
+      #projects.snap-section {
+        height: auto;
+        min-height: 100svh;
+      }
+
+      .helix-section {
+        overflow: visible;
+      }
+
+      .projects-layout {
+        grid-template-rows: auto auto;
+        height: auto;
+        align-items: start;
+      }
+
+      .carousel-shell {
+        align-self: stretch;
+      }
+
+      .site-footer {
+        position: static;
       }
     }
 
@@ -708,7 +845,8 @@
       }
 
       .wave-canvas {
-        display: none;
+        pointer-events: none;
+        touch-action: auto;
       }
 
       .hero-screen {
@@ -765,7 +903,15 @@
       }
 
       .project-quick-links {
-        display: none;
+        display: flex;
+        gap: 0.34rem;
+        margin-top: 0.55rem;
+      }
+
+      .project-quick-links a {
+        gap: 0.42rem;
+        font-size: clamp(0.49rem, 2.1vw, 0.58rem);
+        line-height: 1.32;
       }
 
       .site-footer {
@@ -789,47 +935,44 @@
       }
 
       .project-hints {
-        display: none;
+        display: flex;
+        margin-top: 0.58rem;
+        padding: 0.34rem 0;
+        font-size: clamp(0.46rem, 2vw, 0.54rem);
+        line-height: 1.35;
       }
 
-      .helix-shell {
-        perspective: none;
-        touch-action: auto;
+      .carousel-shell {
+        gap: 0.6rem;
       }
 
-      .helix-world {
-        position: static;
-        top: auto;
-        left: auto;
-        display: grid;
-        width: 100%;
+      .carousel-viewport {
         height: auto;
-        gap: 0.55rem;
-        transform: none;
+        min-height: 0;
       }
 
-      .helix-card {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100%;
-        min-height: 0;
-        border-left: 2px solid rgba(201, 169, 110, 0.32);
-        opacity: 1 !important;
-        filter: none !important;
-        transform: none !important;
+      .carousel-arrow {
+        width: 2.5rem;
+        height: 2.5rem;
+        top: calc(clamp(170px, 48vw, 250px) + 4.65rem);
+        font-size: 1.34rem;
       }
+
+      .carousel-arrow-prev { left: 0.1rem; }
+      .carousel-arrow-next { right: 0.1rem; }
 
       .project-image {
-        display: none;
+        height: clamp(170px, 48vw, 250px);
+        object-fit: contain;
+        object-position: center !important;
       }
 
       .card-body {
-        padding: 0.76rem 0.82rem;
+        padding: 0.72rem 3.3rem;
       }
 
       .card-title {
-        margin-top: 0.48rem;
+        margin-top: 0.4rem;
         font-size: clamp(1rem, 4.2vw, 1.18rem);
         line-height: 1;
       }
@@ -838,22 +981,32 @@
         display: -webkit-box;
         -webkit-line-clamp: 2;
         font-size: 0.74rem;
-        margin-top: 0.42rem;
+        margin-top: 0.38rem;
         color: var(--text-muted);
       }
 
-      .tag-row {
-        gap: 0.35rem;
-        margin-top: 0.56rem;
+      .card-bottom {
+        margin-top: 0.48rem;
         padding-top: 0;
+      }
+
+      .tag-row {
+        gap: 0.3rem;
       }
 
       .tag {
         font-size: 0.46rem;
-        padding: 0.3rem 0.36rem;
+        padding: 0.28rem 0.34rem;
+      }
+
+      .card-cta {
+        margin-top: 0.4rem;
+        padding: 0.4rem 0.68rem;
+        font-size: 0.5rem;
       }
     }
 
+    /* Constrained tablet landscape — tighten carousel viewport */
     @media (min-width: 768px) and (max-width: 1100px) and (max-height: 820px) {
       .projects-layout {
         grid-template-rows: auto minmax(0, 1fr);
@@ -864,63 +1017,21 @@
         font-size: clamp(2.15rem, 5.2vw, 3.05rem);
       }
 
-      .project-hints {
-        display: none;
-      }
-
-      .helix-shell {
-        perspective: none;
-        touch-action: auto;
-      }
-
-      .helix-world {
-        position: static;
-        top: auto;
-        left: auto;
-        display: grid;
-        width: min(100%, 760px);
+      .carousel-viewport {
         height: auto;
-        margin: 0 auto;
-        gap: 0.58rem;
-        transform: none;
+        min-height: 0;
       }
 
-      .helix-card {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100%;
-        min-height: 0;
-        border-left: 2px solid rgba(201, 169, 110, 0.28);
-        opacity: 1 !important;
-        filter: none !important;
-        transform: none !important;
+      .carousel-arrow {
+        top: calc(clamp(170px, 27svh, 220px) + 4.65rem);
       }
 
       .project-image {
-        display: none;
-      }
-
-      .card-body {
-        padding: 0.76rem 0.86rem;
-      }
-
-      .card-title {
-        margin-top: 0.42rem;
-        font-size: 1.16rem;
-        line-height: 1;
-      }
-
-      .card-description {
-        display: none;
-      }
-
-      .tag-row {
-        display: none;
+        height: clamp(170px, 27svh, 220px);
       }
     }
 
-    /* Portrait tablets: any 768–1239px viewport in portrait orientation → list mode */
+    /* Portrait tablets */
     @media (min-width: 768px) and (max-width: 1239px) and (orientation: portrait) {
       .projects-layout {
         grid-template-rows: auto minmax(0, 1fr);
@@ -931,60 +1042,9 @@
         font-size: clamp(2.15rem, 4.8vw, 3.2rem);
       }
 
-      .project-hints {
-        display: none;
-      }
-
-      .helix-shell {
-        perspective: none;
-        touch-action: auto;
-      }
-
-      .helix-world {
-        position: static;
-        top: auto;
-        left: auto;
-        display: grid;
-        width: min(100%, 680px);
+      .carousel-viewport {
         height: auto;
-        margin: 0 auto;
-        gap: 0.55rem;
-        transform: none;
-      }
-
-      .helix-card {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100%;
         min-height: 0;
-        border-left: 2px solid rgba(201, 169, 110, 0.28);
-        opacity: 1 !important;
-        filter: none !important;
-        transform: none !important;
-      }
-
-      .project-image {
-        display: none;
-      }
-
-      .card-body {
-        padding: 0.76rem 0.86rem;
-      }
-
-      .card-title {
-        margin-top: 0.42rem;
-        font-size: 1.12rem;
-        line-height: 1;
-      }
-
-      .card-description {
-        -webkit-line-clamp: 2;
-        font-size: 0.82rem;
-      }
-
-      .tag-row {
-        display: none;
       }
     }
 
@@ -1074,8 +1134,9 @@
         padding-bottom: 0.58rem;
       }
 
-      .helix-world {
-        height: min(clamp(330px, 50svh, 520px), 100%);
+      .carousel-viewport {
+        height: auto;
+        min-height: 0;
       }
     }
 
@@ -1112,7 +1173,7 @@
       }
 
       .tag-row {
-        display: none;
+        display: flex;
       }
     }
 
@@ -1126,6 +1187,10 @@
         animation-iteration-count: 1 !important;
         scroll-behavior: auto !important;
         transition-duration: 0.001ms !important;
+      }
+
+      .card-cta-arrow {
+        animation: none !important;
       }
     }
   </style>
@@ -1191,14 +1256,13 @@
     <section id="projects" class="helix-section snap-section">
       <div class="projects-layout">
         <aside class="projects-intro relative z-10">
-          <div class="projects-eyebrow">Project Index / Helix View</div>
+          <div class="projects-eyebrow">Project Index</div>
           <h2 class="projects-title">Selected mechanical systems.</h2>
           <p class="projects-copy">
             Five builds across biomedical hardware, flight structures, production automation, mechatronics, and competition robotics.
           </p>
           <div class="project-hints">
-            <span>Drag to spin</span>
-            <span>Click to open</span>
+            <span>Tap arrows to cycle between projects</span>
           </div>
           <nav class="project-quick-links" aria-label="All projects">
             <a href="projects/bone-printer.html"><span class="pql-num">01 /</span>&nbsp;Binder-Ink Jet Bone 3D Printer</a>
@@ -1209,8 +1273,13 @@
           </nav>
         </aside>
 
-        <div id="helixShell" class="helix-shell" aria-label="Interactive project helix">
-          <div id="helixWorld" class="helix-world"></div>
+        <div id="carouselShell" class="carousel-shell">
+          <div class="carousel-viewport">
+            <div id="carouselTrack" class="carousel-track"></div>
+            <button id="carouselPrev" class="carousel-arrow carousel-arrow-prev focus-ring" aria-label="Previous project">&#8249;</button>
+            <button id="carouselNext" class="carousel-arrow carousel-arrow-next focus-ring" aria-label="Next project">&#8250;</button>
+          </div>
+          <div id="carouselDots" class="carousel-dots" aria-label="Project position"></div>
         </div>
       </div>
       <footer class="site-footer" aria-label="Site footer">
@@ -1241,7 +1310,8 @@
         type: 'Senior Capstone',
         meta: 'Aug 2024 - Apr 2025 / 8-person team / RevBio',
         href: 'projects/bone-printer.html',
-        image: 'images/bone/bone-assembly-020.jpg',
+        image: 'images/bone/bone-assembly-007.jpg',
+        imagePosition: '50% 43%',
         tags: ['Compliant Mechanisms', 'SolidWorks', 'DFM'],
         description: 'Redesigned the Z-axis sub-assembly and powder containment for a regenerative bone-printing platform built on the open-source OASIS architecture, partnered with RevBio. Replaced precision-machined linear bearing mounts with a 2-DoF compliant coupling, reducing tolerance stack-up and simplifying fabrication.'
       },
@@ -1252,7 +1322,8 @@
         type: 'Personal R&D',
         meta: 'Dec 2024 - Present / From-scratch design',
         href: 'projects/fpv-drone.html',
-        image: 'images/drone/drone-build-001.jpg',
+        image: 'images/drone/drone-build-008.jpg',
+        imagePosition: '50% 50%',
         tags: ['FEA/Ansys', 'MATLAB', 'Sacrificial Design'],
         description: 'Built a custom MATLAB flight simulation, validated it against an external simulator, then used predicted impact forces as FEA inputs. Designed the arms as intentionally sacrificial structural elements so the frame fails in a controlled way before the flight controller stack takes the hit.'
       },
@@ -1264,6 +1335,7 @@
         meta: 'Jan 2023 - Aug 2024 / Manufacturing Engineering',
         href: 'projects/thermofisher.html',
         image: 'images/tf/tf-rack-delatcher-prototype-001.jpg',
+        imagePosition: '50% 50%',
         tags: ['Production Engineering', 'Robot Controls', 'CMM'],
         description: 'Completed two co-op rotations on production lines for laboratory consumables, delivering ten engineering projects from scratch. Work included Epson robot controls integration, ultrasonic weld process improvement, CMM programs, machine redesigns, ShapeGrabber vial inspection, and DOEs on capping failures.'
       },
@@ -1274,7 +1346,8 @@
         type: 'Mechatronics',
         meta: 'Dec 2023 - Aug 2024 / End-to-end build',
         href: 'projects/automated-desk.html',
-        image: 'images/desk/desk-build-013.jpg',
+        image: 'images/desk/desk-build-002.jpg',
+        imagePosition: '50% 52%',
         tags: ['Gear Design', 'System Dynamics', 'Mechatronics'],
         description: 'Built a custom standing desk drive using a 3D-printed helical planetary gearbox sized from system dynamics calculations, a motor controller circuit with potentiometer speed control, direction switching, and voltage readout, plus a bracket that used existing tapped holes.'
       },
@@ -1286,6 +1359,7 @@
         meta: '2019 - 2022 / President, RIT VEX U Robotics',
         href: 'projects/robotics.html',
         image: 'images/vex/vex-u/vex-robot-001.jpg',
+        imagePosition: '50% 38%',
         tags: ['Mechanism Design', 'PID Controls', 'Odometry'],
         description: 'Led multi-year competition robotics work across mechanical and software sub-teams. The robot used a 4-bar linkage with intake rollers, pivoting deposit tray, drivetrain odometry, and PID controllers for autonomous position correction, earning an Innovate Award at World Championships.'
       }
@@ -1310,10 +1384,6 @@
         disturbances: [],
         phase: 0
       };
-
-      function isMobileCanvasDisabled() {
-        return window.matchMedia('(max-width: 767px)').matches;
-      }
 
       function resize() {
         const rect = canvas.getBoundingClientRect();
@@ -1362,11 +1432,6 @@
       });
 
       function draw() {
-        if (isMobileCanvasDisabled()) {
-          requestAnimationFrame(draw);
-          return;
-        }
-
         state.phase += prefersReducedMotion ? 0 : 0.014;
         state.disturbances.forEach((disturbance) => {
           disturbance.strength *= 0.978;
@@ -1426,229 +1491,76 @@
       requestAnimationFrame(draw);
     }
 
-    function initHelix() {
-      const shell = document.getElementById('helixShell');
-      const world = document.getElementById('helixWorld');
-      if (!shell || !world) return;
+    function initCarousel() {
+      const shell = document.getElementById('carouselShell');
+      const track = document.getElementById('carouselTrack');
+      const dotsContainer = document.getElementById('carouselDots');
+      const prevBtn = document.getElementById('carouselPrev');
+      const nextBtn = document.getElementById('carouselNext');
+      if (!shell || !track) return;
 
-      const listQuery = window.matchMedia(
-        '(max-width: 767px), ' +
-        '(min-width: 768px) and (max-width: 1239px) and (orientation: portrait), ' +
-        '(min-width: 768px) and (max-width: 1100px) and (max-height: 820px)'
-      );
-
-      let rotation = -18;
-      let velocity = 0;
-      let lastTime = performance.now();
-      let isDragging = false;
-      let dragStartX = 0;
-      let dragStartRotation = 0;
-      let dragMoved = false;
-      let activePointerId = null;
-      let snapTarget = null;
-      let downCardIndex = -1; // card index captured at pointerdown
-
+      let current = 0;
       const count = projects.length;
-      const anglePerCard = 360 / count;
 
-      // Build cards as interactive divs (not anchor links) so clicks
-      // can be intercepted for spin-to-focus in 3D mode.
-      projects.forEach((project, i) => {
+      // Build carousel cards
+      projects.forEach((project) => {
         const card = document.createElement('div');
-        card.className = 'helix-card focus-ring';
-        card.setAttribute('role', 'button');
-        card.setAttribute('tabindex', '0');
-        card.dataset.index = String(i);
-        card.setAttribute('aria-label', project.title);
+        card.className = 'project-card';
+        card.setAttribute('aria-hidden', 'true');
         card.innerHTML = `
-          <img class="project-image" src="${project.image}" alt="${project.title}">
+          <img class="project-image" src="${project.image}" alt="${project.title}" loading="lazy" style="object-position: ${project.imagePosition || 'center'};">
           <div class="card-body">
             <div class="card-meta">
-              <span class="text-[#666666]">No. ${project.number}</span>
-              <span class="text-[#c9a96e]">${project.type}</span>
+              <span style="color:var(--text-muted)">No. ${project.number}</span>
+              <span style="color:var(--accent)">${project.type}</span>
             </div>
             <h3 class="card-title">${project.shortTitle}</h3>
             <p class="card-description">${project.description}</p>
-            <div class="tag-row">
-              ${project.tags.map((tag, j) => `<span class="tag ${j === 0 ? 'tag-accent' : ''}">${tag}</span>`).join('')}
+            <div class="card-bottom">
+              <div class="tag-row">
+                ${project.tags.map((tag, j) => `<span class="tag ${j === 0 ? 'tag-accent' : ''}">${tag}</span>`).join('')}
+              </div>
+              <a class="card-cta focus-ring" href="${project.href}"><span>Visit project page</span><span class="card-cta-arrow" aria-hidden="true">&rarr;</span></a>
             </div>
           </div>
         `;
-        // List-mode click navigates directly
-        card.addEventListener('click', () => {
-          if (listQuery.matches) window.location.href = projects[i].href;
-        });
-        // Keyboard accessibility
-        card.addEventListener('keydown', (e) => {
-          if (e.key !== 'Enter' && e.key !== ' ') return;
-          e.preventDefault();
-          if (listQuery.matches) {
-            window.location.href = projects[i].href;
-          } else {
-            if (getDepth(i) >= 0.88) window.location.href = projects[i].href;
-            else rotateTo(i);
-          }
-        });
-        world.appendChild(card);
+        track.appendChild(card);
       });
 
-      const cards = Array.from(world.querySelectorAll('.helix-card'));
+      // Build passive position dots; arrows are the only carousel navigation controls.
+      projects.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'carousel-dot' + (i === 0 ? ' is-active' : '');
+        dot.setAttribute('aria-hidden', 'true');
+        dotsContainer.appendChild(dot);
+      });
 
-      function getDepth(index) {
-        const theta = rotation + anglePerCard * index;
-        return (Math.cos(theta * Math.PI / 180) + 1) / 2;
-      }
-
-      // Lerp-animate so card at `index` ends up at the front (cos max)
-      function rotateTo(index) {
-        const base = -anglePerCard * index;
-        let delta = base - rotation;
-        // Normalise to shortest arc in [-180, 180]
-        delta = ((delta % 360) + 540) % 360 - 180;
-        snapTarget = rotation + delta;
-        velocity = 0;
-      }
-
-      function renderCards() {
-        if (listQuery.matches) {
-          cards.forEach((card) => {
-            card.style.opacity = '1';
-            card.style.filter = 'none';
-            card.style.zIndex = 'auto';
-            card.style.pointerEvents = 'auto';
-            card.style.transform = 'none';
-          });
-          return;
-        }
-
-        const worldRect = world.getBoundingClientRect();
-        const cardRect = cards[0]?.getBoundingClientRect();
-        const cardWidth = cardRect?.width || 280;
-        const cardHeight = cardRect?.height || 260;
-        const centerX = worldRect.left + worldRect.width / 2;
-        const centerY = worldRect.top + worldRect.height / 2;
-        const horizontalRoom = Math.max(
-          110,
-          Math.min(
-            (worldRect.width - cardWidth) / 2 - 10,
-            centerX - cardWidth / 2 - 10,
-            window.innerWidth - centerX - cardWidth / 2 - 10
-          )
-        );
-        const verticalRoom = Math.max(
-          40,
-          Math.min(
-            (worldRect.height - cardHeight) / 2 - 14,
-            centerY - cardHeight / 2 - 10,
-            window.innerHeight - centerY - cardHeight / 2 - 10
-          )
-        );
-        const orbit = Math.max(130, Math.min(horizontalRoom, window.innerWidth * 0.24, 320));
-        const pitch = Math.max(40, Math.min(verticalRoom, window.innerHeight * 0.18, 160));
-
-        cards.forEach((card, i) => {
-          const theta = rotation + anglePerCard * i;
-          const radians = theta * Math.PI / 180;
-          const depth = (Math.cos(radians) + 1) / 2;
-          const y = Math.sin(radians * 1.18) * pitch;
-
-          // Always fully opaque — depth shown only via brightness/saturation
-          card.style.opacity = '1';
-          card.style.filter = `saturate(${(0.72 + depth * 0.28).toFixed(3)}) brightness(${(0.86 + depth * 0.14).toFixed(3)})`;
-          card.style.zIndex = String(Math.round(depth * 100));
-          card.style.pointerEvents = depth < 0.08 ? 'none' : 'auto';
-          card.style.transform = `translate(-50%, -50%) rotateY(${theta}deg) translateZ(${orbit}px) translateY(${y}px) rotateY(${-theta}deg)`;
+      function updateUI() {
+        track.style.transform = 'translateX(' + (-current * 100) + '%)';
+        dotsContainer.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+          dot.classList.toggle('is-active', i === current);
+        });
+        track.querySelectorAll('.project-card').forEach((card, i) => {
+          card.classList.toggle('is-active', i === current);
+          card.setAttribute('aria-hidden', i === current ? 'false' : 'true');
         });
       }
 
-      function animate(now) {
-        const dt = Math.min(0.05, (now - lastTime) / 1000);
-        lastTime = now;
-
-        if (!listQuery.matches) {
-          if (snapTarget !== null) {
-            // Lerp toward snap target
-            const diff = snapTarget - rotation;
-            if (Math.abs(diff) < 0.18) {
-              rotation = snapTarget;
-              snapTarget = null;
-            } else {
-              rotation += diff * 0.12;
-            }
-            velocity = 0;
-          } else if (!isDragging && !prefersReducedMotion) {
-            rotation += 5.2 * dt;
-            rotation += velocity * dt;
-            velocity *= 0.94;
-          }
-        }
-
-        renderCards();
-        requestAnimationFrame(animate);
+      function goTo(index) {
+        current = (index + count) % count;
+        updateUI();
       }
 
-      // --- Drag handling via document-level listeners for reliable capture ---
-      // NOTE: We do NOT use setPointerCapture here because pointer capture
-      // redirects e.target to the capturing element, breaking e.target.closest()
-      // in the pointerup handler. Instead, we record the card at pointerdown time.
-      shell.addEventListener('pointerdown', (e) => {
-        if (listQuery.matches) return;
-        // Record which card the user pressed — before any capture changes e.target
-        const dc = e.target && e.target.closest ? e.target.closest('.helix-card') : null;
-        downCardIndex = dc ? parseInt(dc.dataset.index, 10) : -1;
-        activePointerId = e.pointerId;
-        isDragging = true;
-        dragMoved = false;
-        dragStartX = e.clientX;
-        dragStartRotation = rotation;
-        velocity = 0;
-        snapTarget = null;
-      });
+      if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
 
-      document.addEventListener('pointermove', (e) => {
-        if (!isDragging || e.pointerId !== activePointerId) return;
-        const dx = e.clientX - dragStartX;
-        if (Math.abs(dx) > 4) dragMoved = true;
-        rotation = dragStartRotation + dx * 0.28;
-      });
-
-      document.addEventListener('pointerup', (e) => {
-        if (!isDragging || e.pointerId !== activePointerId) return;
-        const dx = e.clientX - dragStartX;
-        isDragging = false;
-        activePointerId = null;
-
-        if (!dragMoved && downCardIndex >= 0) {
-          // Pure click on a card
-          const i = downCardIndex;
-          downCardIndex = -1;
-          if (getDepth(i) >= 0.88) {
-            window.location.href = projects[i].href;
-          } else {
-            rotateTo(i);
-          }
-        } else {
-          downCardIndex = -1;
-          if (dragMoved) velocity = dx * 0.018;
-        }
-      });
-
-      document.addEventListener('pointercancel', (e) => {
-        if (!isDragging || e.pointerId !== activePointerId) return;
-        isDragging = false;
-        activePointerId = null;
-      });
-
-      window.addEventListener('resize', renderCards);
-      renderCards();
-      requestAnimationFrame(animate);
+      updateUI();
     }
 
     function initScrollSnap() {
       const sections = Array.from(document.querySelectorAll('.snap-section'));
       if (sections.length < 2) return;
 
-      const container = document.body;
       let currentIndex = 0;
       let isAnimating = false;
       let lastWheelTime = 0;
@@ -1695,7 +1607,25 @@
         requestAnimationFrame(step);
       }
 
+      function syncCurrentIndex() {
+        const midpoint = window.scrollY + window.innerHeight * 0.5;
+        currentIndex = midpoint >= sections[1].offsetTop ? 1 : 0;
+      }
+
+      function shouldUseNativeProjectScroll(deltaY) {
+        const lastSection = sections[sections.length - 1];
+        const sectionTop = lastSection.offsetTop;
+        const sectionBottom = sectionTop + lastSection.offsetHeight;
+        const hasOverflow = lastSection.offsetHeight > window.innerHeight + 4;
+        if (!hasOverflow || currentIndex !== sections.length - 1) return false;
+        if (deltaY > 0 && window.scrollY + window.innerHeight < sectionBottom - 2) return true;
+        if (deltaY < 0 && window.scrollY > sectionTop + 2) return true;
+        return false;
+      }
+
       window.addEventListener('wheel', (event) => {
+        syncCurrentIndex();
+        if (shouldUseNativeProjectScroll(event.deltaY)) return;
         event.preventDefault();
         if (isAnimating) return;
         const now = performance.now();
@@ -1714,6 +1644,8 @@
         const dY = touchStartY - event.changedTouches[0].clientY;
         const dX = Math.abs(event.changedTouches[0].clientX - touchStartX);
         if (Math.abs(dY) > 48 && Math.abs(dY) > dX * 1.4) {
+          syncCurrentIndex();
+          if (shouldUseNativeProjectScroll(dY)) return;
           if (dY > 0) snapToIndex(currentIndex + 1);
           else snapToIndex(currentIndex - 1);
         }
@@ -1721,9 +1653,13 @@
 
       window.addEventListener('keydown', (event) => {
         if (['ArrowDown', 'PageDown'].includes(event.key)) {
+          syncCurrentIndex();
+          if (shouldUseNativeProjectScroll(1)) return;
           event.preventDefault();
           if (!isAnimating) snapToIndex(currentIndex + 1);
         } else if (['ArrowUp', 'PageUp'].includes(event.key)) {
+          syncCurrentIndex();
+          if (shouldUseNativeProjectScroll(-1)) return;
           event.preventDefault();
           if (!isAnimating) snapToIndex(currentIndex - 1);
         }
@@ -1756,7 +1692,7 @@
     }
 
     initWaveform();
-    initHelix();
+    initCarousel();
     initScrollSnap();
   </script>
 </body>
