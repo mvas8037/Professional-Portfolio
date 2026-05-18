@@ -22,7 +22,7 @@
     .nav-logo { font-family: var(--syne); font-weight: 700; font-size: 1rem; color: var(--heading); text-decoration: none; }
     .nav-logo span { color: var(--accent); }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-family: var(--mono); font-size: 0.68rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a { font-family: var(--mono); font-size: 0.68rem; color: #777; text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
     .nav-item { position: relative; }
     .project-menu { position: absolute; top: calc(100% + 0.75rem); left: 50%; transform: translateX(-50%) translateY(-6px); min-width: 230px; background: rgba(14,14,14,0.98); border: 1px solid var(--border); padding: 0.45rem; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; box-shadow: 0 18px 60px rgba(0,0,0,0.35); }
@@ -30,7 +30,7 @@
     .project-menu a { display: block; padding: 0.7rem 0.8rem; color: var(--body); border-bottom: 1px solid var(--border); white-space: nowrap; }
     .project-menu a:last-child { border-bottom: none; }
     .project-menu a:hover { background: var(--card-hi); color: var(--accent); }
-    .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
     .eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
     .eyebrow-line { width: 28px; height: 1px; background: var(--accent); }
     .eyebrow-text { font-family: var(--mono); font-size: 0.66rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; }
@@ -121,7 +121,7 @@
     .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
     .footer-links a:hover { color: var(--accent); }
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1rem; } .project-menu { left: auto; right: 0; transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu { transform: translateY(0); }
+      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1rem; } .project-menu { position: fixed; left: auto; right: 1rem; top: 4rem; width: min(16rem, calc(100vw - 2rem)); transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu { transform: translateY(0); }
       .project-hero, .wrap, .proj-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
       .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
       .proj-stats { grid-template-columns: 1fr 1fr; }
@@ -352,5 +352,25 @@
   <span>(c) 2025 Michael Vasquez</span>
   <div class="footer-links"><a href="mailto:mvas8037@gmail.com">Email</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank">LinkedIn</a></div>
 </footer>
+<script>
+  document.querySelectorAll('.nav-projects').forEach((item) => {
+    const trigger = item.querySelector('a');
+    if (!trigger) return;
+    trigger.addEventListener('click', (event) => {
+      if (!window.matchMedia('(max-width: 768px)').matches) return;
+      if (!item.classList.contains('is-open')) {
+        event.preventDefault();
+        document.querySelectorAll('.nav-projects.is-open').forEach((openItem) => {
+          if (openItem !== item) openItem.classList.remove('is-open');
+        });
+        item.classList.add('is-open');
+      }
+    });
+  });
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('.nav-projects')) return;
+    document.querySelectorAll('.nav-projects.is-open').forEach((item) => item.classList.remove('is-open'));
+  });
+</script>
 </body>
 </html>
