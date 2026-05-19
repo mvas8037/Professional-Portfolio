@@ -1,12 +1,11 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bone 3D Printer - Michael Vasquez</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500&amp;family=JetBrains+Mono:wght@300;400&amp;display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -132,6 +131,19 @@
       footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
     }
   </style>
+  <style>
+    html.lightbox-open,
+    html.lightbox-open body { overflow: hidden; }
+    .project-media img { cursor: zoom-in; }
+    .image-lightbox { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: clamp(1rem, 3vw, 2.5rem); background: rgba(0, 0, 0, 0.88); opacity: 0; pointer-events: none; transition: opacity 0.18s ease; }
+    .image-lightbox.is-open { opacity: 1; pointer-events: auto; }
+    .image-lightbox-panel { width: min(100%, 1180px); max-height: 92vh; display: grid; gap: 0.85rem; }
+    .image-lightbox-img { width: 100%; max-height: 82vh; object-fit: contain; background: #050505; border: 1px solid rgba(255,255,255,0.16); box-shadow: 0 24px 80px rgba(0,0,0,0.5); cursor: zoom-out; }
+    .image-lightbox-caption { font-family: var(--mono); font-size: 0.68rem; line-height: 1.6; color: var(--body); letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+    .image-lightbox-close { position: fixed; top: 1rem; right: 1rem; width: 2.8rem; height: 2.8rem; border: 1px solid rgba(255,255,255,0.18); background: rgba(12,12,12,0.72); color: var(--heading); font-size: 1.6rem; line-height: 1; cursor: pointer; }
+    .image-lightbox-close:hover,
+    .image-lightbox-close:focus-visible { color: var(--accent); border-color: rgba(201,169,110,0.65); outline: none; }
+  </style>
 </head>
 <body>
 <nav>
@@ -146,9 +158,9 @@
         <a href="robotics.html">VEX Robotics</a>
       </div>
     </li>
-    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#about">About</a></li>
     <li><a href="../resume.pdf" target="_blank">Resume</a></li>
-    <li><a href="../about.html#contact">Contact</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
   </ul>
 </nav>
 
@@ -164,7 +176,7 @@
   </div>
 </div>
 <div class="role-strip">
-  <span class="role-label">My Scope -></span>
+  <span class="role-label">My Scope -&gt;</span>
   <span class="role-content"><strong style="color:var(--heading)">Z-axis sub-assembly</strong> / <strong style="color:var(--heading)">base plate</strong> / <strong style="color:var(--heading)">piston outer sleeve redesign</strong> - owned mechanical design, prototyping, and validation for these subsystems.</span>
 </div>
 
@@ -180,7 +192,7 @@
         <p>The starting printer was too small for the client's intended scaffold sizes, so the platform had to be scaled up and redesigned around the material handling, powder containment, and tolerance realities of mostly 3D-printed hardware.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/home/home-005.jpg" alt="Michael Vasquez standing next to the completed binder-jet bone printer"><figcaption>Completed capstone printer presented at the final review.</figcaption></figure>
+        <figure class="project-media"><img src="../images/home/home-005.jpg" alt="Michael Vasquez standing next to the completed binder-jet bone printer"><figcaption>Completed capstone printer presented at Imagine RIT.</figcaption></figure>
       </div>
     </div>
     <div class="story-block reverse">
@@ -192,7 +204,7 @@
       </div>
       <div class="story-media">
         <figure class="project-media"><img src="../images/home/home-002.jpg" alt="Full CAD assembly of the binder-jet bone printer"><figcaption>Full CAD assembly used to coordinate the scaled printer.</figcaption></figure>
-        <figure class="project-media"><img src="../images/bone/bone-assembly-007.jpg" alt="Orange redesigned printer next to the blue original printer design"><figcaption>Scaled redesign shown against the original OASIS-sized layout.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/Final Project Board - MSD.png" alt="Orange redesigned printer next to the blue original printer design"><figcaption>Project Overview</figcaption></figure>
       </div>
     </div>
     <div class="story-block">
@@ -214,25 +226,25 @@
     <p class="lead">The original print bed and powder reservoir were too small for RevBio's requirements, so the Z-axis had to scale by roughly 75%. That exposed the core design problem: tolerance stack-up in FDM parts gets worse as the printer gets larger.</p>
     <div class="story-block">
       <div class="story-copy">
-        <div class="story-kicker">Original Piston Sleeve</div>
-        <div class="story-title">The first sleeve constrained the piston instead of guiding it.</div>
-        <p>The original sleeve did not leave enough room for manufacturing and assembly variation. During testing, the piston head bound against the sleeve and resisted linear travel, creating inconsistent Z-axis motion.</p>
-        <p>Rather than forcing every printed part to be perfect, the redesign needed to tolerate small alignment errors and still move cleanly.</p>
+        <div class="story-kicker">Original Z-Axis</div>
+        <div class="story-title">Smaller Sleeve and Coupling</div>
+        <p>The original sleeve did not leave enough room for manufacturing and assembly variation when scaled up. During testing, the piston head bound against the sleeve and resisted linear travel, creating inconsistent Z-axis motion.</p>
+        <p>Rather than forcing every printed part to be perfect, the redesign needed to tolerate small alignment errors and still move cleanly. Although machined components would resolve these issues, price and lead times were a big constraint for the project. </p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/bone/bone-assembly-022.jpg" alt="Original piston sleeve and Z-axis reservoir assembly"><figcaption>Original piston sleeve area where tolerance stack-up caused binding.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-014.jpg" alt="Original piston sleeve and Z-axis reservoir assembly"><figcaption>Original piston sleeve (clear part) that was significantly smaller than the final design</figcaption></figure>
       </div>
     </div>
     <div class="story-block reverse">
       <div class="story-copy">
-        <div class="story-kicker">Redesigned Piston Sleeve</div>
-        <div class="story-title">A 2-DoF compliant coupling lets the piston self-align.</div>
-        <p>I redesigned the sleeve around a compliant coupling that can pivot slightly about two axes. That small motion accommodates imperfections from printed parts and assembly without adding precision-machined bearing mounts.</p>
+        <div class="story-kicker">Redesigned Linear Motion Bearings</div>
+        <div class="story-title">2 DoF Compliant Coupling</div>
+        <p>I redesigned the z-axis around a compliant coupling that can pivot slightly about two axes. That small motion accommodates imperfections from printed parts and assembly without adding precision-machined bearing mounts.</p>
         <p>The result was lower cost, fewer sensitive interfaces, and much smoother piston travel through the Z-axis stroke.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/bone/bone-assembly-020.jpg" alt="Redesigned piston sleeve with compliant interface"><figcaption>Redesigned piston sleeve and compliant interface for smoother motion.</figcaption></figure>
-        <figure class="project-media"><img src="../images/bone/bone-assembly-017.jpg" alt="Compliant coupling section view with linear bearings"><figcaption>Section view of the coupling and bearing package.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-015.jpg" alt="Redesigned piston sleeve with compliant interface"><figcaption>Redesigned piston sleeve and compliant interface for smoother motion.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-018.jpg" alt="Compliant coupling section view with linear bearings"><figcaption>Section view of the coupling and bearing package.</figcaption></figure>
       </div>
     </div>
     <div class="two-col">
@@ -252,7 +264,7 @@
         <p>That small shape error was enough to create friction, fitment issues, and another tolerance stack-up problem in the piston assembly.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/bone/bone-assembly-012.jpg" alt="Outer sleeve tube issue and piston fitment"><figcaption>Outer sleeve fitment issue caused by dimensional variation in the UHMW tube.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/UMHW Sleeve .png" alt="Outer sleeve tube issue and piston fitment"><figcaption>Original UMHW Sleeve in white. Did not meet manufactuerer specifications, and no other off the shelf components met the exact dimensions required.</figcaption></figure>
       </div>
     </div>
     <div class="story-block reverse">
@@ -263,8 +275,8 @@
         <p>The second version wrapped more of the circumference, but the approach still could not hold the precision needed for reliable piston motion.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/bone/bone-assembly-014.jpg" alt="Expandable wedge concept for the piston sleeve"><figcaption>First expandable wedge concept for correcting the sleeve shape.</figcaption></figure>
-        <figure class="project-media"><img src="../images/bone/bone-assembly-008.jpg" alt="Second expandable wedge iteration around the sleeve"><figcaption>Second iteration increased circumferential contact but still lacked precision.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-wire-label-001.jpg" alt="Expandable wedge concept for the piston sleeve"><figcaption>First expandable wedge concept for correcting the sleeve shape.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-004.jpg" alt="Second expandable wedge iteration around the sleeve"><figcaption>Second iteration increased circumferential contact but still lacked precision.</figcaption></figure>
       </div>
     </div>
     <div class="story-block">
@@ -275,8 +287,8 @@
         <p>That adjustability matters in prototyping: it saves time, avoids repeatedly reprinting large parts, and lets the assembly be tuned around real hardware instead of ideal CAD dimensions.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/bone/bone-assembly-015.jpg" alt="Split outer sleeve redesign for shim adjustability"><figcaption>Final split sleeve concept with shim-adjustable geometry.</figcaption></figure>
-        <figure class="project-media"><img src="../images/bone/bone-assembly-006.jpg" alt="Outer sleeve installed into the bone printer piston assembly"><figcaption>Installed sleeve and piston interface after redesign.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-010.jpg" alt="Split outer sleeve redesign for shim adjustability"><figcaption>Final split sleeve concept with shim-adjustable geometry.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-002.jpg" alt="Outer sleeve installed into the bone printer piston assembly"><figcaption>Installed sleeve and piston interface after redesign.</figcaption></figure>
       </div>
     </div>
   </div>
@@ -292,7 +304,7 @@
         <p>The redesign preserved smooth vertical travel while supporting the larger powder volume needed for RevBio's scaffold experiments.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/bone/bone-assembly-004.jpg" alt="Original piston head design for the bone printer"><figcaption>Original piston head used as the baseline for sizing.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-023.jpg" alt="Original piston head design for the bone printer"><figcaption>Original piston head used as the baseline for sizing.</figcaption></figure>
       </div>
     </div>
     <div class="story-block reverse">
@@ -303,8 +315,8 @@
         <p>The section views also show how the motor is packaged inside the piston head to keep the mechanism compact and serviceable.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/bone/bone-assembly-010.jpg" alt="Redesigned piston head with embedded stepper motor"><figcaption>Redesigned piston head with embedded stepper motor.</figcaption></figure>
-        <figure class="project-media"><img src="../images/bone/bone-assembly-009.jpg" alt="Section view of lead screw and flexible coupling"><figcaption>Lead screw, lead nut, and flexible coupling alignment detail.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-021.jpg" alt="Redesigned piston head with embedded stepper motor"><figcaption>Redesigned piston head with embedded stepper motor.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-013.jpg" alt="Section view of lead screw and flexible coupling"><figcaption>Lead screw, lead nut, and flexible coupling alignment detail.</figcaption></figure>
       </div>
     </div>
   </div>
@@ -320,8 +332,8 @@
         <p>The base plate was pocketed on the underside to improve positional repeatability, so service work could happen without losing the alignment the printer depends on.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/bone/bone-assembly-016.jpg" alt="H-frame base plate support under the piston assembly"><figcaption>H-frame support and base plate packaging for the Z-axis assembly.</figcaption></figure>
-        <figure class="project-media"><img src="../images/bone/bone-assembly-023.jpg" alt="Base plate pocketing and underside locating features"><figcaption>Pocketed underside features improve service repeatability.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-003.jpg" alt="H-frame base plate support under the piston assembly"><figcaption>H-frame support and base plate packaging for the Z-axis assembly.</figcaption></figure>
+        <figure class="project-media"><img src="../images/bone/bone-assembly-005.jpg" alt="Base plate pocketing and underside locating features"><figcaption>Pocketed underside features improve service repeatability.</figcaption></figure>
       </div>
     </div>
   </div>
@@ -345,8 +357,8 @@
 </div>
 
 <div class="proj-nav">
-  <a href="../index.html"><- All Projects</a>
-  <a href="fpv-drone.html">Next: FPV Drone -></a>
+  <a href="../index.html">&lt;- All Projects</a>
+  <a href="fpv-drone.html">Next: FPV Drone -&gt;</a>
 </div>
 <footer>
   <span>(c) 2025 Michael Vasquez</span>
@@ -372,5 +384,53 @@
     document.querySelectorAll('.nav-projects.is-open').forEach((item) => item.classList.remove('is-open'));
   });
 </script>
-</body>
-</html>
+<script>
+  (() => {
+    const images = Array.from(document.querySelectorAll('.project-media img'));
+    if (!images.length) return;
+
+    const lightbox = document.createElement('div');
+    lightbox.className = 'image-lightbox';
+    lightbox.setAttribute('role', 'dialog');
+    lightbox.setAttribute('aria-modal', 'true');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightbox.innerHTML = '<button class="image-lightbox-close" type="button" aria-label="Close expanded image">&times;</button><div class="image-lightbox-panel"><img class="image-lightbox-img" alt=""><div class="image-lightbox-caption"></div></div>';
+    document.body.appendChild(lightbox);
+
+    const expandedImg = lightbox.querySelector('.image-lightbox-img');
+    const caption = lightbox.querySelector('.image-lightbox-caption');
+    const closeBtn = lightbox.querySelector('.image-lightbox-close');
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('lightbox-open');
+    };
+
+    images.forEach((img) => {
+      img.addEventListener('click', () => {
+        const figureCaption = img.closest('.project-media')?.querySelector('figcaption')?.textContent || '';
+        expandedImg.src = img.currentSrc || img.src;
+        expandedImg.alt = img.alt || figureCaption || 'Expanded project image';
+        caption.textContent = figureCaption;
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.documentElement.classList.add('lightbox-open');
+        closeBtn.focus();
+      });
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    expandedImg.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+    });
+  })();
+</script>
+
+
+
+</body></html>

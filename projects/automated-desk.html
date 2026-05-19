@@ -130,6 +130,19 @@
       footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
     }
   </style>
+  <style>
+    html.lightbox-open,
+    html.lightbox-open body { overflow: hidden; }
+    .project-media img { cursor: zoom-in; }
+    .image-lightbox { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: clamp(1rem, 3vw, 2.5rem); background: rgba(0, 0, 0, 0.88); opacity: 0; pointer-events: none; transition: opacity 0.18s ease; }
+    .image-lightbox.is-open { opacity: 1; pointer-events: auto; }
+    .image-lightbox-panel { width: min(100%, 1180px); max-height: 92vh; display: grid; gap: 0.85rem; }
+    .image-lightbox-img { width: 100%; max-height: 82vh; object-fit: contain; background: #050505; border: 1px solid rgba(255,255,255,0.16); box-shadow: 0 24px 80px rgba(0,0,0,0.5); cursor: zoom-out; }
+    .image-lightbox-caption { font-family: var(--mono); font-size: 0.68rem; line-height: 1.6; color: var(--body); letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+    .image-lightbox-close { position: fixed; top: 1rem; right: 1rem; width: 2.8rem; height: 2.8rem; border: 1px solid rgba(255,255,255,0.18); background: rgba(12,12,12,0.72); color: var(--heading); font-size: 1.6rem; line-height: 1; cursor: pointer; }
+    .image-lightbox-close:hover,
+    .image-lightbox-close:focus-visible { color: var(--accent); border-color: rgba(201,169,110,0.65); outline: none; }
+  </style>
 </head>
 <body>
 <nav>
@@ -144,9 +157,9 @@
         <a href="robotics.html">VEX Robotics</a>
       </div>
     </li>
-    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#about">About</a></li>
     <li><a href="../resume.pdf" target="_blank">Resume</a></li>
-    <li><a href="../about.html#contact">Contact</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
   </ul>
 </nav>
 <div class="project-hero">
@@ -284,5 +297,51 @@
     if (event.target.closest('.nav-projects')) return;
     document.querySelectorAll('.nav-projects.is-open').forEach((item) => item.classList.remove('is-open'));
   });
+</script>
+<script>
+  (() => {
+    const images = Array.from(document.querySelectorAll('.project-media img'));
+    if (!images.length) return;
+
+    const lightbox = document.createElement('div');
+    lightbox.className = 'image-lightbox';
+    lightbox.setAttribute('role', 'dialog');
+    lightbox.setAttribute('aria-modal', 'true');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightbox.innerHTML = '<button class="image-lightbox-close" type="button" aria-label="Close expanded image">&times;</button><div class="image-lightbox-panel"><img class="image-lightbox-img" alt=""><div class="image-lightbox-caption"></div></div>';
+    document.body.appendChild(lightbox);
+
+    const expandedImg = lightbox.querySelector('.image-lightbox-img');
+    const caption = lightbox.querySelector('.image-lightbox-caption');
+    const closeBtn = lightbox.querySelector('.image-lightbox-close');
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('lightbox-open');
+    };
+
+    images.forEach((img) => {
+      img.addEventListener('click', () => {
+        const figureCaption = img.closest('.project-media')?.querySelector('figcaption')?.textContent || '';
+        expandedImg.src = img.currentSrc || img.src;
+        expandedImg.alt = img.alt || figureCaption || 'Expanded project image';
+        caption.textContent = figureCaption;
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.documentElement.classList.add('lightbox-open');
+        closeBtn.focus();
+      });
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    expandedImg.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+    });
+  })();
 </script>
 </body></html>
