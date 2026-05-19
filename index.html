@@ -49,6 +49,7 @@
     html {
       background: var(--bg);
       scroll-behavior: auto;
+      overscroll-behavior-y: none;
     }
 
     body {
@@ -60,6 +61,7 @@
       line-height: 1.55;
       overflow-x: hidden;
       overflow-y: scroll;
+      overscroll-behavior-y: none;
       cursor: crosshair;
       -webkit-font-smoothing: antialiased;
     }
@@ -2199,27 +2201,51 @@
       }
 
       function shouldRequireStartedAtEdge(section) {
-        return section?.id === 'projects';
+        return section?.id === 'projects' || section?.id === 'about';
+      }
+
+      function getSectionState(index) {
+        const section = sections[index];
+        if (!section) return null;
+        const top = section.offsetTop;
+        const bottom = top + section.offsetHeight;
+        const maxScroll = Math.max(top, bottom - window.innerHeight);
+        return {
+          section,
+          top,
+          bottom,
+          maxScroll,
+          hasOverflow: section.offsetHeight > window.innerHeight + 4,
+          atLowerEdge: window.scrollY + window.innerHeight >= bottom - 2,
+          atUpperEdge: window.scrollY <= top + 2,
+          startedAtLowerEdge: touchStartScrollY + window.innerHeight >= bottom - 2,
+          startedAtUpperEdge: touchStartScrollY <= top + 2
+        };
       }
 
       function shouldSnapFromTouch(deltaY) {
-        const section = sections[touchSectionIndex];
-        if (!section) return false;
-        const sectionTop = section.offsetTop;
-        const sectionBottom = sectionTop + section.offsetHeight;
-        const hasOverflow = section.offsetHeight > window.innerHeight + 4;
+        const state = getSectionState(touchSectionIndex);
+        if (!state) return false;
         const movingDown = deltaY > 0;
         const movingUp = deltaY < 0;
-        const atLowerEdge = window.scrollY + window.innerHeight >= sectionBottom - 2;
-        const atUpperEdge = window.scrollY <= sectionTop + 2;
-        const startedAtLowerEdge = touchStartScrollY + window.innerHeight >= sectionBottom - 2;
-        const startedAtUpperEdge = touchStartScrollY <= sectionTop + 2;
-        if (!hasOverflow) return movingDown || movingUp;
-        if (shouldRequireStartedAtEdge(section)) {
-          return (movingDown && startedAtLowerEdge) || (movingUp && startedAtUpperEdge);
+        if (!state.hasOverflow) return movingDown || movingUp;
+        if (shouldRequireStartedAtEdge(state.section)) {
+          return (movingDown && state.startedAtLowerEdge) || (movingUp && state.startedAtUpperEdge);
         }
-        return (movingDown && (atLowerEdge || startedAtLowerEdge))
-          || (movingUp && (atUpperEdge || startedAtUpperEdge));
+        return (movingDown && (state.atLowerEdge || state.startedAtLowerEdge))
+          || (movingUp && (state.atUpperEdge || state.startedAtUpperEdge));
+      }
+
+      function clampToTouchSection() {
+        const state = getSectionState(touchSectionIndex);
+        if (!state || !state.hasOverflow || !shouldRequireStartedAtEdge(state.section)) return;
+        if (touchStartScrollY > state.top + 2 && touchStartScrollY < state.maxScroll - 2) {
+          if (window.scrollY < state.top) window.scrollTo(0, state.top);
+          else if (window.scrollY > state.maxScroll) window.scrollTo(0, state.maxScroll);
+          return;
+        }
+        if (!state.startedAtUpperEdge && window.scrollY < state.top) window.scrollTo(0, state.top);
+        if (!state.startedAtLowerEdge && window.scrollY > state.maxScroll) window.scrollTo(0, state.maxScroll);
       }
 
       window.addEventListener('wheel', (event) => {
@@ -2251,24 +2277,45 @@
         if (event.touches.length !== 1) return;
         const dY = touchStartY - event.touches[0].clientY;
         const dX = Math.abs(event.touches[0].clientX - touchStartX);
-        if (Math.abs(dY) <= 24 || Math.abs(dY) <= dX * 1.25) return;
-        const touchSection = sections[touchSectionIndex];
-        if (shouldRequireStartedAtEdge(touchSection)) {
-          const sectionTop = touchSection.offsetTop;
-          const sectionBottom = sectionTop + touchSection.offsetHeight;
-          const startedAtLowerEdge = touchStartScrollY + window.innerHeight >= sectionBottom - 2;
-          const startedAtUpperEdge = touchStartScrollY <= sectionTop + 2;
-          if (dY > 0 && !startedAtLowerEdge && window.scrollY + window.innerHeight >= sectionBottom - 2) {
+        if (Math.abs(dY) <= 8 || Math.abs(dY) <= dX * 1.15) return;
+
+        const state = getSectionState(touchSectionIndex);
+        if (!state) return;
+
+        if (!state.hasOverflow) {
+          event.preventDefault();
+          if (Math.abs(dY) <= 42) return;
+          const nextIndex = dY > 0 ? touchSectionIndex + 1 : touchSectionIndex - 1;
+          if (nextIndex < 0 || nextIndex >= sections.length) return;
+          touchSnapFired = true;
+          snapToIndex(nextIndex);
+          return;
+        }
+
+        if (shouldRequireStartedAtEdge(state.section)) {
+          const startedAtExitEdge = (dY > 0 && state.startedAtLowerEdge) || (dY < 0 && state.startedAtUpperEdge);
+          if (startedAtExitEdge) {
             event.preventDefault();
-            window.scrollTo(0, sectionBottom - window.innerHeight);
+            if (Math.abs(dY) <= 42) return;
+            const nextIndex = dY > 0 ? touchSectionIndex + 1 : touchSectionIndex - 1;
+            if (nextIndex < 0 || nextIndex >= sections.length) return;
+            touchSnapFired = true;
+            snapToIndex(nextIndex);
             return;
           }
-          if (dY < 0 && !startedAtUpperEdge && window.scrollY <= sectionTop + 2) {
+
+          if (dY > 0 && window.scrollY + window.innerHeight >= state.bottom - 2) {
             event.preventDefault();
-            window.scrollTo(0, sectionTop);
+            window.scrollTo(0, state.maxScroll);
+            return;
+          }
+          if (dY < 0 && window.scrollY <= state.top + 2) {
+            event.preventDefault();
+            window.scrollTo(0, state.top);
             return;
           }
         }
+
         if (!shouldSnapFromTouch(dY)) return;
         const nextIndex = dY > 0 ? touchSectionIndex + 1 : touchSectionIndex - 1;
         if (nextIndex < 0 || nextIndex >= sections.length) return;
@@ -2283,16 +2330,7 @@
         const dX = Math.abs(event.changedTouches[0].clientX - touchStartX);
         if (Math.abs(dY) > 48 && Math.abs(dY) > dX * 1.4) {
           if (!shouldSnapFromTouch(dY)) {
-            const touchSection = sections[touchSectionIndex];
-            if (shouldRequireStartedAtEdge(touchSection)) {
-              const sectionTop = touchSection.offsetTop;
-              const sectionBottom = sectionTop + touchSection.offsetHeight;
-              if (dY > 0 && window.scrollY + window.innerHeight > sectionBottom) {
-                window.scrollTo(0, sectionBottom - window.innerHeight);
-              } else if (dY < 0 && window.scrollY < sectionTop) {
-                window.scrollTo(0, sectionTop);
-              }
-            }
+            clampToTouchSection();
             return;
           }
           const nextIndex = dY > 0 ? touchSectionIndex + 1 : touchSectionIndex - 1;
