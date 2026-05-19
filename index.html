@@ -303,6 +303,15 @@
       gap: 0.62rem;
     }
 
+    .action-prompt {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.48rem, 1.15vw, 0.58rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
     .linkedin-inline,
     .resume-inline {
       display: inline-flex;
@@ -331,6 +340,13 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       white-space: nowrap;
+    }
+
+    .resume-inline.is-icon {
+      width: clamp(2.14rem, 5vw, 2.48rem);
+      min-width: clamp(2.14rem, 5vw, 2.48rem);
+      padding: 0;
+      letter-spacing: 0.08em;
     }
 
     .linkedin-inline:hover,
@@ -781,6 +797,28 @@
       color: var(--accent);
     }
 
+    .project-about-cue {
+      justify-self: start;
+      margin-top: 1.5rem;
+    }
+
+    .contact-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.15rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-actions:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-actions .action-prompt {
+      width: 80px;
+      flex-shrink: 0;
+    }
+
     @media (min-width: 1240px) {
       .projects-layout {
         grid-template-columns: minmax(320px, 0.72fr) minmax(0, 1.28fr);
@@ -790,6 +828,15 @@
 
       .projects-intro {
         max-width: 33rem;
+      }
+
+      .project-about-cue {
+        grid-column: 1;
+        grid-row: 1;
+        align-self: end;
+        justify-self: start;
+        margin-top: 0;
+        margin-bottom: 0.1rem;
       }
 
       .carousel-viewport {
@@ -878,12 +925,28 @@
       }
 
       .about-hero {
-        display: block;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        align-items: start;
       }
 
       .about-photo {
+        grid-row: 3;
         width: min(100%, 340px);
-        margin: 0 0 1.5rem;
+        margin: 0 0 0.35rem;
+      }
+
+      .about-hero > div {
+        display: contents;
+      }
+
+      .about-hero .eyebrow { grid-row: 1; }
+      .about-hero .page-title { grid-row: 2; }
+      .about-hero .page-lead { grid-row: 4; }
+
+      .content-section {
+        padding: 2.35rem 0;
       }
 
       .skills-grid {
@@ -893,6 +956,11 @@
       .exp-row {
         grid-template-columns: 1fr;
         gap: 0.55rem;
+      }
+
+      .exp-date {
+        display: block;
+        margin-bottom: 0.2rem;
       }
 
       .hero-copy {
@@ -920,6 +988,12 @@
       .bar-actions {
         grid-column: 1 / -1;
         justify-self: start;
+        flex-wrap: wrap;
+        gap: 0.42rem 0.58rem;
+      }
+
+      .bar-actions .action-prompt {
+        flex-basis: 100%;
       }
 
       /* Allow the projects section to grow taller than the viewport on mobile
@@ -1033,13 +1107,14 @@
         -webkit-line-clamp: 2;
         font-size: 0.74rem;
         margin-top: 0.38rem;
-      color: var(--text-muted);
-    }
+        color: var(--text-muted);
+      }
 
-    .project-about-cue {
-      justify-self: start;
-      margin-top: 1.5rem;
-    }
+      .project-about-cue {
+        grid-row: auto;
+        justify-self: center;
+        margin: 0.25rem auto 0;
+      }
 
     .about-section {
       min-height: 100svh;
@@ -1256,6 +1331,33 @@
       color: var(--accent);
     }
 
+    .contact-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.15rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-actions:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-actions .action-prompt {
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+      .contact-actions {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+      }
+
+      .contact-actions .action-prompt {
+        width: 100%;
+      }
+
     .about-section .site-footer {
       position: static;
       margin-top: 1rem;
@@ -1280,6 +1382,36 @@
         margin-top: 0.4rem;
         padding: 0.4rem 0.68rem;
         font-size: 0.5rem;
+      }
+
+      .about-hero {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .about-hero > div {
+        display: contents;
+      }
+
+      .about-hero .eyebrow { grid-row: 1; }
+      .about-hero .page-title { grid-row: 2; }
+      .about-photo {
+        grid-row: 3;
+        width: min(100%, 340px);
+        margin: 0 0 0.35rem;
+      }
+      .about-hero .page-lead { grid-row: 4; }
+
+      .exp-row {
+        grid-template-columns: 1fr;
+        gap: 0.55rem;
+      }
+
+      .exp-date {
+        display: block;
+        margin-bottom: 0.2rem;
       }
     }
 
@@ -1525,8 +1657,9 @@
               <div class="hero-info-value">Danbury, Connecticut</div>
             </div>
             <div class="bar-actions">
+              <span class="action-prompt">Click to view</span>
               <a class="linkedin-inline focus-ring" href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener" aria-label="LinkedIn profile">in</a>
-              <a class="resume-inline focus-ring" href="resume.pdf" target="_blank" rel="noopener">Resume PDF</a>
+              <a class="resume-inline is-icon focus-ring" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume PDF">PDF</a>
             </div>
           </div>
           <a class="explore-cue focus-ring" href="#projects" aria-label="Explore more below">
@@ -1554,10 +1687,6 @@
             <a href="projects/automated-desk.html"><span class="pql-num">04 /</span>&nbsp;Standing Desk Automation</a>
             <a href="projects/robotics.html"><span class="pql-num">05 /</span>&nbsp;VEX U Competition Robot</a>
           </nav>
-          <a class="explore-cue project-about-cue focus-ring" href="#about" aria-label="About me">
-            <span>About me</span>
-            <span class="explore-cue-arrow" aria-hidden="true">v</span>
-          </a>
         </aside>
 
         <div id="carouselShell" class="carousel-shell">
@@ -1568,6 +1697,10 @@
           </div>
           <div id="carouselDots" class="carousel-dots" aria-label="Project position"></div>
         </div>
+        <a class="explore-cue project-about-cue focus-ring" href="#about" aria-label="About me">
+          <span>About me</span>
+          <span class="explore-cue-arrow" aria-hidden="true">v</span>
+        </a>
       </div>
     </section>
 
@@ -1693,9 +1826,12 @@
             <p style="max-width:480px;margin-bottom:2rem;">Open to R&amp;D, automation/robotics, and systems engineering roles - aerospace, defense, or automotive preferred. Connecticut-based, hybrid-friendly.</p>
             <div>
               <a class="contact-link" href="mailto:mvas8037@gmail.com"><span class="cl-label">Email</span>mvas8037@gmail.com<span class="cl-arr">-&gt;</span></a>
-              <a class="contact-link" href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener"><span class="cl-label">LinkedIn</span>linkedin.com/in/michael-vasquez-573290206<span class="cl-arr">-&gt;</span></a>
               <a class="contact-link" href="tel:+12035712052"><span class="cl-label">Phone</span>(203) 571-2052<span class="cl-arr">-&gt;</span></a>
-              <a class="contact-link" href="resume.pdf" target="_blank" rel="noopener"><span class="cl-label">Resume</span>Download PDF<span class="cl-arr">-&gt;</span></a>
+              <div class="contact-actions" aria-label="Profile and resume links">
+                <span class="action-prompt">Click to view</span>
+                <a class="linkedin-inline focus-ring" href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener" aria-label="LinkedIn profile">in</a>
+                <a class="resume-inline is-icon focus-ring" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume PDF">PDF</a>
+              </div>
             </div>
           </div>
         </div>
@@ -1985,6 +2121,9 @@
       let lastWheelTime = 0;
       let touchStartY = 0;
       let touchStartX = 0;
+      let touchStartScrollY = 0;
+      let touchSectionIndex = 0;
+      let touchSnapFired = false;
 
       function easeInOutCubic(t) {
         return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -2020,6 +2159,12 @@
             requestAnimationFrame(step);
           } else {
             isAnimating = false;
+            const settleUntil = performance.now() + 220;
+            function settle() {
+              window.scrollTo(0, sections[index].offsetTop);
+              if (performance.now() < settleUntil) requestAnimationFrame(settle);
+            }
+            requestAnimationFrame(settle);
           }
         }
 
@@ -2053,6 +2198,21 @@
         return false;
       }
 
+      function shouldSnapFromTouch(deltaY) {
+        const section = sections[touchSectionIndex];
+        if (!section) return false;
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        const movingDown = deltaY > 0;
+        const movingUp = deltaY < 0;
+        const atLowerEdge = window.scrollY + window.innerHeight >= sectionBottom - 2;
+        const atUpperEdge = window.scrollY <= sectionTop + 2;
+        const startedAtLowerEdge = touchStartScrollY + window.innerHeight >= sectionBottom - 2;
+        const startedAtUpperEdge = touchStartScrollY <= sectionTop + 2;
+        return (movingDown && (atLowerEdge || startedAtLowerEdge))
+          || (movingUp && (atUpperEdge || startedAtUpperEdge));
+      }
+
       window.addEventListener('wheel', (event) => {
         syncCurrentIndex();
         if (shouldUseNativeSectionScroll(event.deltaY)) return;
@@ -2066,11 +2226,33 @@
       }, { passive: false });
 
       window.addEventListener('touchstart', (event) => {
+        syncCurrentIndex();
         touchStartY = event.touches[0].clientY;
         touchStartX = event.touches[0].clientX;
+        touchStartScrollY = window.scrollY;
+        touchSectionIndex = currentIndex;
+        touchSnapFired = false;
       }, { passive: true });
 
+      window.addEventListener('touchmove', (event) => {
+        if (touchSnapFired) {
+          event.preventDefault();
+          return;
+        }
+        if (event.touches.length !== 1) return;
+        const dY = touchStartY - event.touches[0].clientY;
+        const dX = Math.abs(event.touches[0].clientX - touchStartX);
+        if (Math.abs(dY) <= 24 || Math.abs(dY) <= dX * 1.25) return;
+        if (!shouldSnapFromTouch(dY)) return;
+        const nextIndex = dY > 0 ? touchSectionIndex + 1 : touchSectionIndex - 1;
+        if (nextIndex < 0 || nextIndex >= sections.length) return;
+        event.preventDefault();
+        touchSnapFired = true;
+        snapToIndex(nextIndex);
+      }, { passive: false });
+
       window.addEventListener('touchend', (event) => {
+        if (touchSnapFired) return;
         const dY = touchStartY - event.changedTouches[0].clientY;
         const dX = Math.abs(event.changedTouches[0].clientX - touchStartX);
         if (Math.abs(dY) > 48 && Math.abs(dY) > dX * 1.4) {

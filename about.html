@@ -137,7 +137,14 @@
     .cl-label { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; width: 80px; flex-shrink: 0; }
     .cl-arr { margin-left: auto; color: var(--muted); transition: transform 0.2s, color 0.2s; }
     .contact-link:hover .cl-arr { transform: translateX(4px); color: var(--accent); }
-    @media(max-width:768px){ .page-hero,.wrap { padding-left:1.25rem; padding-right:1.25rem; } .page-hero { display:block; } .about-photo { width:min(100%,340px); margin:0 0 1.5rem; } .skills-grid { grid-template-columns:1fr; } .exp-row { grid-template-columns:1fr; gap:0.5rem; } }
+    .action-prompt { font-family: var(--mono); font-size: 0.58rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+    .contact-actions { display: flex; align-items: center; gap: 0.75rem; padding: 1.15rem 0; border-bottom: 1px solid var(--border); }
+    .contact-actions .action-prompt { width: 80px; flex-shrink: 0; }
+    .linkedin-inline, .resume-inline { display: inline-flex; align-items: center; justify-content: center; width: 2.42rem; height: 2.42rem; border: 1px solid var(--border); background: rgba(17,17,17,0.72); color: var(--heading); text-decoration: none; transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease; }
+    .linkedin-inline { font-family: var(--syne); font-size: 0.94rem; font-weight: 700; line-height: 1; }
+    .resume-inline { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .linkedin-inline:hover, .linkedin-inline:focus-visible, .resume-inline:hover, .resume-inline:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
+    @media(max-width:768px){ .page-hero,.wrap { padding-left:1.25rem; padding-right:1.25rem; } .page-hero { display:flex; flex-direction:column; align-items:stretch; } .page-hero .eyebrow { order:1; } .page-title { order:2; } .about-photo { order:3; width:min(100%,340px); margin:0 0 1rem; } .page-lead { order:4; } .skills-grid { grid-template-columns:1fr; } .exp-row { grid-template-columns:1fr; gap:0.5rem; } .exp-row > div:first-child { order:1; } .exp-row > div:last-child { order:2; } .exp-date { display:block; margin-bottom:0.2rem; } .contact-actions { align-items:flex-start; flex-wrap:wrap; gap:0.7rem; } .contact-actions .action-prompt { width:100%; } }
   </style>
 </head>
 <body>
@@ -277,9 +284,12 @@
     <p style="max-width:480px;margin-bottom:2rem;">Open to R&amp;D, automation/robotics, and systems engineering roles - aerospace, defense, or automotive preferred. Connecticut-based, hybrid-friendly.</p>
     <div>
       <a class="contact-link" href="mailto:mvas8037@gmail.com"><span class="cl-label">Email</span>mvas8037@gmail.com<span class="cl-arr">-></span></a>
-      <a class="contact-link" href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank"><span class="cl-label">LinkedIn</span>linkedin.com/in/michael-vasquez-573290206<span class="cl-arr">-></span></a>
       <a class="contact-link" href="tel:+12035712052"><span class="cl-label">Phone</span>(203) 571-2052<span class="cl-arr">-></span></a>
-      <a class="contact-link" href="resume.pdf" target="_blank"><span class="cl-label">Resume</span>Download PDF<span class="cl-arr"><-</span></a>
+      <div class="contact-actions" aria-label="Profile and resume links">
+        <span class="action-prompt">Click to view</span>
+        <a class="linkedin-inline" href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener" aria-label="LinkedIn profile">in</a>
+        <a class="resume-inline" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume PDF">PDF</a>
+      </div>
     </div>
   </div>
 </div>
