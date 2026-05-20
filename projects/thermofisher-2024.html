@@ -1,0 +1,417 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ThermoFisher 2024 Co-op Rotation - Michael Vasquez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --surface: #111; --card: #141414; --card-hi: #1a1a1a;
+      --border: #1e1e1e; --border-hi: #2a2a2a; --muted: #3a3a3a; --subtle: #666;
+      --body: #b8b8b8; --heading: #f0f0f0; --accent: #c9a96e; --accent-dim: #7a6340;
+      --blue: #6b9fbd; --green: #7fb37f;
+      --syne: 'Syne', sans-serif; --mono: 'JetBrains Mono', monospace; --sans: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--body); font-family: var(--sans); font-weight: 300; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 2.5rem; background: rgba(10,10,10,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--syne); font-weight: 700; font-size: 1rem; color: var(--heading); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.68rem; color: #777; text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-item { position: relative; }
+    .project-menu { position: absolute; top: calc(100% + 0.75rem); left: 50%; transform: translateX(-50%) translateY(-6px); min-width: 230px; background: rgba(14,14,14,0.98); border: 1px solid var(--border); padding: 0.45rem; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; box-shadow: 0 18px 60px rgba(0,0,0,0.35); }
+    .project-menu::before { content: ''; position: absolute; left: 0; right: 0; top: -0.85rem; height: 0.85rem; }
+    .project-menu a { display: block; padding: 0.7rem 0.8rem; color: var(--body); border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .project-menu a:last-child { border-bottom: none; }
+    .project-menu a:hover { background: var(--card-hi); color: var(--accent); }
+    .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+    .eyebrow-line { width: 28px; height: 1px; background: var(--accent); }
+    .eyebrow-text { font-family: var(--mono); font-size: 0.66rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; }
+    /* Hero */
+    .project-hero { padding: 9rem 2.5rem 3rem; max-width: 980px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+    .proj-meta-tag { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; }
+    .proj-title { font-family: var(--syne); font-weight: 800; font-size: clamp(2.2rem, 5vw, 3.8rem); color: var(--heading); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+    .proj-subtitle { font-size: 1.05rem; color: var(--body); max-width: 620px; margin-bottom: 2rem; }
+    .proj-stats { display: grid; grid-template-columns: repeat(4, 1fr); padding: 1.5rem 0; border-top: 1px solid var(--border); }
+    .proj-stat { padding-right: 1.5rem; border-right: 1px solid var(--border); }
+    .proj-stat:last-child { border-right: none; }
+    .stat-val { font-family: var(--syne); font-size: 1.1rem; font-weight: 700; color: var(--heading); margin-bottom: 0.2rem; line-height: 1.2; }
+    .stat-label { font-family: var(--mono); font-size: 0.58rem; color: var(--subtle); text-transform: uppercase; letter-spacing: 0.1em; }
+    /* Role strip */
+    .role-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2.5rem; max-width: 980px; margin: 0 auto; display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    .role-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+    .role-content { font-size: 0.88rem; color: var(--body); }
+    /* Content */
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 2.5rem; }
+    .content-section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+    .content-section:last-child { border-bottom: none; }
+    .section-label { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.1rem; }
+    .section-h { font-family: var(--syne); font-size: 1.55rem; font-weight: 700; color: var(--heading); line-height: 1.2; margin-bottom: 1.2rem; }
+    .wrap p { font-size: 0.94rem; color: var(--body); margin-bottom: 1rem; }
+    .wrap p strong { color: var(--heading); font-weight: 500; }
+    .wrap p em { color: var(--body); font-style: italic; }
+    .lead { font-size: 1rem !important; }
+    /* two-col */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1.5rem; }
+    .col-head { font-family: var(--mono); font-size: 0.6rem; color: var(--blue); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.7rem; }
+    /* Highlight list */
+    .hl { list-style: none; }
+    .hl li { font-size: 0.92rem; color: var(--body); padding: 1rem 0 1rem 1.5rem; border-bottom: 1px solid var(--border); position: relative; }
+    .hl li:first-child { border-top: 1px solid var(--border); }
+    .hl li::before { content: '->'; position: absolute; left: 0; color: var(--accent); }
+    .hl li strong { color: var(--heading); font-weight: 500; }
+    /* Image placeholder */
+    .img-ph { width: 100%; background: #0c0c0c; border: 1px dashed var(--border-hi); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; min-height: 180px; position: relative; margin: 1rem 0; }
+    .img-ph::before { content:''; position:absolute; inset:0; background-image: linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px); background-size:24px 24px; pointer-events:none; }
+    .img-ph-label { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem; position: relative; z-index: 1; }
+    .img-ph-desc { font-family: var(--sans); font-size: 0.75rem; color: var(--subtle); text-align: center; max-width: 360px; position: relative; z-index: 1; font-style: italic; }
+    .img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .img-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .project-media { margin: 1rem 0; border: 1px solid var(--border); background: #0c0c0c; overflow: hidden; }
+    .project-media img { width: 100%; height: clamp(240px, 45vw, 560px); display: block; object-fit: contain; background: #080808; filter: saturate(0.96) contrast(1.03); transition: filter 0.3s ease; }
+    .project-media:hover img { filter: saturate(1.04) contrast(1.06); }
+    .project-media figcaption { font-family: var(--mono); font-size: 0.62rem; color: var(--subtle); padding: 0.85rem 1rem; border-top: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.08em; }
+    .artifact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.25rem; }
+    .artifact-card { margin: 0; }
+    .artifact-card img, .artifact-card video { width: 100%; height: 220px; display: block; object-fit: contain; background: #080808; }
+    .artifact-card figcaption { min-height: 3.35rem; }
+    /* Tools block */
+    .tools-block { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .tools-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { display: inline-block; font-family: var(--mono); font-size: 0.6rem; color: var(--subtle); border: 1px solid var(--border); padding: 0.3rem 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .tag-accent { color: var(--accent); border-color: var(--accent-dim); }
+    .tag-blue { color: var(--blue); border-color: rgba(107,159,189,0.35); }
+    /* Sub-projects */
+    .subproject { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .subproject:last-child { border-bottom: none; }
+    .sp-num { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.18em; margin-bottom: 0.6rem; }
+    .sp-title { font-family: var(--syne); font-size: 1.25rem; font-weight: 700; color: var(--heading); margin-bottom: 0.4rem; line-height: 1.2; }
+    .sp-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
+    .sp-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2.5rem; align-items: start; }
+    /* Rotation header */
+    .rotation-header { padding: 3rem 0 2rem; border-bottom: 2px solid var(--accent-dim); margin-bottom: 0; }
+    .rotation-tag { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .rotation-title { font-family: var(--syne); font-size: 1.75rem; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; margin-bottom: 0.4rem; }
+    .rotation-sub { font-size: 0.9rem; color: var(--subtle); }
+    /* Project nav */
+    .proj-nav { display: flex; justify-content: space-between; align-items: center; padding: 2.5rem; max-width: 980px; margin: 0 auto 2rem; }
+    .proj-nav a { font-family: var(--mono); font-size: 0.65rem; color: var(--subtle); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+    .proj-nav a:hover { color: var(--accent); }
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; max-width: 980px; margin: 1rem auto 0; display: flex; align-items: center; justify-content: space-between; }
+    footer span { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--accent); }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; } .nav-links { gap: 0.64rem; } .nav-links a { font-size: 0.54rem; } .nav-links > li:not(:first-child) { display: none; } .project-menu { position: fixed; left: auto; right: 1rem; top: 4rem; width: min(16rem, calc(100vw - 2rem)); transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu { transform: translateY(0); }
+      .project-hero, .wrap, .proj-nav { width: min(350px, calc(100vw - 2.5rem)); max-width: min(350px, calc(100vw - 2.5rem)); margin-left: 1.25rem; margin-right: 0; padding-left: 0; padding-right: 0; }
+      .proj-title { font-size: clamp(1.05rem, 5.6vw, 1.55rem); line-height: 1.12; }
+      .proj-subtitle { max-width: 100%; overflow-wrap: break-word; font-size: 0.94rem; }
+      .role-strip { width: min(350px, calc(100vw - 2.5rem)); max-width: min(350px, calc(100vw - 2.5rem)); margin-left: 1.25rem; margin-right: 0; padding-left: 0; padding-right: 0; }
+      .proj-stats { grid-template-columns: 1fr 1fr; }
+      .proj-stat { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+      .two-col, .sp-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .img-row, .img-row-3, .artifact-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
+    }
+  </style>
+  <style>
+    html.lightbox-open,
+    html.lightbox-open body { overflow: hidden; }
+    .project-media img { cursor: zoom-in; }
+    .image-lightbox { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: clamp(1rem, 3vw, 2.5rem); background: rgba(0, 0, 0, 0.88); opacity: 0; pointer-events: none; transition: opacity 0.18s ease; }
+    .image-lightbox.is-open { opacity: 1; pointer-events: auto; }
+    .image-lightbox-panel { width: min(100%, 1180px); max-height: 92vh; display: grid; gap: 0.85rem; }
+    .image-lightbox-img { width: 100%; max-height: 82vh; object-fit: contain; background: #050505; border: 1px solid rgba(255,255,255,0.16); box-shadow: 0 24px 80px rgba(0,0,0,0.5); cursor: zoom-out; }
+    .image-lightbox-caption { font-family: var(--mono); font-size: 0.68rem; line-height: 1.6; color: var(--body); letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+    .image-lightbox-close { position: fixed; top: 1rem; right: 1rem; width: 2.8rem; height: 2.8rem; border: 1px solid rgba(255,255,255,0.18); background: rgba(12,12,12,0.72); color: var(--heading); font-size: 1.6rem; line-height: 1; cursor: pointer; }
+    .image-lightbox-close:hover,
+    .image-lightbox-close:focus-visible { color: var(--accent); border-color: rgba(201,169,110,0.65); outline: none; }
+  </style>
+  <style>
+    .proj-index { background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; margin: 2rem 0; }
+    .proj-index-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1rem; }
+    .proj-index ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 1.5rem; }
+    .proj-index a { font-family: var(--mono); font-size: 0.72rem; color: var(--body); text-decoration: none; padding: 0.35rem 0; display: block; border-bottom: 1px solid var(--border); transition: color 0.2s; }
+    .proj-index a:hover { color: var(--accent); }
+    .proj-index a span { color: var(--muted); margin-right: 0.6rem; }
+    @media(max-width:600px){ .proj-index ul { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="../index.html">MV<span>.</span></a>
+  <ul class="nav-links">
+    <li class="nav-item nav-projects"><a href="../index.html#projects">Projects</a>
+      <div class="project-menu" aria-label="Project links">
+        <a href="bone-printer.html">Bone 3D Printer</a>
+        <a href="fpv-drone.html">FPV Drone</a>
+        <a href="thermofisher.html">ThermoFisher Co-ops</a>
+        <a href="automated-desk.html">Automated Desk</a>
+        <a href="robotics.html">VEX Robotics</a>
+      </div>
+    </li>
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../resume.pdf" target="_blank">Resume</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="project-hero">
+  <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">03 / Industry / Jan 2024 - Aug 2024</span></div>
+  <h1 class="proj-title">ThermoFisher Scientific<br>2024 Co-op<br>Rotation</h1>
+  <p class="proj-subtitle">Manufacturing engineering rotation focused on robotics, inspection systems, process optimization, CMM/3D scanner programs, and machine redesign work on production lines for laboratory consumables.</p>
+  <div class="proj-stats">
+    <div class="proj-stat"><div class="stat-val">8 mo.</div><div class="stat-label">Rotation length</div></div>
+    <div class="proj-stat"><div class="stat-val">+18%</div><div class="stat-label">Yield (capping line)</div></div>
+    <div class="proj-stat"><div class="stat-val">98%</div><div class="stat-label">Yield (weld process)</div></div>
+    <div class="proj-stat"><div class="stat-val">+60%</div><div class="stat-label">Yield (inspection)</div></div>
+  </div>
+</div>
+<div class="role-strip">
+  <span class="role-label">Manager -></span><span class="role-content">Chris VanQuekelberg</span>
+  <span class="role-label" style="margin-left:1.5rem;">Mentor -></span><span class="role-content">Ken Nogaj &nbsp;/&nbsp; Penfield, NY</span>
+</div>
+
+<div class="wrap">
+
+  <div class="proj-index">
+    <div class="proj-index-label">2024 rotation projects</div>
+    <ul>
+      <li><a href="#rack-delatcher"><span>01</span>Rack Delatcher (V1->V2)</a></li>
+      <li><a href="#tube-cutting"><span>02</span>Tube Cutting Station</a></li>
+      <li><a href="#gasket"><span>03</span>Closure Gasket Machine Redesign</a></li>
+      <li><a href="#apex"><span>04</span>Apex DOE &amp; Capping Optimization</a></li>
+      <li><a href="#shapegrabber"><span>05</span>ShapeGrabber Vial Inspection</a></li>
+      <li><a href="#t225"><span>06</span>T225 Flask CMM Program</a></li>
+      <li><a href="#line4"><span>07</span>Line 4 Move &amp; Robot Re-Teach</a></li>
+    </ul>
+  </div>
+
+  <!-- ====== ROTATION 2 ====== -->
+  <div class="rotation-header">
+    <div class="rotation-tag">Rotation 02 / Jan-Aug 2024</div>
+    <h2 class="rotation-title">Robotics, Process Engineering &amp; Quality</h2>
+    <p class="rotation-sub">Higher complexity - controls integration, CMM/3D scanner programs, machine redesigns.</p>
+  </div>
+
+  <div class="subproject" id="rack-delatcher">
+    <div class="sp-num">01 / HEALTH &amp; SAFETY</div>
+    <h3 class="sp-title">Rack Delatcher Tool - V1 to V2</h3>
+    <div class="sp-meta">Ergonomic Safety Tool / Cam-Follower Mechanism / Two Iterations</div>
+    <div class="sp-grid">
+      <div>
+        <p><strong>Problem:</strong> Operators manually toggled side latches on tube racks dozens of times per shift. Non-ergonomic motion caused fatigue - reported as a Health &amp; Safety issue.</p>
+        <p><strong>Solution:</strong> A bench-top tool that significantly reduces unlatching force, runs one-handed (operator never releases the rack), handles two rack heights in the same fixture. Mechanically driven by a cam-follower that converts a push motion into lateral latch actuation.</p>
+        <p><strong>V1 -> V2:</strong> The original cam showed significant wear at the main contact surface. Diagnosed failure mode, replaced with a roller bearing and simplified cam profile, beefed up thin walls, added draft angle at the part entry for wider operator margin, added two linear rails for stability - all while improving manufacturability and reducing cost.</p>
+      </div>
+      <div>
+        <figure class="project-media"><img src="../images/tf-2024/tf-rack-delatcher-prototype-001.jpg" alt="Machined ThermoFisher rack delatcher prototype"><figcaption>Machined rack delatcher prototype used for manufacturing-line process improvement.</figcaption></figure>
+        <figure class="project-media"><img src="../images/tf-2024/tf-production-machine-001.jpg" alt="ThermoFisher production machine assembly"><figcaption>Production-line machine context for fixture and mechanism integration work.</figcaption></figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="subproject" id="tube-cutting">
+    <div class="sp-num">02 / PROCESS INSOURCING</div>
+    <h3 class="sp-title">Tube Cutting &amp; Reaming Station</h3>
+    <div class="sp-meta">Self-Contained Workstation / Custom Ergonomic Design</div>
+    <div class="sp-grid">
+      <div>
+        <p><strong>Problem:</strong> Dispensing jug stems were made externally by Scott Industries. Bringing the process in-house required a safe, repeatable cutting and reaming operation.</p>
+        <p><strong>Solution:</strong> Self-contained station with ergonomic table, swing-in powered cutting and reaming tools, storage shelf, and caster wheels. Four-step process: (1) swing cutter into work area, (2) feed tube to length and cut, (3) load into staging area and clamp, (4) activate drill and push to ream spout.</p>
+      </div>
+      <div>
+        <figure class="project-media"><img src="../images/tf-2024/tf-engineering-sketches-001.jpg" alt="ThermoFisher engineering sketches and station concepts"><figcaption>Engineering sketches and station concepts used to define operator workflow and tooling layout.</figcaption></figure>
+        <figure class="project-media"><img src="../images/tf-2024/tf-stem-bender-panel-001.jpg" alt="ThermoFisher tooling panel prototype"><figcaption>Tooling-panel prototype representative of fixture layout and operator-interface decisions.</figcaption></figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="subproject" id="gasket">
+    <div class="sp-num">03 / MACHINE REDESIGN</div>
+    <h3 class="sp-title">Closure Gasket Machine - Redesign</h3>
+    <div class="sp-meta">Multi-Station Redesign / 5 Tamping Tool Iterations / Controls Discovery</div>
+    <div class="sp-grid">
+      <div>
+        <p><strong>Stations redesigned:</strong> 3 &amp; 6 (orientation + gasket check), 5 (gasket seating), 8 (post-weld tamp), plus the part nests.</p>
+        <p><strong>Orientation Check:</strong> Replaced a shaft-collar + proximity switch system with an LVDT - easier to teach, reduced complexity.</p>
+        <p><strong>Gasket Seating - 5 iterations:</strong> Designed and tested five tamping tool iterations. Each incrementally improved seating. Root-cause analysis ultimately revealed the primary issue was concentricity and sharpness of the cutter - pivoted away from this approach. The iteration history is the evidence of a real engineering process, not a shortcoming.</p>
+        <p><strong>Secondary Tamp:</strong> Post-weld, gasket material caught on closure threads caused aesthetic failures. Designed a secondary post-weld tamp - adjustable along three axes, stainless steel only contacts the part. Successfully reduced high-gasket rate.</p>
+        <p><strong>Nests:</strong> Redesigned to support closure underside for weld performance, with sliding action for consistent station-to-station height repeatability.</p>
+        <p><strong>Controls discovery:</strong> Machine continued running hundreds of cycles after weld horn shut off. Traced via Part vs Force / Part vs Energy plots: weld horn over-traveled onto the nest (tooling-on-tooling), force spiked past feedback limits, horn shut off but machine kept running because the register wasn't catching it. Solution: enabled lower feedback limits in additional settings menu, verified PLC logic for welder output to machine register.</p>
+      </div>
+      <div>
+        <figure class="project-media"><img src="../images/tf-2024/tf-oring-tool-001.jpg" alt="ThermoFisher process tooling prototype"><figcaption>Process tooling prototype from the broader closure and seal-handling workstream.</figcaption></figure>
+        <figure class="project-media"><img src="../images/tf-2024/tf-engineering-sketches-001.jpg" alt="ThermoFisher tamping tool iteration sketches"><figcaption>Iteration sketches used to converge on tooling geometry and adjustment strategy.</figcaption></figure>
+        <div class="img-ph"><span class="img-ph-label">Image / Part vs Force Plot</span><span class="img-ph-desc">Controls discovery data - force spike showing tooling-on-tooling event.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subproject" id="apex">
+    <div class="sp-num">04 / DOE / +18% YIELD</div>
+    <h3 class="sp-title">Apex Capping - DOE &amp; LINMOT Optimization</h3>
+    <div class="sp-meta">Design of Experiments / Capping Speed Calculation / Particulate Investigation</div>
+    <div class="sp-grid">
+      <div>
+        <p><strong>Problem:</strong> Particulate on vials and thread stringing on closures were causing production stoppages.</p>
+        <p><strong>DOE:</strong> Varied capping parameters (linear speed, rotational speed, abort timer, positions, torques) to isolate what drove stringing. Discovered the LINMOT capper was running at the wrong linear-to-rotational ratio - rotation not matching the closure thread pitch.</p>
+        <p><strong>Calculation:</strong> Derived the correct rotational and linear speeds to match the pitch from the closure drawing. Due to machine speed limits, the full ideal rate couldn't be achieved - but updated settings were ~18% closer to ideal and produced a substantial decline in stringing and capping failures. Trial 1: ~17% bad parts. Trial 3 (optimized): ~1.2%.</p>
+        <p><strong>Particulate air knife:</strong> Designed and printed a 3D air knife to blow particulate into a reject chute. The design didn't succeed - particulate reduced after cleaning and LINMOT optimization. Productive failure: documented the approach and moved on.</p>
+      </div>
+      <div>
+        <div class="img-ph"><span class="img-ph-label">Image / Thread Stringing Close-Up</span><span class="img-ph-desc">Microscope view of the stringing defect on closure threads.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / DOE Trial Tables</span><span class="img-ph-desc">Trial 1 vs Trial 3 parameter tables showing yield improvement.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / Pitch Calculation</span><span class="img-ph-desc">Hand-written calc matching rotational rate to closure thread pitch.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subproject" id="shapegrabber">
+    <div class="sp-num">05 / 3D INSPECTION</div>
+    <h3 class="sp-title">ShapeGrabber Ai620 - Vial Inspection Method</h3>
+    <div class="sp-meta">3D Laser Scanning / 3 Fixture Concepts / 12+ Hours Training</div>
+    <div class="sp-grid">
+      <div>
+        <p><strong>Problem:</strong> Molded vial defects (flash, runout) were reaching automation lines. Needed an in-process inspection method to catch them earlier.</p>
+        <p><strong>Training:</strong> 12+ hours with an OGP applications engineer. Characterized machine capabilities by scanning a drill bit and stitching a full point cloud.</p>
+        <p><strong>Concept 1:</strong> Two-stage fixture - mandrel for external features, counter-bore for internal. Captured both; workflow required two scans and stitching.</p>
+        <p><strong>Concept 2:</strong> Vertical fixture for single-scan capture. Promising geometry, but inconsistent scanning spray application and part handling introduced accuracy variability.</p>
+        <p><strong>Concept 3:</strong> Chain-link spray station with interchangeable mandrels carries parts through a linear spray path (no handling -> uniform coating), then mounts on a circular stage within the scanner's field of view.</p>
+      </div>
+      <div>
+        <figure class="project-media"><img src="../images/tf-2024/tf-shapegrabber-results-001.jpg" alt="ShapeGrabber inspection results"><figcaption>ShapeGrabber inspection output with measured features called out on scanned geometry.</figcaption></figure>
+        <div class="img-ph"><span class="img-ph-label">Image / Concept 1 Mandrel Fixture</span><span class="img-ph-desc">Mandrel fixture for external feature scanning.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / Concept 3 Chain Spray</span><span class="img-ph-desc">Chain-link spray station and circular scanning stage.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subproject" id="t225">
+    <div class="sp-num">06 / CMM PROGRAMMING</div>
+    <h3 class="sp-title">T225 Flask - CMM Program &amp; Gauge R&amp;R</h3>
+    <div class="sp-meta">Centerline Measurement / Datum Strategy Investigation / 0.020" Variability Root-Cause</div>
+    <div class="sp-grid">
+      <div>
+        <p><strong>Problem:</strong> T225 flasks were failing burst tests. Investigation pointed to misalignment between energy director centerlines and lid groove centerlines. Needed a measurement program.</p>
+        <p><strong>CMM program:</strong> Developed with Daryl (Quality Engineer) to measure centerlines and determine part fitment. Program failed to pass a Type 2 Gauge R&amp;R - repeatability degraded progressively, up to 0.020" total variation measuring the same points on the same part.</p>
+        <p><strong>Investigation:</strong> Designed multiple staging fixtures referencing different datum surfaces (part feet vs. internal cavity) to isolate the source. Data analysis revealed variability came from the CMM <strong>alignment process itself</strong>, not the staging.</p>
+        <p><strong>Resolution:</strong> Switched to SmartScope (optical comparator with user-input centerlines), which removed alignment-process variability entirely.</p>
+      </div>
+      <div>
+        <figure class="project-media"><img src="../images/tf-2024/tf-matrix-tube-rack-001.jpg" alt="ThermoFisher Matrix tube rack inspection setup"><figcaption>Matrix tube rack inspection artifact tied to CMM and dimensional validation work.</figcaption></figure>
+        <div class="img-ph"><span class="img-ph-label">Image / Gauge R&amp;R Plot</span><span class="img-ph-desc">A Centerline measurement plot showing 0.020" scan-to-scan variability.</span></div>
+        <div class="img-ph"><span class="img-ph-label">Image / Staging Fixtures V1/V2</span><span class="img-ph-desc">Two fixture iterations referencing different datum surfaces.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subproject" id="line4">
+    <div class="sp-num">07 / LINE MOVE</div>
+    <h3 class="sp-title">Line 4 Move - Vision &amp; Robot Re-Teach</h3>
+    <div class="sp-meta">Production Line Relocation / Vision System / Fanuc/Epson Robot Path Update</div>
+    <div class="sp-grid">
+      <div>
+        <p><strong>Project:</strong> Condensed Line 4 footprint to reduce operator travel between stations. After the move, the tubeloader vision system's bowl position fell outside its previously-taught reference threshold. Re-taught camera reference points and LVDT measurement positions. Tubeloader robot pick positions also needed re-teaching after its local coordinate system was adjusted by the vision offsets - re-taught all positions across three bowl sizes (96, 48, 24) and updated configuration code.</p>
+      </div>
+      <div>
+        <div class="img-ph"><span class="img-ph-label">Image / Condensed Line 4</span><span class="img-ph-desc">Photo of the moved layout with reduced station-to-station travel.</span></div>
+        <figure class="project-media"><img src="../images/tf-2024/tf-vision-reteach-001.jpg" alt="ThermoFisher robot vision reteach interface"><figcaption>Vision re-teach interface used after line movement shifted camera and robot reference positions.</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <div class="content-section">
+    <div class="section-label">Engineering Tools - 2024 Rotation</div>
+    <div class="tools-block">
+      <div class="tools-label">Software / Methods / Manufacturing / Standards</div>
+      <div class="tag-row">
+        <span class="tag tag-accent">SolidWorks</span><span class="tag tag-accent">GD&amp;T</span><span class="tag tag-blue">Epson Robot Controls</span><span class="tag tag-blue">PLC Logic</span>
+        <span class="tag">CMM Programming</span><span class="tag">SmartScope</span><span class="tag">ShapeGrabber Ai620</span>
+        <span class="tag">Ultrasonic Welding</span><span class="tag">DOE</span><span class="tag">Root Cause Analysis</span>
+        <span class="tag">Tolerance Stack-Up</span><span class="tag">Gauge R&amp;R</span>
+        <span class="tag">FDM &amp; SLA Printing</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="proj-nav"><a href="thermofisher-2023.html"><- 2023 Rotation</a><a href="automated-desk.html">Next: Automated Desk -></a></div>
+<footer><span>(c) 2025 Michael Vasquez</span><div class="footer-links"><a href="mailto:mvas8037@gmail.com">Email</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank">LinkedIn</a></div></footer>
+<script>
+  document.querySelectorAll('.nav-projects').forEach((item) => {
+    const trigger = item.querySelector('a');
+    if (!trigger) return;
+    trigger.addEventListener('click', (event) => {
+      if (!window.matchMedia('(max-width: 768px)').matches) return;
+      if (!item.classList.contains('is-open')) {
+        event.preventDefault();
+        document.querySelectorAll('.nav-projects.is-open').forEach((openItem) => {
+          if (openItem !== item) openItem.classList.remove('is-open');
+        });
+        item.classList.add('is-open');
+      }
+    });
+  });
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('.nav-projects')) return;
+    document.querySelectorAll('.nav-projects.is-open').forEach((item) => item.classList.remove('is-open'));
+  });
+</script>
+<script>
+  (() => {
+    const images = Array.from(document.querySelectorAll('.project-media img'));
+    if (!images.length) return;
+
+    const lightbox = document.createElement('div');
+    lightbox.className = 'image-lightbox';
+    lightbox.setAttribute('role', 'dialog');
+    lightbox.setAttribute('aria-modal', 'true');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightbox.innerHTML = '<button class="image-lightbox-close" type="button" aria-label="Close expanded image">&times;</button><div class="image-lightbox-panel"><img class="image-lightbox-img" alt=""><div class="image-lightbox-caption"></div></div>';
+    document.body.appendChild(lightbox);
+
+    const expandedImg = lightbox.querySelector('.image-lightbox-img');
+    const caption = lightbox.querySelector('.image-lightbox-caption');
+    const closeBtn = lightbox.querySelector('.image-lightbox-close');
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('lightbox-open');
+    };
+
+    images.forEach((img) => {
+      img.addEventListener('click', () => {
+        const figureCaption = img.closest('.project-media')?.querySelector('figcaption')?.textContent || '';
+        expandedImg.src = img.currentSrc || img.src;
+        expandedImg.alt = img.alt || figureCaption || 'Expanded project image';
+        caption.textContent = figureCaption;
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.documentElement.classList.add('lightbox-open');
+        closeBtn.focus();
+      });
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    expandedImg.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+    });
+  })();
+</script>
+</body></html>
+
+
