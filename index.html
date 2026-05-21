@@ -215,16 +215,7 @@
     }
 
     .hero-kicker-tip::before {
-      content: '?';
-      display: grid;
-      place-items: center;
-      width: 0.92rem;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: rgba(201, 169, 110, 0.2);
-      color: var(--accent);
-      font-size: 0.52rem;
-      line-height: 1;
+      content: none;
     }
 
     .hero-kicker::before {
@@ -345,7 +336,6 @@
     }
 
     .linkedin-inline,
-    .youtube-inline,
     .resume-inline {
       display: inline-flex;
       align-items: center;
@@ -368,26 +358,6 @@
       line-height: 1;
     }
 
-    .youtube-inline {
-      width: clamp(2.14rem, 5vw, 2.48rem);
-      height: clamp(2.14rem, 5vw, 2.48rem);
-      position: relative;
-      border-radius: 0.42rem;
-      background: #ff1f1f;
-      color: #fff;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
-    }
-
-    .youtube-inline::before {
-      content: '';
-      width: 0;
-      height: 0;
-      margin-left: 0.12rem;
-      border-top: 0.42rem solid transparent;
-      border-bottom: 0.42rem solid transparent;
-      border-left: 0.68rem solid currentColor;
-    }
-
     .resume-inline {
       min-height: clamp(2.14rem, 5vw, 2.48rem);
       padding: 0 1rem;
@@ -407,8 +377,6 @@
 
     .linkedin-inline:hover,
     .linkedin-inline:focus-visible,
-    .youtube-inline:hover,
-    .youtube-inline:focus-visible,
     .resume-inline:hover,
     .resume-inline:focus-visible {
       color: var(--accent);
@@ -483,6 +451,34 @@
       background:
         linear-gradient(180deg, rgba(5, 5, 5, 0.88), var(--bg) 18%, var(--bg) 82%, rgba(15, 15, 15, 0.72)),
         radial-gradient(ellipse at 68% 54%, rgba(201, 169, 110, 0.11), transparent 46%);
+    }
+
+    .helix-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      background:
+        radial-gradient(circle at 50% 52%, rgba(201, 169, 110, 0.36) 0 1px, transparent 2px),
+        radial-gradient(circle at 50% 52%, rgba(201, 169, 110, 0.2), transparent 21%),
+        repeating-linear-gradient(174deg, transparent 0 34px, rgba(248, 248, 248, 0.08) 35px, transparent 37px),
+        repeating-linear-gradient(186deg, transparent 0 52px, rgba(201, 169, 110, 0.055) 53px, transparent 55px);
+      background-size: 44px 44px, auto, auto, auto;
+      mix-blend-mode: screen;
+      transform: scale(0.96);
+    }
+
+    .helix-section.is-warping::after {
+      animation: waveParticleMerge 980ms cubic-bezier(0.19, 1, 0.22, 1) both;
+    }
+
+    @keyframes waveParticleMerge {
+      0% { opacity: 0; filter: blur(0); transform: translateY(-26%) scale(0.92); }
+      22% { opacity: 0.78; filter: blur(0.2px); transform: translateY(-13%) scale(0.98); }
+      58% { opacity: 0.46; filter: blur(1px); transform: translateY(0) scale(1.06); }
+      100% { opacity: 0; filter: blur(9px); transform: translateY(10%) scale(1.22); }
     }
 
     .projects-layout {
@@ -1756,7 +1752,7 @@
     .constellation-core {
       position: absolute;
       left: 50%;
-      top: 50%;
+      top: 53%;
       z-index: 4;
       width: max-content;
       min-width: clamp(8rem, 18vw, 11rem);
@@ -1766,7 +1762,7 @@
       background: transparent;
       box-shadow: none;
       transform: translate(-50%, -50%);
-      text-shadow: 0 2px 18px #050505, 0 0 28px rgba(5, 5, 5, 0.86);
+      text-shadow: 0 2px 18px #050505, 0 0 30px rgba(5, 5, 5, 0.9);
     }
 
     .constellation-core::before {
@@ -1782,12 +1778,12 @@
     }
 
     .constellation-core-title {
-      margin-top: 0.36rem;
+      margin-top: 0.28rem;
       color: var(--text-primary);
       font-family: 'Syne', sans-serif;
-      font-size: clamp(1.02rem, 2.3vw, 1.34rem);
+      font-size: clamp(1.04rem, 2.35vw, 1.38rem);
       font-weight: 800;
-      line-height: 0.98;
+      line-height: 0.96;
     }
 
     @keyframes hubPulse {
@@ -1870,12 +1866,12 @@
     .orbit-thumb-wrap::before {
       content: '';
       position: absolute;
-      inset: 13% 6%;
+      inset: 5% -4% 4%;
       z-index: -1;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(201, 169, 110, 0.18), rgba(201, 169, 110, 0.05) 45%, transparent 72%);
-      filter: blur(8px);
-      opacity: 0.82;
+      background: radial-gradient(circle, rgba(201, 169, 110, 0.24), rgba(201, 169, 110, 0.08) 42%, transparent 73%);
+      filter: blur(12px);
+      opacity: 0.88;
     }
 
     .orbit-node-motion {
@@ -1891,7 +1887,7 @@
     }
 
     .orbit-node-label {
-      margin-top: 0.55rem;
+      margin-top: 0.88rem;
       text-shadow: 0 2px 14px rgba(0, 0, 0, 0.92), 0 0 18px rgba(5, 5, 5, 0.72);
     }
 
@@ -2041,9 +2037,9 @@
       margin: 0.65rem 2.6rem 1rem 0;
       color: var(--text-primary);
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2rem, 6vw, 3.6rem);
+      font-size: clamp(1.75rem, 4.5vw, 2.55rem);
       font-weight: 800;
-      line-height: 0.96;
+      line-height: 1.02;
     }
 
     .about-preview-copy {
@@ -2125,6 +2121,17 @@
     }
 
     @media (max-width: 767px) {
+      #projects.snap-section {
+        height: auto;
+        min-height: 100svh;
+      }
+
+      .projects-layout {
+        height: auto;
+        min-height: 100svh;
+        padding-bottom: 1.1rem;
+      }
+
       .constellation-wrap {
         --constellation-scale: 0.5;
       }
@@ -2142,6 +2149,16 @@
       .constellation-tutorial {
         width: min(21.5rem, calc(100vw - 2rem));
         font-size: clamp(0.52rem, 2.8vw, 0.6rem);
+      }
+
+      .constellation-footer-link {
+        margin-bottom: 0.85rem;
+      }
+
+      .site-footer {
+        position: static;
+        width: 100%;
+        margin-top: 0.6rem;
       }
 
       .project-hints span {
@@ -2184,7 +2201,7 @@
             <a class="block border-b border-[#1e1e1e] px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="projects/fpv-drone.html">FPV Drone</a>
             <a class="block border-b border-[#1e1e1e] px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="projects/thermofisher.html">ThermoFisher Co-op</a>
             <a class="block border-b border-[#1e1e1e] px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="projects/automated-desk.html">Standing Desk</a>
-            <a class="block px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="projects/robotics.html">VEX Robotics</a>
+            <a class="block px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="projects/robotics.html">Competitive Robotics</a>
           </div>
         </li>
         <li class="nav-about relative">
@@ -2226,7 +2243,6 @@
               <div class="hero-info-value">Danbury, Connecticut</div>
             </div>
             <div class="bar-actions">
-              <a class="youtube-inline focus-ring" href="https://www.youtube.com/@myrobotisgas" target="_blank" rel="noopener" aria-label="YouTube channel"></a>
               <a class="linkedin-inline focus-ring" href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener" aria-label="LinkedIn profile">in</a>
               <a class="resume-inline is-icon focus-ring" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume">Resume</a>
             </div>
@@ -2267,9 +2283,11 @@
           <span>Mechanical Engineer</span>
         </div>
         <div class="footer-links">
-          <a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="index.html#projects">Projects</a>
           <span class="footer-divider" aria-hidden="true"></span>
-          <a href="https://www.youtube.com/@myrobotisgas" target="_blank" rel="noopener">YouTube</a>
+          <a href="about.html#my-mission">About</a>
+          <span class="footer-divider" aria-hidden="true"></span>
+          <a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a>
           <span class="footer-divider" aria-hidden="true"></span>
           <a href="resume.pdf" target="_blank" rel="noopener">Resume</a>
           <span class="footer-divider" aria-hidden="true"></span>
@@ -2304,8 +2322,8 @@
     <section class="about-preview-panel">
       <button id="aboutPreviewClose" class="overlay-close focus-ring" type="button" aria-label="Close about preview">×</button>
       <div class="about-preview-kicker">Mechanical Engineer</div>
-      <h2 id="aboutPreviewTitle" class="about-preview-title">I build the bridge between concept and hardware.</h2>
-      <img class="about-preview-photo" src="images/about/about-headshot-001.jpg" alt="Michael Vasquez">
+      <h2 id="aboutPreviewTitle" class="about-preview-title">My mission.</h2>
+      <img class="about-preview-photo" src="images/about/headshot_v2.png" alt="Michael Vasquez">
       <div class="about-preview-copy">
         <p>There’s a certain kind of problem that most people don’t want to touch. That’s usually where I start.</p>
         <p>The kind of work where the tolerances matter, the stakes are real, and “good enough” isn’t. Looking for technically demanding problems and a team that takes their craft seriously. Let’s connect.</p>
@@ -2524,11 +2542,11 @@
 
       const ctx = canvas.getContext('2d');
       const nodePositions = [
-        { x: 380, y: 72 },
-        { x: 638, y: 238 },
-        { x: 556, y: 560 },
-        { x: 204, y: 560 },
-        { x: 122, y: 238 }
+        { x: 380, y: 112 },
+        { x: 650, y: 258 },
+        { x: 558, y: 528 },
+        { x: 202, y: 528 },
+        { x: 110, y: 258 }
       ];
       const floatDefs = [
         ['4.8s', '0ms'],
@@ -2612,7 +2630,7 @@
         node.style.setProperty('--node-y', nodePositions[index].y + 'px');
         node.style.setProperty('--reveal-delay', (index * 34 + 24) + 'ms');
         const dx = 380 - nodePositions[index].x;
-        const dy = 325 - nodePositions[index].y;
+        const dy = 345 - nodePositions[index].y;
         const dist = Math.max(1, Math.hypot(dx, dy));
         node.style.setProperty('--float-x', ((dx / dist) * 3.1).toFixed(2));
         node.style.setProperty('--float-y', ((dy / dist) * 3.1).toFixed(2));
@@ -2668,21 +2686,35 @@
         };
       }
 
+      function desiredParticleCount() {
+        if (window.innerWidth < 480) return 430;
+        if (window.innerWidth < 900) return 520;
+        return 720;
+      }
+
+      function desiredHubCount() {
+        if (window.innerWidth < 480) return 190;
+        if (window.innerWidth < 900) return 240;
+        return 340;
+      }
+
       function createParticle(index) {
         const hub = hubCenter();
-        const nearHub = index < 54;
+        const nearHub = index < desiredHubCount();
+        const angle = Math.random() * Math.PI * 2;
+        const hubSpread = Math.pow(Math.random(), 1.85);
         return {
-          x: nearHub ? hub.x + (Math.random() - 0.5) * hub.radius * 2.6 : Math.random() * width,
-          y: nearHub ? hub.y + (Math.random() - 0.5) * hub.radius * 2.1 : Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.2,
-          vy: (Math.random() - 0.5) * 0.2,
-          r: Math.random() * 1.05 + 0.38,
-          base: Math.random() * 0.18 + 0.07,
+          x: nearHub ? hub.x + Math.cos(angle) * hub.radius * 2.28 * hubSpread : Math.random() * width,
+          y: nearHub ? hub.y + Math.sin(angle) * hub.radius * 1.88 * hubSpread : Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.18,
+          vy: (Math.random() - 0.5) * 0.18,
+          r: nearHub ? Math.random() * 0.9 + 0.34 : Math.random() * 1.05 + 0.32,
+          base: nearHub ? Math.random() * 0.2 + 0.13 : Math.random() * 0.16 + 0.055,
           hubSeed: nearHub
         };
       }
 
-      const particles = Array.from({ length: 260 }, (_, index) => createParticle(index));
+      const particles = Array.from({ length: desiredParticleCount() }, (_, index) => createParticle(index));
 
       function iconCenters() {
         const canvasRect = canvas.getBoundingClientRect();
@@ -2706,12 +2738,12 @@
           const hubDx = hub.x - particle.x;
           const hubDy = hub.y - particle.y;
           const hubDist = Math.hypot(hubDx, hubDy);
-          if (hubDist > hub.radius * 0.42 && hubDist < hub.radius * 2.2) {
-            const force = ((hub.radius * 2.2 - hubDist) / hub.radius) * (particle.hubSeed ? 0.007 : 0.0024);
+          if (hubDist > hub.radius * 0.38 && hubDist < hub.radius * 3.05) {
+            const force = ((hub.radius * 3.05 - hubDist) / hub.radius) * (particle.hubSeed ? 0.0062 : 0.0017);
             particle.vx += (hubDx / hubDist) * force;
             particle.vy += (hubDy / hubDist) * force;
-          } else if (hubDist < hub.radius * 0.42) {
-            const force = ((hub.radius * 0.42 - hubDist) / hub.radius) * 0.042;
+          } else if (hubDist < hub.radius * 0.38) {
+            const force = ((hub.radius * 0.38 - hubDist) / hub.radius) * 0.052;
             particle.vx -= (hubDx / Math.max(1, hubDist)) * force;
             particle.vy -= (hubDy / Math.max(1, hubDist)) * force;
           }
@@ -2736,9 +2768,9 @@
           particle.vx *= 0.985;
           particle.vy *= 0.985;
           const speed = Math.hypot(particle.vx, particle.vy);
-          if (speed > 0.58) {
-            particle.vx = (particle.vx / speed) * 0.58;
-            particle.vy = (particle.vy / speed) * 0.58;
+          if (speed > 0.54) {
+            particle.vx = (particle.vx / speed) * 0.54;
+            particle.vy = (particle.vy / speed) * 0.54;
           }
 
           particle.x += particle.vx;
@@ -2749,15 +2781,16 @@
           if (particle.y > height + 12) particle.y = -12;
         });
 
-        for (let i = 0; i < particles.length; i += 1) {
-          for (let j = i + 1; j < particles.length; j += 1) {
-            const dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
-            const iHub = Math.hypot(hub.x - particles[i].x, hub.y - particles[i].y);
-            const jHub = Math.hypot(hub.x - particles[j].x, hub.y - particles[j].y);
-            if (dist < 82 && (iHub > hub.radius * 1.55 || jHub > hub.radius * 1.55)) {
+        const linkParticles = particles.filter((particle, index) => !particle.hubSeed && index % 3 === 0);
+        for (let i = 0; i < linkParticles.length; i += 1) {
+          for (let j = i + 1; j < linkParticles.length; j += 1) {
+            const dist = Math.hypot(linkParticles[i].x - linkParticles[j].x, linkParticles[i].y - linkParticles[j].y);
+            const iHub = Math.hypot(hub.x - linkParticles[i].x, hub.y - linkParticles[i].y);
+            const jHub = Math.hypot(hub.x - linkParticles[j].x, hub.y - linkParticles[j].y);
+            if (dist < 82 && iHub > hub.radius * 1.9 && jHub > hub.radius * 1.9) {
               ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.moveTo(linkParticles[i].x, linkParticles[i].y);
+              ctx.lineTo(linkParticles[j].x, linkParticles[j].y);
               ctx.strokeStyle = `rgba(201,169,110,${(1 - dist / 82) * 0.09})`;
               ctx.lineWidth = 0.6;
               ctx.stroke();
@@ -2767,15 +2800,15 @@
 
         particles.forEach((particle) => {
           const hubDistance = Math.hypot(hub.x - particle.x, hub.y - particle.y);
-          const nearHub = hubDistance < hub.radius * 1.75;
+          const nearHub = hubDistance < hub.radius * 2.65;
           const nearIcon = icons.some((icon) => {
             const dist = Math.hypot(icon.x - particle.x, icon.y - particle.y);
             return dist > icon.radius + 10 && dist < influence;
           });
           ctx.beginPath();
-          ctx.arc(particle.x, particle.y, nearIcon || nearHub ? particle.r * 1.45 : particle.r, 0, Math.PI * 2);
+          ctx.arc(particle.x, particle.y, nearIcon || nearHub ? particle.r * 1.5 : particle.r, 0, Math.PI * 2);
           ctx.fillStyle = nearIcon || nearHub
-            ? `rgba(201,169,110,${Math.min(0.72, particle.base * (nearHub ? 2.4 : 2.8))})`
+            ? `rgba(201,169,110,${Math.min(0.84, particle.base * (nearHub ? 3.05 : 2.8))})`
             : `rgba(180,160,120,${particle.base})`;
           ctx.fill();
         });

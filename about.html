@@ -50,8 +50,10 @@
     .wrap { max-width: 980px; margin: 0 auto; padding: 0 2.5rem; }
     .content-section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
     .content-section:last-child { border-bottom: none; }
-    .section-label { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.1rem; }
-    .section-h { font-family: var(--syne); font-size: 1.55rem; font-weight: 700; color: var(--heading); line-height: 1.2; margin-bottom: 1.2rem; }
+    .section-label { display:flex; align-items:center; gap:1rem; font-family: var(--syne); font-size: clamp(1.1rem, 2.4vw, 1.45rem); font-weight: 700; color: var(--heading); letter-spacing: 0; text-transform:none; margin-bottom: 1.4rem; line-height:1.2; }
+    .section-label::after { content:''; height:1px; flex:1; min-width:2rem; background: linear-gradient(90deg, rgba(201,169,110,0.75), rgba(201,169,110,0)); }
+    .section-label .section-num { color: var(--accent); font-family: var(--mono); font-size:0.62rem; font-weight:300; letter-spacing:0.18em; text-transform:uppercase; }
+    .section-h { position:absolute; width:1px; height:1px; overflow:hidden; clip: rect(0 0 0 0); white-space:nowrap; }
     .wrap p { font-size: 0.94rem; color: var(--body); margin-bottom: 1rem; }
     .wrap p strong { color: var(--heading); font-weight: 500; }
     .wrap p em { color: var(--body); font-style: italic; }
@@ -98,7 +100,7 @@
     /* Footer */
     footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; max-width: 980px; margin: 1rem auto 0; display: flex; align-items: center; justify-content: space-between; }
     footer span { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
-    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem 1.5rem; }
     .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
     .footer-links a:hover { color: var(--accent); }
     @media (max-width: 768px) {
@@ -140,16 +142,21 @@
     .action-prompt { font-family: var(--mono); font-size: 0.58rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
     .contact-actions { display: flex; align-items: center; gap: 0.75rem; padding: 1.15rem 0; border-bottom: 1px solid var(--border); }
     .contact-actions .action-prompt { width: 80px; flex-shrink: 0; }
-    .linkedin-inline, .youtube-inline, .resume-inline { display: inline-flex; align-items: center; justify-content: center; min-width: 2.42rem; height: 2.42rem; background: rgba(17,17,17,0.72); color: var(--heading); text-decoration: none; transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease; }
-    .linkedin-inline, .youtube-inline { width: 2.42rem; }
+    .linkedin-inline, .resume-inline { display: inline-flex; align-items: center; justify-content: center; min-width: 2.42rem; height: 2.42rem; background: rgba(17,17,17,0.72); color: var(--heading); text-decoration: none; transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease; }
+    .linkedin-inline { width: 2.42rem; }
     .resume-inline { border: 1px solid var(--border); }
     .linkedin-inline { font-family: var(--syne); font-size: 0.94rem; font-weight: 700; line-height: 1; }
-    .youtube-inline { position: relative; border-radius: 0.42rem; background: #ff1f1f; color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16); }
-    .youtube-inline::before { content: ''; width: 0; height: 0; margin-left: 0.12rem; border-top: 0.42rem solid transparent; border-bottom: 0.42rem solid transparent; border-left: 0.68rem solid currentColor; }
     .resume-inline { min-width: 5.1rem; padding: 0 0.72rem; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; }
-    .linkedin-inline:hover, .linkedin-inline:focus-visible, .youtube-inline:hover, .youtube-inline:focus-visible, .resume-inline:hover, .resume-inline:focus-visible { color: var(--accent); outline: none; }
+    .linkedin-inline:hover, .linkedin-inline:focus-visible, .resume-inline:hover, .resume-inline:focus-visible { color: var(--accent); outline: none; }
     .resume-inline:hover, .resume-inline:focus-visible { border-color: var(--accent); }
-    @media(max-width:768px){ .page-hero,.wrap { padding-left:1.25rem; padding-right:1.25rem; } .page-hero { display:flex; flex-direction:column; align-items:stretch; } .page-hero .eyebrow { order:1; } .page-title { order:2; } .about-photo { order:3; width:min(100%,340px); margin:0 0 1rem; } .page-lead { order:4; } .skills-grid { grid-template-columns:1fr; } .exp-row { grid-template-columns:1fr; gap:0.5rem; } .exp-row > div:first-child { order:1; } .exp-row > div:last-child { order:2; } .exp-date { display:block; margin-bottom:0.2rem; } .contact-actions { align-items:flex-start; flex-wrap:wrap; gap:0.7rem; } .contact-actions .action-prompt { width:100%; } }
+    .about-section-nav { position: fixed; left: 1.1rem; top: 50%; z-index: 120; transform: translateY(-50%); display: flex; flex-direction: column; gap: 0.28rem; padding: 0.42rem; border: 1px solid var(--border); background: rgba(10,10,10,0.78); backdrop-filter: blur(14px); transition: width 0.2s ease, background 0.2s ease; }
+    .about-section-nav a { display: grid; grid-template-columns: 0.42rem max-content; align-items: center; gap: 0.58rem; min-height: 1.72rem; color: var(--muted); text-decoration: none; font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+    .about-section-nav a::before { content: ''; width: 0.42rem; aspect-ratio: 1; border-radius: 50%; background: currentColor; opacity: 0.45; }
+    .about-section-nav a span { max-width: 0; overflow: hidden; opacity: 0; transition: max-width 0.22s ease, opacity 0.18s ease; }
+    .about-section-nav:hover a span, .about-section-nav:focus-within a span { max-width: 9rem; opacity: 1; }
+    .about-section-nav a.is-active { color: var(--accent); }
+    .about-section-nav a.is-active::before { opacity: 1; box-shadow: 0 0 14px rgba(201,169,110,0.48); }
+    @media(max-width:768px){ .page-hero,.wrap { padding-left:1.25rem; padding-right:3.15rem; } .page-hero { display:flex; flex-direction:column; align-items:stretch; } .page-hero .eyebrow { order:1; } .page-title { order:2; } .about-photo { order:3; width:min(100%,340px); margin:0 0 1rem; } .page-lead { order:4; } .skills-grid { grid-template-columns:1fr; } .exp-row { grid-template-columns:1fr; gap:0.5rem; } .exp-row > div:first-child { order:1; } .exp-row > div:last-child { order:2; } .exp-date { display:block; margin-bottom:0.2rem; } .contact-actions { align-items:flex-start; flex-wrap:wrap; gap:0.7rem; } .about-section-nav { left: auto; right: 0.55rem; top: 50%; bottom: auto; transform: translateY(-50%); flex-direction: column; max-width: none; padding: 0.34rem; } .about-section-nav a { grid-template-columns: 0.38rem; gap: 0; min-width: 1.35rem; min-height: 1.45rem; justify-items: center; } .about-section-nav a::before { width: 0.38rem; } .about-section-nav a span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }
   </style>
 </head>
 <body>
@@ -162,7 +169,7 @@
         <a href="projects/fpv-drone.html">FPV Drone</a>
         <a href="projects/thermofisher.html">ThermoFisher Co-ops</a>
         <a href="projects/automated-desk.html">Automated Desk</a>
-        <a href="projects/robotics.html">VEX Robotics</a>
+        <a href="projects/robotics.html">Competitive Robotics</a>
       </div>
     </li>
     <li class="nav-item nav-about"><a href="about.html">About</a>
@@ -175,25 +182,33 @@
   </ul>
 </nav>
 
+<aside class="about-section-nav" aria-label="About page sections">
+  <a href="#my-mission" class="is-active"><span>Mission</span></a>
+  <a href="#technical-skills"><span>Skills</span></a>
+  <a href="#my-experience"><span>Experience</span></a>
+  <a href="#background"><span>Background</span></a>
+  <a href="#contact"><span>Contact</span></a>
+</aside>
+
 <div class="page-hero">
   <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">Background</span></div>
   <h1 class="page-title">About</h1>
-  <img class="about-photo" src="images/about/about-headshot-001.jpg" alt="Michael Vasquez">
+  <img class="about-photo" src="images/about/headshot_v2.png" alt="Michael Vasquez">
   <p class="page-lead">Mechanical engineer with hands-on experience across the full design cycle - compliant mechanism R&amp;D, FEA-validated structures, robot controls integration, and production-line process engineering.</p>
 </div>
 
 <div class="wrap">
   <div class="content-section" id="my-mission">
-    <div class="section-label">Who I Am</div>
-    <h2 class="section-h">A Bit About Me</h2>
+    <div class="section-label"><span class="section-num">01</span> My Mission</div>
+    <h2 class="section-h">My Mission</h2>
     <p>I graduated from <strong>Rochester Institute of Technology</strong> in 2025 with a B.S. in Mechanical Engineering. RIT's co-op program meant I spent nearly two full years working at <strong>ThermoFisher Scientific</strong>, owning real production-engineering work on live manufacturing lines. That experience shaped how I approach design - every CAD decision is a tolerance stack-up waiting to happen, and every design intent has to survive the operator who's been on shift for 11 hours.</p>
     <p>Right now I'm the only mechanical engineer at <strong>Point Lighting Corporation</strong>, owning the full product lifecycle for specialized lighting systems serving aerospace, industrial, and architectural clients - including FAA-compliant solutions.</p>
     <p>Outside of work I keep building things - gearboxes, drones, machines. I'm looking for roles in <strong>R&amp;D, automation/robotics, or systems engineering</strong> in <strong>aerospace, defense, or automotive</strong>. Work with technical depth and a mission I can get behind.</p>
   </div>
 
-  <div class="content-section">
-    <div class="section-label">Technical Skills</div>
-    <h2 class="section-h">Tools &amp; Capabilities</h2>
+  <div class="content-section" id="technical-skills">
+    <div class="section-label"><span class="section-num">02</span> Technical Skills</div>
+    <h2 class="section-h">Technical Skills</h2>
     <p style="color:var(--subtle);font-size:0.82rem;margin-bottom:1.5rem;">
       <span style="color:var(--accent);">*</span> Expert &nbsp;&nbsp; <span style="color:var(--blue);">*</span> Proficient &nbsp;&nbsp; <span style="color:var(--subtle);">*</span> Working knowledge
     </p>
@@ -226,8 +241,8 @@
   </div>
 
   <div class="content-section" id="my-experience">
-    <div class="section-label">Experience</div>
-    <h2 class="section-h">Work History</h2>
+    <div class="section-label"><span class="section-num">03</span> My Experience</div>
+    <h2 class="section-h">My Experience</h2>
     <div>
       <div class="exp-row">
         <div><div class="exp-date">Jun 2025 - Present</div><div class="exp-loc">Bloomfield, CT</div></div>
@@ -256,8 +271,8 @@
     </div>
   </div>
 
-  <div class="content-section">
-    <div class="section-label">Education &amp; Leadership</div>
+  <div class="content-section" id="background">
+    <div class="section-label"><span class="section-num">04</span> Background</div>
     <h2 class="section-h">Background</h2>
     <div>
       <div class="exp-row">
@@ -288,15 +303,13 @@
   </div>
 
   <div class="content-section" id="contact">
-    <div class="section-label">Get In Touch</div>
+    <div class="section-label"><span class="section-num">05</span> Contact</div>
     <h2 class="section-h">Contact</h2>
     <p style="max-width:480px;margin-bottom:2rem;">Open to R&amp;D, automation/robotics, and systems engineering roles - aerospace, defense, or automotive preferred. Connecticut-based, hybrid-friendly.</p>
     <div>
       <a class="contact-link" href="mailto:mvas8037@gmail.com"><span class="cl-label">Email</span>mvas8037@gmail.com<span class="cl-arr">-></span></a>
       <a class="contact-link" href="tel:+12035712052"><span class="cl-label">Phone</span>(203) 571-2052<span class="cl-arr">-></span></a>
       <div class="contact-actions" aria-label="Profile and resume links">
-        <span class="action-prompt">Click to view</span>
-        <a class="youtube-inline" href="https://www.youtube.com/@myrobotisgas" target="_blank" rel="noopener" aria-label="YouTube channel"></a>
         <a class="linkedin-inline" href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener" aria-label="LinkedIn profile">in</a>
         <a class="resume-inline" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume">Resume</a>
       </div>
@@ -304,7 +317,7 @@
   </div>
 </div>
 
-<footer><span>(c) 2026 Michael Vasquez / Mechanical Engineer / Connecticut</span><div class="footer-links"><a href="index.html#projects">Projects</a><a href="https://www.youtube.com/@myrobotisgas" target="_blank" rel="noopener">YouTube</a><a href="resume.pdf" target="_blank">Resume</a></div></footer>
+<footer><span>&copy; 2026 Michael Vasquez / Mechanical Engineer</span><div class="footer-links"><a href="index.html#projects">Projects</a><a href="about.html#my-mission">About</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a><a href="resume.pdf" target="_blank" rel="noopener">Resume</a><a href="about.html#contact">Contact</a></div></footer>
 <script>
   function sortSkillChips(root = document) {
     const rank = { 'sp-e': 0, 'sp-p': 1, 'sp-w': 2 };
@@ -339,6 +352,32 @@
     if (event.target.closest('.nav-projects, .nav-about')) return;
     document.querySelectorAll('.nav-projects.is-open, .nav-about.is-open').forEach((item) => item.classList.remove('is-open'));
   });
+  const sectionNavLinks = Array.from(document.querySelectorAll('.about-section-nav a'));
+  const observedSections = sectionNavLinks
+    .map((link) => document.querySelector(link.getAttribute('href')))
+    .filter(Boolean);
+  function setActiveAboutSection(id) {
+    sectionNavLinks.forEach((link) => {
+      link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`);
+    });
+  }
+  function updateActiveAboutSection() {
+    const probeY = window.scrollY + window.innerHeight * 0.38;
+    let current = observedSections[0];
+    observedSections.forEach((section) => {
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      if (sectionTop <= probeY) current = section;
+    });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+      current = observedSections[observedSections.length - 1];
+    }
+    if (current) setActiveAboutSection(current.id);
+  }
+  const sectionObserver = new IntersectionObserver(() => updateActiveAboutSection(), { rootMargin: '-28% 0px -52% 0px', threshold: [0.12, 0.28, 0.5] });
+  observedSections.forEach((section) => sectionObserver.observe(section));
+  updateActiveAboutSection();
+  window.updateActiveAboutSection = updateActiveAboutSection;
+  window.addEventListener('scroll', updateActiveAboutSection, { passive: true });
   sortSkillChips();
 </script>
 </body></html>

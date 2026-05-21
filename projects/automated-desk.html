@@ -115,7 +115,7 @@
     /* Footer */
     footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; max-width: 980px; margin: 1rem auto 0; display: flex; align-items: center; justify-content: space-between; }
     footer span { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
-    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem 1.5rem; }
     .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
     .footer-links a:hover { color: var(--accent); }
     @media (max-width: 768px) {
@@ -154,7 +154,7 @@
         <a href="fpv-drone.html">FPV Drone</a>
         <a href="thermofisher.html">ThermoFisher Co-ops</a>
         <a href="automated-desk.html">Automated Desk</a>
-        <a href="robotics.html">VEX Robotics</a>
+        <a href="robotics.html">Competitive Robotics</a>
       </div>
     </li>
     <li class="nav-item nav-about"><a href="../about.html">About</a>
@@ -280,8 +280,8 @@
     </div>
   </div>
 </div>
-<div class="proj-nav"><a href="thermofisher.html"><- ThermoFisher</a><a href="robotics.html">Next: VEX Robotics -></a></div>
-<footer><span>(c) 2025 Michael Vasquez</span><div class="footer-links"><a href="mailto:mvas8037@gmail.com">Email</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank">LinkedIn</a></div></footer>
+<div class="proj-nav"><a href="thermofisher.html"><- ThermoFisher</a><a href="robotics.html">Next: Competitive Robotics -></a></div>
+<footer><span>&copy; 2026 Michael Vasquez / Mechanical Engineer</span><div class="footer-links"><a href="../index.html#projects">Projects</a><a href="../about.html#my-mission">About</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a><a href="../resume.pdf" target="_blank" rel="noopener">Resume</a><a href="../about.html#contact">Contact</a></div></footer>
 <script>
   document.querySelectorAll('.nav-projects, .nav-about').forEach((item) => {
     const trigger = item.querySelector('a');
