@@ -31,7 +31,7 @@
     .project-menu a { display: block; padding: 0.7rem 0.8rem; color: var(--body); border-bottom: 1px solid var(--border); white-space: nowrap; }
     .project-menu a:last-child { border-bottom: none; }
     .project-menu a:hover { background: var(--card-hi); color: var(--accent); }
-    .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu, .nav-about:hover .project-menu, .nav-about:focus-within .project-menu, .nav-about.is-open .project-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
 
     .project-hero { padding: 7.4rem 2.5rem 3rem; max-width: 1080px; margin: 0 auto; border-bottom: 1px solid var(--border); }
     .hero-media { margin-bottom: 1.55rem; border: 1px solid var(--border); background: #060606; overflow: hidden; }
@@ -106,7 +106,7 @@
     .image-lightbox-close { position: fixed; top: 1rem; right: 1rem; width: 2.8rem; height: 2.8rem; border: 1px solid rgba(255,255,255,0.18); background: rgba(12,12,12,0.72); color: var(--heading); font-size: 1.6rem; line-height: 1; cursor: pointer; }
     .image-lightbox-close:hover, .image-lightbox-close:focus-visible { color: var(--accent); border-color: rgba(201,169,110,0.65); outline: none; }
     @media (max-width: 860px) {
-      nav { padding: 1rem 1.25rem; } .nav-links { gap: 0.64rem; } .nav-links a { font-size: 0.54rem; } .nav-links > li:not(:first-child) { display: none; } .project-menu { position: fixed; left: auto; right: 1rem; top: 4rem; width: min(16rem, calc(100vw - 2rem)); transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu { transform: translateY(0); }
+      nav { padding: 1rem 1.25rem; } .nav-links { gap: 0.64rem; } .nav-links a { font-size: 0.54rem; } .project-menu { position: fixed; left: auto; right: 1rem; top: 4rem; width: min(16rem, calc(100vw - 2rem)); transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu, .nav-about:hover .project-menu, .nav-about:focus-within .project-menu, .nav-about.is-open .project-menu { transform: translateY(0); }
       .project-hero, .wrap, .proj-nav { width: min(350px, calc(100vw - 2.5rem)); max-width: min(350px, calc(100vw - 2.5rem)); margin-left: 1.25rem; margin-right: 0; padding-left: 0; padding-right: 0; }
       .proj-title { font-size: clamp(1.05rem, 5.6vw, 1.55rem); line-height: 1.12; }
       .proj-subtitle { max-width: 100%; overflow-wrap: break-word; font-size: 0.94rem; }
@@ -133,9 +133,13 @@
         <a href="robotics.html">VEX Robotics</a>
       </div>
     </li>
-    <li><a href="../index.html#about">About</a></li>
-    <li><a href="../resume.pdf" target="_blank">Resume</a></li>
-    <li><a href="../index.html#contact">Contact</a></li>
+    <li class="nav-item nav-about"><a href="../about.html">About</a>
+      <div class="project-menu" aria-label="About links">
+        <a href="../about.html#my-mission">My Mission</a>
+        <a href="../about.html#my-experience">My Experience</a>
+        <a href="../about.html#contact">Contact</a>
+      </div>
+    </li>
   </ul>
 </nav>
 
@@ -334,14 +338,14 @@
 <div class="proj-nav"><a href="thermofisher.html">&lt;- ThermoFisher Rotations</a><a href="thermofisher-2024.html">Next: 2024 Rotation -&gt;</a></div>
 <footer><span>&copy; 2025 Michael Vasquez</span><div class="footer-links"><a href="mailto:mvas8037@gmail.com">Email</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank">LinkedIn</a></div></footer>
 <script>
-  document.querySelectorAll('.nav-projects').forEach((item) => {
+  document.querySelectorAll('.nav-projects, .nav-about').forEach((item) => {
     const trigger = item.querySelector('a');
     if (!trigger) return;
     trigger.addEventListener('click', (event) => {
       if (!window.matchMedia('(max-width: 768px)').matches) return;
       if (!item.classList.contains('is-open')) {
         event.preventDefault();
-        document.querySelectorAll('.nav-projects.is-open').forEach((openItem) => {
+        document.querySelectorAll('.nav-projects.is-open, .nav-about.is-open').forEach((openItem) => {
           if (openItem !== item) openItem.classList.remove('is-open');
         });
         item.classList.add('is-open');
@@ -349,8 +353,8 @@
     });
   });
   document.addEventListener('click', (event) => {
-    if (event.target.closest('.nav-projects')) return;
-    document.querySelectorAll('.nav-projects.is-open').forEach((item) => item.classList.remove('is-open'));
+    if (event.target.closest('.nav-projects, .nav-about')) return;
+    document.querySelectorAll('.nav-projects.is-open, .nav-about.is-open').forEach((item) => item.classList.remove('is-open'));
   });
 </script>
 <script>

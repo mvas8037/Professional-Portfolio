@@ -28,7 +28,7 @@
     .project-menu a { display: block; padding: 0.7rem 0.8rem; color: var(--body); border-bottom: 1px solid var(--border); white-space: nowrap; }
     .project-menu a:last-child { border-bottom: none; }
     .project-menu a:hover { background: var(--card-hi); color: var(--accent); }
-    .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu, .nav-about:hover .project-menu, .nav-about:focus-within .project-menu, .nav-about.is-open .project-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
     .eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
     .eyebrow-line { width: 28px; height: 1px; background: var(--accent); }
     .eyebrow-text { font-family: var(--mono); font-size: 0.66rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; }
@@ -102,7 +102,7 @@
     .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
     .footer-links a:hover { color: var(--accent); }
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1rem; } .project-menu { position: fixed; left: auto; right: 1rem; top: 4rem; width: min(16rem, calc(100vw - 2rem)); transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu { transform: translateY(0); }
+      nav { padding: 1rem 1.25rem; } .nav-links { gap: 1rem; } .project-menu { position: fixed; left: auto; right: 1rem; top: 4rem; width: min(16rem, calc(100vw - 2rem)); transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu, .nav-about:hover .project-menu, .nav-about:focus-within .project-menu, .nav-about.is-open .project-menu { transform: translateY(0); }
       .project-hero, .wrap, .proj-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
       .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
       .proj-stats { grid-template-columns: 1fr 1fr; }
@@ -140,10 +140,15 @@
     .action-prompt { font-family: var(--mono); font-size: 0.58rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
     .contact-actions { display: flex; align-items: center; gap: 0.75rem; padding: 1.15rem 0; border-bottom: 1px solid var(--border); }
     .contact-actions .action-prompt { width: 80px; flex-shrink: 0; }
-    .linkedin-inline, .resume-inline { display: inline-flex; align-items: center; justify-content: center; width: 2.42rem; height: 2.42rem; border: 1px solid var(--border); background: rgba(17,17,17,0.72); color: var(--heading); text-decoration: none; transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease; }
+    .linkedin-inline, .youtube-inline, .resume-inline { display: inline-flex; align-items: center; justify-content: center; min-width: 2.42rem; height: 2.42rem; background: rgba(17,17,17,0.72); color: var(--heading); text-decoration: none; transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease; }
+    .linkedin-inline, .youtube-inline { width: 2.42rem; }
+    .resume-inline { border: 1px solid var(--border); }
     .linkedin-inline { font-family: var(--syne); font-size: 0.94rem; font-weight: 700; line-height: 1; }
-    .resume-inline { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; }
-    .linkedin-inline:hover, .linkedin-inline:focus-visible, .resume-inline:hover, .resume-inline:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
+    .youtube-inline { position: relative; border-radius: 0.42rem; background: #ff1f1f; color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16); }
+    .youtube-inline::before { content: ''; width: 0; height: 0; margin-left: 0.12rem; border-top: 0.42rem solid transparent; border-bottom: 0.42rem solid transparent; border-left: 0.68rem solid currentColor; }
+    .resume-inline { min-width: 5.1rem; padding: 0 0.72rem; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .linkedin-inline:hover, .linkedin-inline:focus-visible, .youtube-inline:hover, .youtube-inline:focus-visible, .resume-inline:hover, .resume-inline:focus-visible { color: var(--accent); outline: none; }
+    .resume-inline:hover, .resume-inline:focus-visible { border-color: var(--accent); }
     @media(max-width:768px){ .page-hero,.wrap { padding-left:1.25rem; padding-right:1.25rem; } .page-hero { display:flex; flex-direction:column; align-items:stretch; } .page-hero .eyebrow { order:1; } .page-title { order:2; } .about-photo { order:3; width:min(100%,340px); margin:0 0 1rem; } .page-lead { order:4; } .skills-grid { grid-template-columns:1fr; } .exp-row { grid-template-columns:1fr; gap:0.5rem; } .exp-row > div:first-child { order:1; } .exp-row > div:last-child { order:2; } .exp-date { display:block; margin-bottom:0.2rem; } .contact-actions { align-items:flex-start; flex-wrap:wrap; gap:0.7rem; } .contact-actions .action-prompt { width:100%; } }
   </style>
 </head>
@@ -160,9 +165,13 @@
         <a href="projects/robotics.html">VEX Robotics</a>
       </div>
     </li>
-    <li><a href="index.html#about">About</a></li>
-    <li><a href="resume.pdf" target="_blank">Resume</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
+    <li class="nav-item nav-about"><a href="about.html">About</a>
+      <div class="project-menu" aria-label="About links">
+        <a href="#my-mission">My Mission</a>
+        <a href="#my-experience">My Experience</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </li>
   </ul>
 </nav>
 
@@ -174,7 +183,7 @@
 </div>
 
 <div class="wrap">
-  <div class="content-section">
+  <div class="content-section" id="my-mission">
     <div class="section-label">Who I Am</div>
     <h2 class="section-h">A Bit About Me</h2>
     <p>I graduated from <strong>Rochester Institute of Technology</strong> in 2025 with a B.S. in Mechanical Engineering. RIT's co-op program meant I spent nearly two full years working at <strong>ThermoFisher Scientific</strong>, owning real production-engineering work on live manufacturing lines. That experience shaped how I approach design - every CAD decision is a tolerance stack-up waiting to happen, and every design intent has to survive the operator who's been on shift for 11 hours.</p>
@@ -216,7 +225,7 @@
     </div>
   </div>
 
-  <div class="content-section">
+  <div class="content-section" id="my-experience">
     <div class="section-label">Experience</div>
     <h2 class="section-h">Work History</h2>
     <div>
@@ -287,14 +296,15 @@
       <a class="contact-link" href="tel:+12035712052"><span class="cl-label">Phone</span>(203) 571-2052<span class="cl-arr">-></span></a>
       <div class="contact-actions" aria-label="Profile and resume links">
         <span class="action-prompt">Click to view</span>
+        <a class="youtube-inline" href="https://www.youtube.com/@myrobotisgas" target="_blank" rel="noopener" aria-label="YouTube channel"></a>
         <a class="linkedin-inline" href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener" aria-label="LinkedIn profile">in</a>
-        <a class="resume-inline" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume PDF">PDF</a>
+        <a class="resume-inline" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume">Resume</a>
       </div>
     </div>
   </div>
 </div>
 
-<footer><span>(c) 2025 Michael Vasquez / Mechanical Engineer / Connecticut</span><div class="footer-links"><a href="index.html">Projects</a><a href="resume.pdf" target="_blank">Resume</a></div></footer>
+<footer><span>(c) 2026 Michael Vasquez / Mechanical Engineer / Connecticut</span><div class="footer-links"><a href="index.html#projects">Projects</a><a href="https://www.youtube.com/@myrobotisgas" target="_blank" rel="noopener">YouTube</a><a href="resume.pdf" target="_blank">Resume</a></div></footer>
 <script>
   function sortSkillChips(root = document) {
     const rank = { 'sp-e': 0, 'sp-p': 1, 'sp-w': 2 };
@@ -311,14 +321,14 @@
     });
   }
 
-  document.querySelectorAll('.nav-projects').forEach((item) => {
+  document.querySelectorAll('.nav-projects, .nav-about').forEach((item) => {
     const trigger = item.querySelector('a');
     if (!trigger) return;
     trigger.addEventListener('click', (event) => {
       if (!window.matchMedia('(max-width: 768px)').matches) return;
       if (!item.classList.contains('is-open')) {
         event.preventDefault();
-        document.querySelectorAll('.nav-projects.is-open').forEach((openItem) => {
+        document.querySelectorAll('.nav-projects.is-open, .nav-about.is-open').forEach((openItem) => {
           if (openItem !== item) openItem.classList.remove('is-open');
         });
         item.classList.add('is-open');
@@ -326,8 +336,8 @@
     });
   });
   document.addEventListener('click', (event) => {
-    if (event.target.closest('.nav-projects')) return;
-    document.querySelectorAll('.nav-projects.is-open').forEach((item) => item.classList.remove('is-open'));
+    if (event.target.closest('.nav-projects, .nav-about')) return;
+    document.querySelectorAll('.nav-projects.is-open, .nav-about.is-open').forEach((item) => item.classList.remove('is-open'));
   });
   sortSkillChips();
 </script>

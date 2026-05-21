@@ -143,7 +143,10 @@
 
     .nav-projects:hover .project-menu,
     .nav-projects:focus-within .project-menu,
-    .nav-projects.is-open .project-menu {
+    .nav-projects.is-open .project-menu,
+    .nav-about:hover .project-menu,
+    .nav-about:focus-within .project-menu,
+    .nav-about.is-open .project-menu {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
@@ -190,11 +193,38 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 0.75rem;
-      color: var(--accent);
       font-family: 'JetBrains Mono', monospace;
       font-size: clamp(0.57rem, 1.4vw, 0.66rem);
       letter-spacing: 0.16em;
       text-transform: uppercase;
+    }
+
+    .hero-kicker-role {
+      color: var(--accent);
+    }
+
+    .hero-kicker-tip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.44rem;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid rgba(201, 169, 110, 0.34);
+      background: rgba(201, 169, 110, 0.08);
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+    }
+
+    .hero-kicker-tip::before {
+      content: '?';
+      display: grid;
+      place-items: center;
+      width: 0.92rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: rgba(201, 169, 110, 0.2);
+      color: var(--accent);
+      font-size: 0.52rem;
+      line-height: 1;
     }
 
     .hero-kicker::before {
@@ -315,14 +345,18 @@
     }
 
     .linkedin-inline,
+    .youtube-inline,
     .resume-inline {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid var(--border);
       background: rgba(17, 17, 17, 0.72);
       color: var(--text-primary);
       transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+    }
+
+    .resume-inline {
+      border: 1px solid var(--border);
     }
 
     .linkedin-inline {
@@ -332,6 +366,26 @@
       font-size: 0.94rem;
       font-weight: 700;
       line-height: 1;
+    }
+
+    .youtube-inline {
+      width: clamp(2.14rem, 5vw, 2.48rem);
+      height: clamp(2.14rem, 5vw, 2.48rem);
+      position: relative;
+      border-radius: 0.42rem;
+      background: #ff1f1f;
+      color: #fff;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+    }
+
+    .youtube-inline::before {
+      content: '';
+      width: 0;
+      height: 0;
+      margin-left: 0.12rem;
+      border-top: 0.42rem solid transparent;
+      border-bottom: 0.42rem solid transparent;
+      border-left: 0.68rem solid currentColor;
     }
 
     .resume-inline {
@@ -345,19 +399,49 @@
     }
 
     .resume-inline.is-icon {
-      width: clamp(2.14rem, 5vw, 2.48rem);
-      min-width: clamp(2.14rem, 5vw, 2.48rem);
-      padding: 0;
+      width: auto;
+      min-width: clamp(4.6rem, 8vw, 5.1rem);
+      padding: 0 0.72rem;
       letter-spacing: 0.08em;
     }
 
     .linkedin-inline:hover,
     .linkedin-inline:focus-visible,
+    .youtube-inline:hover,
+    .youtube-inline:focus-visible,
+    .resume-inline:hover,
+    .resume-inline:focus-visible {
+      color: var(--accent);
+      outline: none;
+    }
+
     .resume-inline:hover,
     .resume-inline:focus-visible {
       border-color: var(--accent);
-      color: var(--accent);
+    }
+
+    .hero-name-button {
+      display: block;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .hero-name-button:hover,
+    .hero-name-button:focus-visible {
       outline: none;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .hero-name-button:hover,
+      .hero-name-button:focus-visible {
+        text-shadow:
+          0 0 10px rgba(201, 169, 110, 0.26),
+          0 0 28px rgba(201, 169, 110, 0.22),
+          0 0 54px rgba(201, 169, 110, 0.14);
+      }
     }
 
     .explore-cue {
@@ -1136,7 +1220,8 @@
         letter-spacing: 0.08em !important;
       }
 
-      .nav-projects .project-menu {
+      .nav-projects .project-menu,
+      .nav-about .project-menu {
         position: fixed !important;
         left: auto !important;
         right: 1rem !important;
@@ -1148,7 +1233,10 @@
 
       .nav-projects:hover .project-menu,
       .nav-projects:focus-within .project-menu,
-      .nav-projects.is-open .project-menu {
+      .nav-projects.is-open .project-menu,
+      .nav-about:hover .project-menu,
+      .nav-about:focus-within .project-menu,
+      .nav-about.is-open .project-menu {
         transform: translateY(0);
       }
 
@@ -1624,10 +1712,463 @@
       }
     }
 
-    section#about.snap-section.about-section {
-      height: auto !important;
+    /* === Project constellation === */
+    #projects.snap-section {
+      height: 100svh;
       min-height: 100svh;
+      overflow: clip;
+    }
+
+    .projects-layout {
+      position: relative;
+      z-index: 2;
+      grid-template-rows: auto minmax(0, 1fr) auto auto;
+    }
+
+    .constellation-shell {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      min-height: 0;
+      max-width: 100%;
+      width: 100%;
+      height: min(74svh, 720px);
+      align-self: stretch;
+      transform: translateZ(0);
+    }
+
+    .constellation-wrap {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 760px;
+      height: 650px;
+      max-width: none;
+      max-height: min(62svh, 640px);
+      aspect-ratio: 17 / 15;
       overflow: visible;
+      transform-origin: 50% 50%;
+      transform: translate(-50%, -50%) scale(var(--constellation-scale, 1));
+    }
+
+    .constellation-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 4;
+      width: max-content;
+      min-width: clamp(8rem, 18vw, 11rem);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: transparent;
+      box-shadow: none;
+      transform: translate(-50%, -50%);
+      text-shadow: 0 2px 18px #050505, 0 0 28px rgba(5, 5, 5, 0.86);
+    }
+
+    .constellation-core::before {
+      content: none;
+    }
+
+    .constellation-core-kicker {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.54rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .constellation-core-title {
+      margin-top: 0.36rem;
+      color: var(--text-primary);
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.02rem, 2.3vw, 1.34rem);
+      font-weight: 800;
+      line-height: 0.98;
+    }
+
+    @keyframes hubPulse {
+      0%, 100% { transform: scale(0.96); opacity: 0.24; }
+      50% { transform: scale(1.14); opacity: 0.72; }
+    }
+
+    #constellationParticles {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .black-hole-transition {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 2;
+      width: min(44vw, 24rem);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      pointer-events: none;
+      background:
+        radial-gradient(circle, #000 0 25%, rgba(201, 169, 110, 0.28) 29%, rgba(201, 169, 110, 0.08) 42%, transparent 64%);
+      filter: blur(0.3px);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.24) rotate(-120deg);
+    }
+
+    .helix-section.is-warping .black-hole-transition {
+      animation: blackHoleSpiral 920ms cubic-bezier(0.19, 1, 0.22, 1) both;
+    }
+
+    @keyframes blackHoleSpiral {
+      0% { opacity: 0.95; transform: translate(-50%, -50%) scale(0.16) rotate(-150deg); }
+      56% { opacity: 0.72; transform: translate(-50%, -50%) scale(1.18) rotate(28deg); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.75) rotate(86deg); }
+    }
+
+    .orbit-node {
+      position: absolute;
+      left: var(--node-x);
+      top: var(--node-y);
+      z-index: 5;
+      width: clamp(11.6rem, 15.5vw, 13.2rem);
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      text-align: center;
+      transform: translate(-50%, -50%) scale(0.66) rotate(-18deg);
+      transform-origin: 50% 50%;
+      opacity: 0.18;
+      transition: opacity 320ms ease, transform 680ms cubic-bezier(0.19, 1, 0.22, 1), filter 180ms ease;
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    .helix-section.is-revealed .orbit-node {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+
+    .orbit-node:hover,
+    .orbit-node:focus-visible {
+      filter: drop-shadow(0 0 18px rgba(201, 169, 110, 0.36));
+      outline: none;
+    }
+
+    .orbit-thumb-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+      height: 10.4rem;
+      filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.68));
+    }
+
+    .orbit-thumb-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 13% 6%;
+      z-index: -1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201, 169, 110, 0.18), rgba(201, 169, 110, 0.05) 45%, transparent 72%);
+      filter: blur(8px);
+      opacity: 0.82;
+    }
+
+    .orbit-node-motion {
+      will-change: transform;
+    }
+
+    .orbit-thumb {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: brightness(1.42) contrast(1.12) saturate(1.12) drop-shadow(0 12px 18px rgba(0, 0, 0, 0.64));
+    }
+
+    .orbit-node-label {
+      margin-top: 0.55rem;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.92), 0 0 18px rgba(5, 5, 5, 0.72);
+    }
+
+    .orbit-node-num {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+    }
+
+    .orbit-node-title {
+      margin-top: 0.08rem;
+      color: var(--text-primary);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 800;
+      line-height: 1.02;
+    }
+
+    @keyframes orbitFloat {
+      0%, 100% { transform: translate(0, 0) rotate(var(--float-rot-start, 0deg)); }
+      50% { transform: translate(calc(var(--float-x, 0px) * 1px), calc(var(--float-y, -6px) * 1px)) rotate(var(--float-rot-end, 0.8deg)); }
+    }
+
+    .constellation-summary {
+      width: min(620px, calc(100vw - 2rem));
+      margin: 0 auto;
+      color: var(--text-secondary);
+      font-size: clamp(0.82rem, 1.4vw, 0.96rem);
+      line-height: 1.55;
+      text-align: center;
+      text-wrap: pretty;
+      overflow-wrap: break-word;
+    }
+
+    .constellation-tutorial {
+      width: min(620px, calc(100vw - 2rem));
+      margin: 0.55rem auto 0;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.56rem, 1.1vw, 0.64rem);
+      letter-spacing: 0.14em;
+      line-height: 1.45;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .constellation-footer-link {
+      justify-self: center;
+      margin-top: 0.6rem;
+    }
+
+    .project-overlay,
+    .about-preview {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: grid;
+      place-items: center;
+      padding: clamp(1rem, 4vw, 2.5rem);
+      background: rgba(0, 0, 0, 0.52);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 220ms ease, visibility 220ms ease;
+    }
+
+    .project-overlay.is-open,
+    .about-preview.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .project-overlay-card,
+    .about-preview-panel {
+      position: relative;
+      width: min(100%, 760px);
+      max-height: min(86svh, 760px);
+      overflow: auto;
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.72);
+      transform: scale(0.92) translateY(1rem);
+      opacity: 0;
+      transition: transform 520ms cubic-bezier(0.16, 1.25, 0.3, 1), opacity 220ms ease;
+    }
+
+    .project-overlay.is-open .project-overlay-card,
+    .about-preview.is-open .about-preview-panel {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    .overlay-close {
+      position: absolute;
+      right: 0.8rem;
+      top: 0.8rem;
+      z-index: 3;
+      width: 2.25rem;
+      height: 2.25rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(5, 5, 5, 0.72);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .overlay-close:hover,
+    .overlay-close:focus-visible {
+      border-color: var(--accent);
+      color: var(--accent);
+      outline: none;
+    }
+
+    .project-overlay-card .project-image {
+      height: clamp(220px, 36svh, 360px);
+    }
+
+    .about-preview-panel {
+      padding: clamp(1.35rem, 4vw, 2.4rem);
+    }
+
+    .about-preview-photo {
+      width: min(100%, 15rem);
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: 52% 44%;
+      display: block;
+      margin-bottom: 1.35rem;
+      border: 1px solid var(--border);
+      filter: saturate(0.95) contrast(1.03);
+    }
+
+    .about-preview-kicker {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .about-preview-title {
+      margin: 0.65rem 2.6rem 1rem 0;
+      color: var(--text-primary);
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.6rem);
+      font-weight: 800;
+      line-height: 0.96;
+    }
+
+    .about-preview-copy {
+      color: var(--text-secondary);
+      font-size: clamp(0.92rem, 1.6vw, 1.02rem);
+      line-height: 1.72;
+    }
+
+    .about-preview-panel > .card-cta {
+      margin-top: 1.25rem;
+    }
+
+    .about-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      margin: 1.5rem 0;
+    }
+
+    .about-preview-stat {
+      border-top: 1px solid rgba(201, 169, 110, 0.36);
+      padding-top: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .about-preview-stat strong {
+      display: block;
+      margin-bottom: 0.28rem;
+      color: var(--text-primary);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.92rem;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    @media (min-width: 1240px) {
+      .projects-layout {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto auto auto auto;
+        grid-template-areas: "constellation" "summary" "tutorial" "footer";
+        align-content: center;
+        justify-items: center;
+      }
+
+      .constellation-shell { grid-area: constellation; }
+      .constellation-summary { grid-area: summary; }
+      .constellation-tutorial { grid-area: tutorial; }
+      .constellation-footer-link { grid-area: footer; }
+    }
+
+    @media (max-width: 1239px) {
+      #projects.snap-section {
+        height: 100svh;
+        min-height: 100svh;
+      }
+
+      .helix-section {
+        overflow: clip;
+      }
+
+      .projects-layout {
+        grid-template-rows: auto minmax(0, 1fr) auto auto;
+        height: 100%;
+        align-items: center;
+        justify-items: center;
+      }
+
+      .constellation-wrap {
+        --constellation-scale: 0.78;
+      }
+
+      .site-footer {
+        position: absolute;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .constellation-wrap {
+        --constellation-scale: 0.5;
+      }
+
+      .constellation-shell {
+        height: min(58svh, 520px);
+      }
+
+      .constellation-summary {
+        width: min(21.5rem, calc(100vw - 2rem));
+        max-width: calc(100vw - 2rem);
+        font-size: clamp(0.74rem, 3.4vw, 0.88rem);
+      }
+
+      .constellation-tutorial {
+        width: min(21.5rem, calc(100vw - 2rem));
+        font-size: clamp(0.52rem, 2.8vw, 0.6rem);
+      }
+
+      .project-hints span {
+        display: none;
+      }
+
+      .project-hints::before {
+        content: 'Tap a project artifact to preview';
+      }
+
+      .about-preview-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-overlay-card .card-body {
+        padding-inline: 1rem;
+      }
+
+      .about-preview-photo {
+        width: min(100%, 11.5rem);
+      }
+    }
+
+    @media (max-width: 380px) {
+      .constellation-wrap {
+        --constellation-scale: 0.46;
+      }
     }
   </style>
 </head>
@@ -1646,9 +2187,14 @@
             <a class="block px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="projects/robotics.html">VEX Robotics</a>
           </div>
         </li>
-        <li><a class="nav-link focus-ring" href="#about">About</a></li>
-        <li><a class="nav-link focus-ring" href="resume.pdf" target="_blank" rel="noopener">Resume</a></li>
-        <li><a class="nav-link focus-ring" href="#contact">Contact</a></li>
+        <li class="nav-about relative">
+          <a class="nav-link focus-ring" href="about.html">About</a>
+          <div class="project-menu absolute left-1/2 top-[calc(100%+0.95rem)] w-56 border border-[#1e1e1e] bg-[#0e0e0e]/95 p-2 shadow-2xl backdrop-blur-xl" aria-label="About links">
+            <a class="block border-b border-[#1e1e1e] px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="about.html#my-mission">My Mission</a>
+            <a class="block border-b border-[#1e1e1e] px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="about.html#my-experience">My Experience</a>
+            <a class="block px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="about.html#contact">Contact</a>
+          </div>
+        </li>
       </ul>
     </div>
   </nav>
@@ -1660,8 +2206,11 @@
 
       <div class="hero-screen">
         <div class="hero-copy">
-          <div class="hero-kicker">Mechanical Engineer / B.S. RIT 2025</div>
-          <h1 class="hero-name">Michael<br>Vasquez</h1>
+          <div class="hero-kicker">
+            <span class="hero-kicker-role">Mechanical Engineer</span>
+            <span class="hero-kicker-tip">Press my name</span>
+          </div>
+          <button id="aboutPreviewTrigger" class="hero-name hero-name-button focus-ring" type="button" aria-haspopup="dialog" aria-controls="aboutPreview">Michael<br>Vasquez</button>
           <div class="hero-tagline">designs, develops,<br> delivers.</div>
           <p class="hero-copy-line">From precision mechanisms and FEA-validated structures to production-line robotics - engineering work across the full design cycle.</p>
         </div>
@@ -1677,13 +2226,13 @@
               <div class="hero-info-value">Danbury, Connecticut</div>
             </div>
             <div class="bar-actions">
-              <span class="action-prompt">Click to view</span>
+              <a class="youtube-inline focus-ring" href="https://www.youtube.com/@myrobotisgas" target="_blank" rel="noopener" aria-label="YouTube channel"></a>
               <a class="linkedin-inline focus-ring" href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener" aria-label="LinkedIn profile">in</a>
-              <a class="resume-inline is-icon focus-ring" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume PDF">PDF</a>
+              <a class="resume-inline is-icon focus-ring" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume">Resume</a>
             </div>
           </div>
-          <a class="explore-cue focus-ring" href="#projects" aria-label="Explore more below">
-            <span>Explore more below</span>
+          <a class="explore-cue focus-ring" href="#projects" aria-label="Explore my projects">
+            <span>Explore my projects</span>
             <span class="explore-cue-arrow" aria-hidden="true">v</span>
           </a>
         </div>
@@ -1691,185 +2240,79 @@
     </section>
 
     <section id="projects" class="helix-section snap-section">
+      <canvas id="constellationParticles" aria-hidden="true"></canvas>
       <div class="projects-layout">
-        <aside class="projects-intro relative z-10">
-          <div class="projects-eyebrow">Project Index</div>
-          <h2 class="projects-title">Selected mechanical systems.</h2>
-          <p class="projects-copy">Various projects across biomedical hardware, flight structures, production automation, mechatronics, and competition robotics.
-          </p>
-          <div class="project-hints">
-            <span>Tap arrows to cycle between projects</span>
+        <div id="constellationShell" class="constellation-shell">
+          <div id="constellationWrap" class="constellation-wrap" aria-label="Selected project constellation">
+            <div class="black-hole-transition" aria-hidden="true"></div>
+            <div class="constellation-core" aria-hidden="true">
+              <div>
+                <div class="constellation-core-kicker">Portfolio</div>
+                <div class="constellation-core-title">Selected<br>Projects</div>
+              </div>
+            </div>
           </div>
-          <nav class="project-quick-links" aria-label="All projects">
-            <a href="projects/bone-printer.html"><span class="pql-num">01 /</span>&nbsp;Binder-Ink Jet Bone 3D Printer</a>
-            <a href="projects/fpv-drone.html"><span class="pql-num">02 /</span>&nbsp;Custom FPV Drone</a>
-            <a href="projects/thermofisher.html"><span class="pql-num">03 /</span>&nbsp;ThermoFisher Scientific Co-op</a>
-            <a href="projects/automated-desk.html"><span class="pql-num">04 /</span>&nbsp;Standing Desk Automation</a>
-            <a href="projects/robotics.html"><span class="pql-num">05 /</span>&nbsp;VEX U Competition Robot</a>
-          </nav>
-        </aside>
-
-        <div id="carouselShell" class="carousel-shell">
-          <div class="carousel-viewport">
-            <div id="carouselTrack" class="carousel-track"></div>
-            <button id="carouselPrev" class="carousel-arrow carousel-arrow-prev focus-ring" aria-label="Previous project">‹</button>
-            <button id="carouselNext" class="carousel-arrow carousel-arrow-next focus-ring" aria-label="Next project">›</button>
-          </div>
-          <div id="carouselDots" class="carousel-dots" aria-label="Project position"></div>
         </div>
-        <a class="explore-cue project-about-cue focus-ring" href="#about" aria-label="About me">
-          <span>About me</span>
-          <span class="explore-cue-arrow" aria-hidden="true">v</span>
+        <p class="constellation-summary">Various projects across biomedical hardware, flight structures, production automation, mechatronics, and competition robotics.</p>
+        <p class="constellation-tutorial">Click on the icon to learn more about each project</p>
+        <a class="explore-cue constellation-footer-link focus-ring" href="about.html" aria-label="About Michael Vasquez">
+          <span>About Michael</span>
+          <span class="explore-cue-arrow" aria-hidden="true">→</span>
         </a>
       </div>
-    </section>
-
-    <section id="about" class="about-section snap-section">
-      <div class="about-shell">
-        <div class="about-hero">
-          <div>
-            <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">Professional</span></div>
-            <h2 class="page-title">Overview</h2>
-            <p class="page-lead">Mechanical engineer with hands-on experience across the full design cycle - DFM/DFA, precision mechanisms, FEA-validated structures, robot controls integration, and production-line process engineering.</p>
-          </div>
-          <img class="about-photo" src="images/about/headshot_v2.png" alt="Michael Vasquez">
+      <footer class="site-footer" aria-label="Site footer">
+        <div class="footer-brand">
+          <span class="footer-brand-name">Michael Vasquez</span>
+          <span class="footer-divider" aria-hidden="true"></span>
+          <span>Mechanical Engineer</span>
         </div>
-
-        <div class="about-wrap">
-          <div class="content-section">
-            <h2 class="section-h section-heading"><span aria-hidden="true">01</span> About Me</h2>
-            <p>I graduated from <strong>Rochester Institute of Technology</strong> in 2025 with a B.S. in Mechanical Engineering. RIT's co-op program meant I spent nearly two full years working at <strong>ThermoFisher Scientific</strong>, owning real production-engineering work on live manufacturing lines. That experience shaped how I approach design - every CAD decision is a tolerance stack-up waiting to happen, and every design intent has to survive the operator who's been on shift for 11 hours.</p>
-            <p>Right now I'm the only mechanical engineer at <strong>Point Lighting Corporation</strong>, owning the full product lifecycle for specialized lighting systems serving aerospace, industrial, and architectural clients - including FAA-compliant solutions.</p>
-            <p>Outside of work I keep building things - gearboxes, drones, machines. I'm looking for roles in <strong>R&amp;D, automation/robotics, or systems engineering</strong> in <strong>aerospace, defense, or automotive</strong>. Work with technical depth and a mission I can get behind.</p>
-          </div>
-
-          <div class="content-section">
-            <h2 class="section-h section-heading"><span aria-hidden="true">02</span> Technical Skills</h2>
-            <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:1.5rem;">
-              <span style="color:var(--accent);">*</span> Expert &nbsp;&nbsp; <span style="color:var(--blue);">*</span> Proficient &nbsp;&nbsp; <span style="color:var(--text-muted);">*</span> Working knowledge
-            </p>
-            <div class="skills-grid">
-              <div class="skill-cell">
-                <div class="skill-cell-label">CAD/CAE Tools</div>
-                <span class="sp sp-e">SolidWorks</span><span class="sp sp-e">Fusion 360</span><span class="sp sp-p">Creo</span><span class="sp sp-p">AutoCAD</span><span class="sp sp-p">OnShape</span><span class="sp sp-p">SolidWorks Simulation</span>
-              </div>
-              <div class="skill-cell">
-                <div class="skill-cell-label">Design &amp; Analysis</div>
-                <span class="sp sp-e">Mechanical Design</span><span class="sp sp-e">Tolerance Analysis</span><span class="sp sp-e">Tolerance Stack-Up</span><span class="sp sp-p">Precision Mechanisms</span><span class="sp sp-p">FEA (Static)</span><span class="sp sp-p">DFM/DFA</span><span class="sp sp-p">Requirements Analysis</span><span class="sp sp-p">V&amp;V</span><span class="sp sp-p">System Dynamics</span>
-              </div>
-              <div class="skill-cell">
-                <div class="skill-cell-label">Manufacturing &amp; Metrology</div>
-                <span class="sp sp-e">Additive Manufacturing (FDM/SLA)</span><span class="sp sp-p">CNC (Mill/Lathe)</span><span class="sp sp-p">CMM Programming</span><span class="sp sp-p">ShapeGrabber Ai620</span><span class="sp sp-p">Ultrasonic Welding</span><span class="sp sp-p">Injection Molding</span><span class="sp sp-p">Sheet Metal</span><span class="sp sp-p">Machine Vision</span><span class="sp sp-p">SmartScope</span>
-              </div>
-              <div class="skill-cell">
-                <div class="skill-cell-label">Standards, Certifications &amp; Process</div>
-                <span class="sp sp-e">GD&amp;T Professional (ASME Y14.5)</span><span class="sp sp-e">DOE</span><span class="sp sp-e">ISO 9001</span><span class="sp sp-e">Root Cause Analysis</span><span class="sp sp-p">Gauge R&amp;R</span><span class="sp sp-p">FAA Compliance</span><span class="sp sp-p">UL / NEMA</span><span class="sp sp-p">CSWA Mechanical Design</span><span class="sp sp-p">CSWA Additive Manufacturing</span>
-              </div>
-              <div class="skill-cell">
-                <div class="skill-cell-label">Controls &amp; Programming</div>
-                <span class="sp sp-e">MATLAB</span><span class="sp sp-e">PID Tuning</span><span class="sp sp-p">Fanuc/Epson Robot Programming</span><span class="sp sp-p">PLC Logic</span><span class="sp sp-p">Simulink</span><span class="sp sp-p">C++</span><span class="sp sp-w">Java</span>
-              </div>
-              <div class="skill-cell">
-                <div class="skill-cell-label">Specialty Methods</div>
-                <span class="sp sp-e">Compliant Mechanisms</span><span class="sp sp-p">Ultrasonic Welding</span><span class="sp sp-p">Gear Design</span><span class="sp sp-p">Sacrificial Design</span><span class="sp sp-p">Odometry Localization</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="content-section">
-            <h2 class="section-h section-heading"><span aria-hidden="true">03</span> Work History</h2>
-            <div>
-              <div class="exp-row">
-                <div><div class="exp-date">Jun 2025 - Present</div><div class="exp-loc">Bloomfield, CT</div></div>
-                <div>
-                  <div class="exp-role">Mechanical Engineer (Sole ME)</div>
-                  <div class="exp-co">Point Lighting Corporation</div>
-                  <p style="font-size:0.9rem;color:var(--text-secondary)">Full product lifecycle - CAD, prototyping, testing, documentation. Specialized lighting for aerospace, industrial, and architectural clients. ISO 9001, FAA-compliant solutions.</p>
-                </div>
-              </div>
-              <div class="exp-row">
-                <div><div class="exp-date">Jan 2023 - Aug 2024</div><div class="exp-loc">Penfield, NY</div></div>
-                <div>
-                  <div class="exp-role">Manufacturing Engineering Intern</div>
-                  <div class="exp-co">ThermoFisher Scientific / Two Co-op Rotations / 16 months</div>
-                  <p style="font-size:0.9rem;color:var(--text-secondary)">+18% yield via robot controls reconfiguration. CMM and 3D scanner inspection programs. Ergonomic safety machine design. Ultrasonic weld process development to 98% yield. <a href="projects/thermofisher.html" style="color:var(--accent);">See all 10 projects -&gt;</a></p>
-                </div>
-              </div>
-              <div class="exp-row">
-                <div><div class="exp-date">Jun 2023 - Dec 2024</div><div class="exp-loc">Walworth, NY</div></div>
-                <div>
-                  <div class="exp-role">Engine Technician Assistant</div>
-                  <div class="exp-co">Ken's Automotive</div>
-                  <p style="font-size:0.9rem;color:var(--text-secondary)">Disassembled and restored performance engines. Machined components to spec. Hands-on with mechanical fits, clearances, and assembly sequencing.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="content-section">
-            <h2 class="section-h section-heading"><span aria-hidden="true">04</span> Education &amp; Leadership</h2>
-            <div>
-              <div class="exp-row">
-                <div><div class="exp-date">2020-2025</div><div class="exp-loc">Rochester, NY</div></div>
-                <div>
-                  <div class="exp-role">B.S. Mechanical Engineering</div>
-                  <div class="exp-co">Rochester Institute of Technology</div>
-                  <p style="font-size:0.9rem;color:var(--text-secondary)">Advanced CAD / Optimal Design / System Dynamics / Material Science / Heat Transfer<br>GD&amp;T Professional Cert. / CSWA Mechanical Design / CSWA Additive Manufacturing</p>
-                </div>
-              </div>
-              <div class="exp-row">
-                <div><div class="exp-date">2021-2022</div><div class="exp-loc">RIT</div></div>
-                <div>
-                  <div class="exp-role">President, RIT VEX U Robotics</div>
-                  <div class="exp-co">15+ member team / Innovate Award at World Championships</div>
-                  <p style="font-size:0.9rem;color:var(--text-secondary)">Led hardware and software sub-teams. <a href="projects/robotics.html" style="color:var(--accent)">View project -&gt;</a></p>
-                </div>
-              </div>
-              <div class="exp-row">
-                <div><div class="exp-date">2021-2023</div><div class="exp-loc">RIT</div></div>
-                <div>
-                  <div class="exp-role">Resident Advisor</div>
-                  <div class="exp-co">RIT Residence Life</div>
-                  <p style="font-size:0.9rem;color:var(--text-secondary)">Supported students, fostered community, mediated conflicts. Two years of responsibility outside the technical track.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="content-section" id="contact">
-            <h2 class="section-h section-heading"><span aria-hidden="true">05</span> Contact</h2>
-            <p style="max-width:480px;margin-bottom:2rem;">Open to R&amp;D, automation/robotics, and systems engineering roles - aerospace, defense, or automotive preferred. Connecticut-based, hybrid-friendly.</p>
-            <div>
-              <a class="contact-link" href="mailto:mvas8037@gmail.com"><span class="cl-label">Email</span>mvas8037@gmail.com<span class="cl-arr">-&gt;</span></a>
-              <a class="contact-link" href="tel:+12035712052"><span class="cl-label">Phone</span>(203) 571-2052<span class="cl-arr">-&gt;</span></a>
-              <div class="contact-actions" aria-label="Profile and resume links">
-                <span class="action-prompt">Click to view</span>
-                <a class="linkedin-inline focus-ring" href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener" aria-label="LinkedIn profile">in</a>
-                <a class="resume-inline is-icon focus-ring" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume PDF">PDF</a>
-              </div>
-            </div>
-          </div>
+        <div class="footer-links">
+          <a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a>
+          <span class="footer-divider" aria-hidden="true"></span>
+          <a href="https://www.youtube.com/@myrobotisgas" target="_blank" rel="noopener">YouTube</a>
+          <span class="footer-divider" aria-hidden="true"></span>
+          <a href="resume.pdf" target="_blank" rel="noopener">Resume</a>
+          <span class="footer-divider" aria-hidden="true"></span>
+          <a href="about.html#contact">Contact</a>
+          <span class="footer-divider" aria-hidden="true"></span>
+          <span>© 2026 Michael Vasquez</span>
         </div>
-
-        <footer class="site-footer" aria-label="Site footer">
-          <div class="footer-brand">
-            <span class="footer-brand-name">Michael Vasquez</span>
-            <span class="footer-divider" aria-hidden="true"></span>
-            <span>Mechanical Engineer</span>
-          </div>
-          <div class="footer-links">
-            <a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a>
-            <span class="footer-divider" aria-hidden="true"></span>
-            <a href="resume.pdf" target="_blank" rel="noopener">Resume</a>
-            <span class="footer-divider" aria-hidden="true"></span>
-            <a href="#contact">Contact</a>
-            <span class="footer-divider" aria-hidden="true"></span>
-            <span>© 2026 Michael Vasquez</span>
-          </div>
-        </footer>
-      </div>
+      </footer>
     </section>
   </main>
+
+  <div id="projectOverlay" class="project-overlay" role="dialog" aria-modal="true" aria-labelledby="overlayProjectTitle">
+    <article class="project-overlay-card">
+      <button id="projectOverlayClose" class="overlay-close focus-ring" type="button" aria-label="Close project preview">×</button>
+      <img id="overlayProjectImage" class="project-image" src="" alt="">
+      <div class="card-body">
+        <div class="card-meta">
+          <span id="overlayProjectNumber" style="color:var(--text-muted)"></span>
+          <span id="overlayProjectType" style="color:var(--accent)"></span>
+        </div>
+        <h3 id="overlayProjectTitle" class="card-title"></h3>
+        <p id="overlayProjectDescription" class="card-description"></p>
+        <div class="card-bottom">
+          <div id="overlayProjectTags" class="tag-row"></div>
+          <a id="overlayProjectCta" class="card-cta focus-ring" href="#"><span>Visit project page</span><span class="card-cta-arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div id="aboutPreview" class="about-preview" role="dialog" aria-modal="true" aria-labelledby="aboutPreviewTitle">
+    <section class="about-preview-panel">
+      <button id="aboutPreviewClose" class="overlay-close focus-ring" type="button" aria-label="Close about preview">×</button>
+      <div class="about-preview-kicker">Mechanical Engineer</div>
+      <h2 id="aboutPreviewTitle" class="about-preview-title">I build the bridge between concept and hardware.</h2>
+      <img class="about-preview-photo" src="images/about/about-headshot-001.jpg" alt="Michael Vasquez">
+      <div class="about-preview-copy">
+        <p>There’s a certain kind of problem that most people don’t want to touch. That’s usually where I start.</p>
+        <p>The kind of work where the tolerances matter, the stakes are real, and “good enough” isn’t. Looking for technically demanding problems and a team that takes their craft seriously. Let’s connect.</p>
+      </div>
+      <a class="card-cta focus-ring" href="about.html#my-mission"><span>Read the full about page</span><span class="card-cta-arrow" aria-hidden="true">&rarr;</span></a>
+    </section>
+  </div>
 
   <script>
     const projects = [
@@ -1881,6 +2324,7 @@
         meta: 'Aug 2024 - Apr 2025 / 8-person team / RevBio',
         href: 'projects/bone-printer.html',
         image: 'images/bone/bone-assembly-007.jpg',
+        thumbnail: 'images/home/bone-printer-thumbnail.png',
         imagePosition: '50% 43%',
         tags: ['Compliant Mechanisms', 'SolidWorks', 'DFM'],
         description: 'Redesigned the Z-axis sub-assembly and powder containment for a regenerative bone-printing platform built on the open-source OASIS architecture, partnered with RevBio. Replaced precision-machined linear bearing mounts with a 2-DoF compliant coupling, reducing tolerance stack-up and simplifying fabrication.'
@@ -1893,6 +2337,7 @@
         meta: 'Dec 2024 - Present / From-scratch design',
         href: 'projects/fpv-drone.html',
         image: 'images/drone/drone-build-008.jpg',
+        thumbnail: 'images/home/fpv-drone-thumbnail.png',
         imagePosition: '50% 50%',
         tags: ['FEA/Ansys', 'MATLAB', 'Sacrificial Design'],
         description: 'Built a custom MATLAB flight simulation, validated it against an external simulator, then used predicted impact forces as FEA inputs. Designed the arms as intentionally sacrificial structural elements so the frame fails in a controlled way before the flight controller stack takes the hit.'
@@ -1905,6 +2350,7 @@
         meta: 'Jan 2023 - Aug 2024 / Manufacturing Engineering',
         href: 'projects/thermofisher.html',
         image: 'images/tf-2023/rack-unlatcher-v2-assembled.jpeg',
+        thumbnail: 'images/home/thermofisher-thumbnail.png',
         imagePosition: '50% 50%',
         tags: ['Production Engineering', 'Robot Controls', 'CMM'],
         description: 'Completed two co-op rotations on production lines for laboratory consumables, delivering ten engineering projects from scratch. Work included Epson robot controls integration, ultrasonic weld process improvement, CMM programs, machine redesigns, ShapeGrabber vial inspection, and DOEs on capping failures.'
@@ -1917,18 +2363,20 @@
         meta: 'Dec 2023 - Aug 2024 / End-to-end build',
         href: 'projects/automated-desk.html',
         image: 'images/desk/desk-build-002.jpg',
+        thumbnail: 'images/home/standing-desk-thumbnail.png',
         imagePosition: '50% 52%',
         tags: ['Gear Design', 'System Dynamics', 'Mechatronics'],
         description: 'Built a custom standing desk drive using a 3D-printed helical planetary gearbox sized from system dynamics calculations, a motor controller circuit with potentiometer speed control, direction switching, and voltage readout, plus a bracket that used existing tapped holes.'
       },
       {
-        title: 'VEX U Competition Robot',
-        shortTitle: 'VEX U Competition Robot',
+        title: 'Competitive Robotics',
+        shortTitle: 'Competitive Robotics',
         number: '05',
         type: 'Leadership',
         meta: '2019 - 2022 / President, RIT VEX U Robotics',
         href: 'projects/robotics.html',
         image: 'images/vex/vex-u/vex-robot-001.jpg',
+        thumbnail: 'images/home/vex-robotics-thumbnail.png',
         imagePosition: '50% 38%',
         tags: ['Mechanism Design', 'PID Controls', 'Odometry'],
         description: 'Led multi-year competition robotics work across mechanical and software sub-teams. The robot used a 4-bar linkage with intake rollers, pivoting deposit tray, drivetrain odometry, and PID controllers for autonomous position correction, earning an Innovate Award at World Championships.'
@@ -2061,6 +2509,332 @@
       requestAnimationFrame(draw);
     }
 
+    function projectTags(tags) {
+      return tags.map((tag, index) => `<span class="tag ${index === 0 ? 'tag-accent' : ''}">${tag}</span>`).join('');
+    }
+
+    function initConstellation() {
+      const section = document.getElementById('projects');
+      const shell = document.getElementById('constellationShell');
+      const wrap = document.getElementById('constellationWrap');
+      const canvas = document.getElementById('constellationParticles');
+      const overlay = document.getElementById('projectOverlay');
+      const core = document.querySelector('.constellation-core');
+      if (!section || !shell || !wrap || !canvas || !overlay || !core) return;
+
+      const ctx = canvas.getContext('2d');
+      const nodePositions = [
+        { x: 380, y: 72 },
+        { x: 638, y: 238 },
+        { x: 556, y: 560 },
+        { x: 204, y: 560 },
+        { x: 122, y: 238 }
+      ];
+      const floatDefs = [
+        ['4.8s', '0ms'],
+        ['5.25s', '220ms'],
+        ['4.55s', '130ms'],
+        ['5.6s', '340ms'],
+        ['4.95s', '80ms']
+      ];
+      const nodes = [];
+      let width = 680;
+      let height = 600;
+      let dpr = 1;
+
+      function softenThumbnailBackground(img) {
+        try {
+          const sourceWidth = img.naturalWidth;
+          const sourceHeight = img.naturalHeight;
+          if (!sourceWidth || !sourceHeight) return;
+          const cleanup = document.createElement('canvas');
+          cleanup.width = sourceWidth;
+          cleanup.height = sourceHeight;
+          const cleanupCtx = cleanup.getContext('2d');
+          cleanupCtx.drawImage(img, 0, 0);
+          const imageData = cleanupCtx.getImageData(0, 0, sourceWidth, sourceHeight);
+          const data = imageData.data;
+          const seen = new Uint8Array(sourceWidth * sourceHeight);
+          const queue = [];
+
+          function isBackgroundPixel(index) {
+            const offset = index * 4;
+            const r = data[offset];
+            const g = data[offset + 1];
+            const b = data[offset + 2];
+            const brightness = (r + g + b) / 3;
+            const saturation = Math.max(r, g, b) - Math.min(r, g, b);
+            return brightness > 118 && saturation < 44;
+          }
+
+          function enqueue(x, y) {
+            if (x < 0 || y < 0 || x >= sourceWidth || y >= sourceHeight) return;
+            const index = y * sourceWidth + x;
+            if (seen[index] || !isBackgroundPixel(index)) return;
+            seen[index] = 1;
+            queue.push(index);
+          }
+
+          for (let x = 0; x < sourceWidth; x += 1) {
+            enqueue(x, 0);
+            enqueue(x, sourceHeight - 1);
+          }
+          for (let y = 0; y < sourceHeight; y += 1) {
+            enqueue(0, y);
+            enqueue(sourceWidth - 1, y);
+          }
+
+          for (let i = 0; i < queue.length; i += 1) {
+            const index = queue[i];
+            const x = index % sourceWidth;
+            const y = Math.floor(index / sourceWidth);
+            enqueue(x + 1, y);
+            enqueue(x - 1, y);
+            enqueue(x, y + 1);
+            enqueue(x, y - 1);
+          }
+
+          for (let index = 0; index < seen.length; index += 1) {
+            if (seen[index]) data[index * 4 + 3] = 0;
+          }
+          cleanupCtx.putImageData(imageData, 0, 0);
+          img.src = cleanup.toDataURL('image/png');
+        } catch (_) {
+          // If canvas cleanup is unavailable, the original thumbnail still renders.
+        }
+      }
+
+      projects.forEach((project, index) => {
+        const node = document.createElement('button');
+        node.className = 'orbit-node focus-ring';
+        node.type = 'button';
+        node.style.setProperty('--node-x', nodePositions[index].x + 'px');
+        node.style.setProperty('--node-y', nodePositions[index].y + 'px');
+        node.style.setProperty('--reveal-delay', (index * 34 + 24) + 'ms');
+        const dx = 380 - nodePositions[index].x;
+        const dy = 325 - nodePositions[index].y;
+        const dist = Math.max(1, Math.hypot(dx, dy));
+        node.style.setProperty('--float-x', ((dx / dist) * 3.1).toFixed(2));
+        node.style.setProperty('--float-y', ((dy / dist) * 3.1).toFixed(2));
+        node.style.setProperty('--float-rot-start', (index % 2 ? '0.28deg' : '-0.28deg'));
+        node.style.setProperty('--float-rot-end', (index % 2 ? '-0.28deg' : '0.28deg'));
+        node.setAttribute('aria-label', `Preview ${project.title}`);
+        node.innerHTML = `
+          <div class="orbit-node-motion" style="animation:orbitFloat ${floatDefs[index][0]} ease-in-out ${floatDefs[index][1]} infinite">
+            <div class="orbit-thumb-wrap">
+              <img class="orbit-thumb" src="${project.thumbnail}" alt="${project.title}" loading="lazy">
+            </div>
+            <div class="orbit-node-label">
+              <div class="orbit-node-num">${project.number}</div>
+              <div class="orbit-node-title">${project.shortTitle}</div>
+            </div>
+          </div>
+        `;
+        const img = node.querySelector('.orbit-thumb');
+        if (img.complete && img.naturalWidth) softenThumbnailBackground(img);
+        else img.addEventListener('load', () => softenThumbnailBackground(img), { once: true });
+        node.addEventListener('click', () => openProjectOverlay(index));
+        wrap.appendChild(node);
+        nodes.push(node.querySelector('.orbit-thumb-wrap'));
+      });
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) section.classList.add('is-revealed');
+        });
+      }, { threshold: 0.35 });
+      revealObserver.observe(section);
+
+      function resizeCanvas() {
+        const rect = section.getBoundingClientRect();
+        dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+        width = Math.max(1, rect.width);
+        height = Math.max(1, rect.height);
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      resizeCanvas();
+      new ResizeObserver(resizeCanvas).observe(section);
+
+      function hubCenter() {
+        const canvasRect = canvas.getBoundingClientRect();
+        const coreRect = core.getBoundingClientRect();
+        return {
+          x: coreRect.left - canvasRect.left + coreRect.width / 2,
+          y: coreRect.top - canvasRect.top + coreRect.height / 2,
+          radius: Math.max(coreRect.width, coreRect.height) * 0.9
+        };
+      }
+
+      function createParticle(index) {
+        const hub = hubCenter();
+        const nearHub = index < 54;
+        return {
+          x: nearHub ? hub.x + (Math.random() - 0.5) * hub.radius * 2.6 : Math.random() * width,
+          y: nearHub ? hub.y + (Math.random() - 0.5) * hub.radius * 2.1 : Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.2,
+          vy: (Math.random() - 0.5) * 0.2,
+          r: Math.random() * 1.05 + 0.38,
+          base: Math.random() * 0.18 + 0.07,
+          hubSeed: nearHub
+        };
+      }
+
+      const particles = Array.from({ length: 260 }, (_, index) => createParticle(index));
+
+      function iconCenters() {
+        const canvasRect = canvas.getBoundingClientRect();
+        return nodes.map((node) => {
+          const rect = node.getBoundingClientRect();
+          return {
+            x: rect.left - canvasRect.left + rect.width / 2,
+            y: rect.top - canvasRect.top + rect.height / 2,
+            radius: Math.max(rect.width, rect.height) * 0.46
+          };
+        });
+      }
+
+      function drawParticles() {
+        ctx.clearRect(0, 0, width, height);
+        const icons = iconCenters();
+        const influence = Math.min(width, height) * 0.22;
+        const hub = hubCenter();
+
+        particles.forEach((particle) => {
+          const hubDx = hub.x - particle.x;
+          const hubDy = hub.y - particle.y;
+          const hubDist = Math.hypot(hubDx, hubDy);
+          if (hubDist > hub.radius * 0.42 && hubDist < hub.radius * 2.2) {
+            const force = ((hub.radius * 2.2 - hubDist) / hub.radius) * (particle.hubSeed ? 0.007 : 0.0024);
+            particle.vx += (hubDx / hubDist) * force;
+            particle.vy += (hubDy / hubDist) * force;
+          } else if (hubDist < hub.radius * 0.42) {
+            const force = ((hub.radius * 0.42 - hubDist) / hub.radius) * 0.042;
+            particle.vx -= (hubDx / Math.max(1, hubDist)) * force;
+            particle.vy -= (hubDy / Math.max(1, hubDist)) * force;
+          }
+
+          icons.forEach((icon) => {
+            const dx = icon.x - particle.x;
+            const dy = icon.y - particle.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 1) return;
+            const repel = icon.radius + 12;
+            if (dist < repel) {
+              const force = ((repel - dist) / repel) * 0.065;
+              particle.vx -= (dx / dist) * force;
+              particle.vy -= (dy / dist) * force;
+            } else if (dist < influence) {
+              const force = ((influence - dist) / (influence - repel)) * 0.016;
+              particle.vx += (dx / dist) * force;
+              particle.vy += (dy / dist) * force;
+            }
+          });
+
+          particle.vx *= 0.985;
+          particle.vy *= 0.985;
+          const speed = Math.hypot(particle.vx, particle.vy);
+          if (speed > 0.58) {
+            particle.vx = (particle.vx / speed) * 0.58;
+            particle.vy = (particle.vy / speed) * 0.58;
+          }
+
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          if (particle.x < -12) particle.x = width + 12;
+          if (particle.x > width + 12) particle.x = -12;
+          if (particle.y < -12) particle.y = height + 12;
+          if (particle.y > height + 12) particle.y = -12;
+        });
+
+        for (let i = 0; i < particles.length; i += 1) {
+          for (let j = i + 1; j < particles.length; j += 1) {
+            const dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+            const iHub = Math.hypot(hub.x - particles[i].x, hub.y - particles[i].y);
+            const jHub = Math.hypot(hub.x - particles[j].x, hub.y - particles[j].y);
+            if (dist < 82 && (iHub > hub.radius * 1.55 || jHub > hub.radius * 1.55)) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(201,169,110,${(1 - dist / 82) * 0.09})`;
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+            }
+          }
+        }
+
+        particles.forEach((particle) => {
+          const hubDistance = Math.hypot(hub.x - particle.x, hub.y - particle.y);
+          const nearHub = hubDistance < hub.radius * 1.75;
+          const nearIcon = icons.some((icon) => {
+            const dist = Math.hypot(icon.x - particle.x, icon.y - particle.y);
+            return dist > icon.radius + 10 && dist < influence;
+          });
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, nearIcon || nearHub ? particle.r * 1.45 : particle.r, 0, Math.PI * 2);
+          ctx.fillStyle = nearIcon || nearHub
+            ? `rgba(201,169,110,${Math.min(0.72, particle.base * (nearHub ? 2.4 : 2.8))})`
+            : `rgba(180,160,120,${particle.base})`;
+          ctx.fill();
+        });
+
+        if (!prefersReducedMotion) requestAnimationFrame(drawParticles);
+      }
+
+      requestAnimationFrame(drawParticles);
+
+      function openProjectOverlay(index) {
+        const project = projects[index];
+        document.getElementById('overlayProjectImage').src = project.image;
+        document.getElementById('overlayProjectImage').alt = project.title;
+        document.getElementById('overlayProjectImage').style.objectPosition = project.imagePosition || 'center';
+        document.getElementById('overlayProjectNumber').textContent = `No. ${project.number}`;
+        document.getElementById('overlayProjectType').textContent = project.type;
+        document.getElementById('overlayProjectTitle').textContent = project.title;
+        document.getElementById('overlayProjectDescription').textContent = project.description;
+        document.getElementById('overlayProjectTags').innerHTML = projectTags(project.tags);
+        document.getElementById('overlayProjectCta').href = project.href;
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        document.getElementById('projectOverlayClose').focus();
+      }
+    }
+
+    function initOverlays() {
+      const overlayPairs = [
+        [document.getElementById('projectOverlay'), document.getElementById('projectOverlayClose'), null],
+        [document.getElementById('aboutPreview'), document.getElementById('aboutPreviewClose'), document.getElementById('aboutPreviewTrigger')]
+      ];
+
+      function closeOverlay(overlay) {
+        if (!overlay) return;
+        overlay.classList.remove('is-open');
+        if (!document.querySelector('.project-overlay.is-open, .about-preview.is-open')) {
+          document.body.style.overflow = '';
+        }
+      }
+
+      overlayPairs.forEach(([overlay, closeButton, trigger]) => {
+        if (!overlay) return;
+        closeButton?.addEventListener('click', () => closeOverlay(overlay));
+        overlay.addEventListener('click', (event) => {
+          if (event.target === overlay) closeOverlay(overlay);
+        });
+        trigger?.addEventListener('click', () => {
+          overlay.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+          closeButton?.focus();
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        overlayPairs.forEach(([overlay]) => closeOverlay(overlay));
+      });
+    }
+
     function initCarousel() {
       const shell = document.getElementById('carouselShell');
       const track = document.getElementById('carouselTrack');
@@ -2148,6 +2922,12 @@
         index = Math.max(0, Math.min(sections.length - 1, index));
         if (index === currentIndex && !instant) return;
         currentIndex = index;
+        const projectSection = document.getElementById('projects');
+        if (projectSection && sections[index] === projectSection) {
+          projectSection.classList.add('is-revealed', 'is-warping');
+          window.clearTimeout(projectSection._warpTimer);
+          projectSection._warpTimer = window.setTimeout(() => projectSection.classList.remove('is-warping'), 980);
+        }
 
         const targetY = sections[index].offsetTop;
 
@@ -2381,30 +3161,6 @@
         });
       });
 
-      document.querySelectorAll('[href="#about"]').forEach((el) => {
-        el.addEventListener('click', (event) => {
-          event.preventDefault();
-          const index = sections.findIndex((section) => section.id === 'about');
-          if (index >= 0) {
-            setHash('#about');
-            snapToIndex(index);
-          }
-        });
-      });
-
-      document.querySelectorAll('[href="#contact"]').forEach((el) => {
-        el.addEventListener('click', (event) => {
-          event.preventDefault();
-          const aboutIndex = sections.findIndex((section) => section.id === 'about');
-          const contact = document.getElementById('contact');
-          if (aboutIndex >= 0) currentIndex = aboutIndex;
-          if (contact) {
-            setHash('#contact');
-            window.scrollTo({ top: documentY(contact), behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-          }
-        });
-      });
-
       document.querySelectorAll('[href="index.html"]').forEach((el) => {
         el.addEventListener('click', (event) => {
           if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
@@ -2429,7 +3185,7 @@
     }
 
     function initProjectMenu() {
-      document.querySelectorAll('.nav-projects').forEach((item) => {
+      document.querySelectorAll('.nav-projects, .nav-about').forEach((item) => {
         const trigger = item.querySelector('a');
         if (!trigger) return;
 
@@ -2437,7 +3193,7 @@
           if (!window.matchMedia('(max-width: 768px)').matches) return;
           if (!item.classList.contains('is-open')) {
             event.preventDefault();
-            document.querySelectorAll('.nav-projects.is-open').forEach((openItem) => {
+            document.querySelectorAll('.nav-projects.is-open, .nav-about.is-open').forEach((openItem) => {
               if (openItem !== item) openItem.classList.remove('is-open');
             });
             item.classList.add('is-open');
@@ -2446,13 +3202,13 @@
       });
 
       document.addEventListener('click', (event) => {
-        if (event.target.closest('.nav-projects')) return;
-        document.querySelectorAll('.nav-projects.is-open').forEach((item) => item.classList.remove('is-open'));
+        if (event.target.closest('.nav-projects, .nav-about')) return;
+        document.querySelectorAll('.nav-projects.is-open, .nav-about.is-open').forEach((item) => item.classList.remove('is-open'));
       });
 
       window.addEventListener('resize', () => {
         if (window.matchMedia('(min-width: 769px)').matches) {
-          document.querySelectorAll('.nav-projects.is-open').forEach((item) => item.classList.remove('is-open'));
+          document.querySelectorAll('.nav-projects.is-open, .nav-about.is-open').forEach((item) => item.classList.remove('is-open'));
         }
       });
     }
@@ -2475,6 +3231,8 @@
     initProjectMenu();
     sortSkillChips();
     initWaveform();
+    initConstellation();
+    initOverlays();
     initCarousel();
     initScrollSnap();
   </script>
