@@ -207,11 +207,11 @@
       display: inline-flex;
       align-items: center;
       gap: 0.44rem;
-      padding: 0.2rem 0.5rem;
-      border: 1px solid rgba(201, 169, 110, 0.34);
-      background: rgba(201, 169, 110, 0.08);
-      color: var(--text-muted);
-      letter-spacing: 0.12em;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: rgba(184, 184, 184, 0.58);
+      letter-spacing: 0.1em;
     }
 
     .hero-kicker-tip::before {
@@ -1710,9 +1710,10 @@
 
     /* === Project constellation === */
     #projects.snap-section {
-      height: 100svh;
+      height: auto;
       min-height: 100svh;
-      overflow: clip;
+      overflow: visible;
+      background: #000;
     }
 
     .projects-layout {
@@ -1730,7 +1731,7 @@
       min-height: 0;
       max-width: 100%;
       width: 100%;
-      height: min(74svh, 720px);
+      height: min(78svh, 760px);
       align-self: stretch;
       transform: translateZ(0);
     }
@@ -1738,7 +1739,7 @@
     .constellation-wrap {
       position: absolute;
       left: 50%;
-      top: 50%;
+      top: 55%;
       width: 760px;
       height: 650px;
       max-width: none;
@@ -1752,7 +1753,7 @@
     .constellation-core {
       position: absolute;
       left: 50%;
-      top: 53%;
+      top: 54%;
       z-index: 4;
       width: max-content;
       min-width: clamp(8rem, 18vw, 11rem);
@@ -1837,22 +1838,33 @@
       color: inherit;
       cursor: pointer;
       text-align: center;
-      transform: translate(-50%, -50%) scale(0.66) rotate(-18deg);
+      transform:
+        translate(calc(-50% + var(--morph-x, 0px)), calc(-50% + var(--morph-y, 0px)))
+        scale(var(--node-scale, 0.28))
+        rotate(var(--node-rot, -42deg));
       transform-origin: 50% 50%;
-      opacity: 0.18;
-      transition: opacity 320ms ease, transform 680ms cubic-bezier(0.19, 1, 0.22, 1), filter 180ms ease;
+      opacity: var(--node-opacity, 0);
+      transition: filter 180ms ease;
       transition-delay: var(--reveal-delay, 0ms);
     }
 
     .helix-section.is-revealed .orbit-node {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1) rotate(0deg);
+      opacity: var(--node-opacity, 1);
     }
 
     .orbit-node:hover,
     .orbit-node:focus-visible {
       filter: drop-shadow(0 0 18px rgba(201, 169, 110, 0.36));
       outline: none;
+    }
+
+    .helix-section.is-previewing .orbit-node,
+    .helix-section.is-previewing .constellation-core,
+    .helix-section.is-previewing .constellation-summary,
+    .helix-section.is-previewing .constellation-tutorial,
+    .helix-section.is-previewing .constellation-footer-link {
+      opacity: 0.22;
+      transition: opacity 180ms ease;
     }
 
     .orbit-thumb-wrap {
@@ -1871,7 +1883,7 @@
       border-radius: 50%;
       background: radial-gradient(circle, rgba(201, 169, 110, 0.24), rgba(201, 169, 110, 0.08) 42%, transparent 73%);
       filter: blur(12px);
-      opacity: 0.88;
+      opacity: 0.48;
     }
 
     .orbit-node-motion {
@@ -1907,6 +1919,14 @@
       line-height: 1.02;
     }
 
+    .orbit-node[data-project="robotics"] .orbit-thumb {
+      max-height: 8.4rem;
+    }
+
+    .orbit-node[data-project="robotics"] .orbit-node-label {
+      margin-top: 1.35rem;
+    }
+
     @keyframes orbitFloat {
       0%, 100% { transform: translate(0, 0) rotate(var(--float-rot-start, 0deg)); }
       50% { transform: translate(calc(var(--float-x, 0px) * 1px), calc(var(--float-y, -6px) * 1px)) rotate(var(--float-rot-end, 0.8deg)); }
@@ -1914,7 +1934,7 @@
 
     .constellation-summary {
       width: min(620px, calc(100vw - 2rem));
-      margin: 0 auto;
+      margin: clamp(1.25rem, 3.8vh, 2.9rem) auto 0;
       color: var(--text-secondary);
       font-size: clamp(0.82rem, 1.4vw, 0.96rem);
       line-height: 1.55;
@@ -1948,9 +1968,9 @@
       display: grid;
       place-items: center;
       padding: clamp(1rem, 4vw, 2.5rem);
-      background: rgba(0, 0, 0, 0.52);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background: rgba(0, 0, 0, 0.18);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
@@ -1964,18 +1984,73 @@
       pointer-events: auto;
     }
 
+    .about-preview {
+      background: rgba(0, 0, 0, 0.52);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
     .project-overlay-card,
     .about-preview-panel {
       position: relative;
       width: min(100%, 760px);
       max-height: min(86svh, 760px);
       overflow: auto;
-      border: 1px solid var(--border);
-      background: var(--card);
-      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.72);
+      border: 0;
+      background: rgba(0, 0, 0, 0.22);
+      border-radius: 28px;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
       transform: scale(0.92) translateY(1rem);
       opacity: 0;
       transition: transform 520ms cubic-bezier(0.16, 1.25, 0.3, 1), opacity 220ms ease;
+    }
+
+    .project-overlay-card {
+      display: grid;
+      grid-template-columns: minmax(13rem, 0.72fr) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(1rem, 4vw, 2.35rem);
+      width: min(100%, 830px);
+      padding: clamp(1.35rem, 4vw, 2.65rem);
+      overflow: visible;
+      background:
+        radial-gradient(ellipse at 68% 50%, rgba(0, 0, 0, 0.2), transparent 70%),
+        radial-gradient(circle at 26% 44%, rgba(201, 169, 110, 0.06), transparent 34%),
+        rgba(0, 0, 0, 0.2);
+    }
+
+    .project-overlay-card::before,
+    .project-overlay-card::after {
+      content: '';
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      border-radius: 28px;
+      background: rgba(0, 0, 0, 0.68);
+      backdrop-filter: blur(26px) saturate(1.08);
+      -webkit-backdrop-filter: blur(26px) saturate(1.08);
+      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.44);
+      mask-image: radial-gradient(ellipse at center, #000 0 58%, rgba(0, 0, 0, 0.72) 74%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 0 58%, rgba(0, 0, 0, 0.72) 74%, transparent 100%);
+    }
+
+    .project-overlay-card::before {
+      left: clamp(1.35rem, 4vw, 2.65rem);
+      top: clamp(1.35rem, 4vw, 2.65rem);
+      bottom: clamp(1.35rem, 4vw, 2.65rem);
+      width: min(32%, 18rem);
+    }
+
+    .project-overlay-card::after {
+      right: clamp(1.35rem, 4vw, 2.65rem);
+      top: clamp(1.35rem, 4vw, 2.65rem);
+      bottom: clamp(1.35rem, 4vw, 2.65rem);
+      width: min(52%, 31rem);
+    }
+
+    .project-overlay-card > * {
+      position: relative;
+      z-index: 1;
     }
 
     .project-overlay.is-open .project-overlay-card,
@@ -2007,10 +2082,36 @@
     }
 
     .project-overlay-card .project-image {
-      height: clamp(220px, 36svh, 360px);
+      height: clamp(180px, 34svh, 340px);
+      object-fit: contain;
+      object-position: center;
+      background: transparent;
+      border: 0;
+      filter: brightness(1.34) contrast(1.1) saturate(1.12) drop-shadow(0 24px 32px rgba(0, 0, 0, 0.7));
+    }
+
+    .project-overlay-card .card-body {
+      padding: 0;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.82);
+    }
+
+    .project-overlay-card .card-description {
+      display: block;
+      overflow: visible;
+      -webkit-line-clamp: unset;
+    }
+
+    .project-overlay-card .tag {
+      border-color: rgba(201, 169, 110, 0.3);
+      background: rgba(0, 0, 0, 0.16);
     }
 
     .about-preview-panel {
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      background: var(--card);
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.72);
       padding: clamp(1.35rem, 4vw, 2.4rem);
     }
 
@@ -2096,12 +2197,12 @@
 
     @media (max-width: 1239px) {
       #projects.snap-section {
-        height: 100svh;
+        height: auto;
         min-height: 100svh;
       }
 
       .helix-section {
-        overflow: clip;
+        overflow: visible;
       }
 
       .projects-layout {
@@ -2116,7 +2217,7 @@
       }
 
       .site-footer {
-        position: absolute;
+        position: static;
       }
     }
 
@@ -2155,6 +2256,40 @@
         margin-bottom: 0.85rem;
       }
 
+      .project-overlay-card {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.9rem;
+        padding: 1.15rem;
+        border-radius: 20px;
+      }
+
+      .project-overlay-card::before,
+      .project-overlay-card::after {
+        left: 1.15rem;
+        right: 1.15rem;
+        width: auto;
+        border-radius: 20px;
+      }
+
+      .project-overlay-card::before {
+        top: 1.15rem;
+        bottom: auto;
+        height: clamp(150px, 28svh, 230px);
+      }
+
+      .project-overlay-card::after {
+        top: calc(1.15rem + clamp(150px, 28svh, 230px) + 0.9rem);
+        bottom: 1.15rem;
+      }
+
+      .project-overlay-card .project-image {
+        height: clamp(150px, 28svh, 230px);
+      }
+
+      .project-overlay-card .card-meta {
+        flex-wrap: wrap;
+      }
+
       .site-footer {
         position: static;
         width: 100%;
@@ -2174,7 +2309,7 @@
       }
 
       .project-overlay-card .card-body {
-        padding-inline: 1rem;
+        padding-inline: 0;
       }
 
       .about-preview-photo {
@@ -2559,6 +2694,8 @@
       let width = 680;
       let height = 600;
       let dpr = 1;
+      let morphProgress = 0;
+      let lastFrameTime = performance.now();
 
       function softenThumbnailBackground(img) {
         try {
@@ -2626,6 +2763,7 @@
         const node = document.createElement('button');
         node.className = 'orbit-node focus-ring';
         node.type = 'button';
+        node.dataset.project = project.href.split('/').pop().replace('.html', '');
         node.style.setProperty('--node-x', nodePositions[index].x + 'px');
         node.style.setProperty('--node-y', nodePositions[index].y + 'px');
         node.style.setProperty('--reveal-delay', (index * 34 + 24) + 'ms');
@@ -2663,6 +2801,8 @@
       }, { threshold: 0.35 });
       revealObserver.observe(section);
 
+      const particles = [];
+
       function resizeCanvas() {
         const rect = section.getBoundingClientRect();
         dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
@@ -2671,6 +2811,7 @@
         canvas.width = Math.floor(width * dpr);
         canvas.height = Math.floor(height * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (particles.length) syncParticleCount();
       }
 
       resizeCanvas();
@@ -2686,35 +2827,78 @@
         };
       }
 
-      function desiredParticleCount() {
-        if (window.innerWidth < 480) return 430;
-        if (window.innerWidth < 900) return 520;
-        return 720;
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
       }
 
-      function desiredHubCount() {
-        if (window.innerWidth < 480) return 190;
-        if (window.innerWidth < 900) return 240;
-        return 340;
+      function wrapCorePoint() {
+        return { x: 380, y: 650 * 0.54 };
+      }
+
+      function updateMorphState() {
+        const rect = section.getBoundingClientRect();
+        const raw = (window.innerHeight - rect.top) / (window.innerHeight * 0.96);
+        morphProgress = prefersReducedMotion ? 1 : Math.max(0, Math.min(1, raw));
+        const eased = easeOutCubic(morphProgress);
+        const corePoint = wrapCorePoint();
+
+        nodes.forEach((thumbWrap, index) => {
+          const node = thumbWrap.closest('.orbit-node');
+          if (!node) return;
+          const final = nodePositions[index];
+          const baseDx = final.x - corePoint.x;
+          const baseDy = final.y - corePoint.y;
+          const spiral = (1 - eased) * (index % 2 ? -1.9 : 1.9);
+          const cos = Math.cos(spiral);
+          const sin = Math.sin(spiral);
+          const currentX = corePoint.x + (baseDx * cos - baseDy * sin) * eased;
+          const currentY = corePoint.y + (baseDx * sin + baseDy * cos) * eased;
+          node.style.setProperty('--morph-x', (currentX - final.x).toFixed(2) + 'px');
+          node.style.setProperty('--morph-y', (currentY - final.y).toFixed(2) + 'px');
+          node.style.setProperty('--node-scale', (0.26 + eased * 0.74).toFixed(3));
+          node.style.setProperty('--node-rot', ((1 - eased) * (index % 2 ? 54 : -54)).toFixed(2) + 'deg');
+          node.style.setProperty('--node-opacity', Math.min(1, eased * 1.25).toFixed(3));
+        });
+
+        if (morphProgress > 0.04) section.classList.add('is-revealed');
+      }
+
+      function desiredParticleCount() {
+        const area = width * height;
+        if (window.innerWidth < 480) return Math.min(980, Math.max(620, Math.round(area / 520)));
+        if (window.innerWidth < 900) return Math.min(1500, Math.max(900, Math.round(area / 570)));
+        return Math.min(3300, Math.max(1900, Math.round(area / 720)));
       }
 
       function createParticle(index) {
         const hub = hubCenter();
-        const nearHub = index < desiredHubCount();
+        const total = desiredParticleCount();
         const angle = Math.random() * Math.PI * 2;
-        const hubSpread = Math.pow(Math.random(), 1.85);
+        const maxRadius = Math.hypot(width, height) * 0.58;
+        const radialBias = Math.pow(Math.random(), 1.65);
+        const targetRadius = hub.radius * 0.82 + maxRadius * radialBias;
+        const radiusJitter = (Math.random() - 0.5) * Math.min(width, height) * 0.08;
+        const actualRadius = Math.max(hub.radius * 0.72, targetRadius + radiusJitter);
+        const zone = targetRadius < hub.radius * 3.6 ? 'hub' : 'field';
         return {
-          x: nearHub ? hub.x + Math.cos(angle) * hub.radius * 2.28 * hubSpread : Math.random() * width,
-          y: nearHub ? hub.y + Math.sin(angle) * hub.radius * 1.88 * hubSpread : Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.18,
-          vy: (Math.random() - 0.5) * 0.18,
-          r: nearHub ? Math.random() * 0.9 + 0.34 : Math.random() * 1.05 + 0.32,
-          base: nearHub ? Math.random() * 0.2 + 0.13 : Math.random() * 0.16 + 0.055,
-          hubSeed: nearHub
+          x: hub.x + Math.cos(angle) * actualRadius,
+          y: hub.y + Math.sin(angle) * actualRadius,
+          vx: (Math.random() - 0.5) * 0.38,
+          vy: (Math.random() - 0.5) * 0.38,
+          r: zone === 'hub' ? Math.random() * 1.1 + 0.52 : Math.random() * 0.95 + 0.34,
+          base: zone === 'hub' ? Math.random() * 0.24 + 0.2 : Math.random() * 0.16 + 0.08,
+          targetRadius,
+          swirl: (Math.random() < 0.5 ? -1 : 1) * (0.0016 + Math.random() * 0.0026),
+          phase: Math.random() * Math.PI * 2,
+          zone
         };
       }
 
-      const particles = Array.from({ length: desiredParticleCount() }, (_, index) => createParticle(index));
+      function syncParticleCount() {
+        const target = desiredParticleCount();
+        while (particles.length < target) particles.push(createParticle(particles.length));
+        if (particles.length > target) particles.length = target;
+      }
 
       function iconCenters() {
         const canvasRect = canvas.getBoundingClientRect();
@@ -2729,87 +2913,114 @@
       }
 
       function drawParticles() {
+        const now = performance.now();
+        const dt = Math.min(2.4, Math.max(0.45, (now - lastFrameTime) / 16.67));
+        lastFrameTime = now;
+        updateMorphState();
         ctx.clearRect(0, 0, width, height);
+        syncParticleCount();
         const icons = iconCenters();
-        const influence = Math.min(width, height) * 0.22;
         const hub = hubCenter();
 
         particles.forEach((particle) => {
           const hubDx = hub.x - particle.x;
           const hubDy = hub.y - particle.y;
           const hubDist = Math.hypot(hubDx, hubDy);
-          if (hubDist > hub.radius * 0.38 && hubDist < hub.radius * 3.05) {
-            const force = ((hub.radius * 3.05 - hubDist) / hub.radius) * (particle.hubSeed ? 0.0062 : 0.0017);
-            particle.vx += (hubDx / hubDist) * force;
-            particle.vy += (hubDy / hubDist) * force;
-          } else if (hubDist < hub.radius * 0.38) {
-            const force = ((hub.radius * 0.38 - hubDist) / hub.radius) * 0.052;
-            particle.vx -= (hubDx / Math.max(1, hubDist)) * force;
-            particle.vy -= (hubDy / Math.max(1, hubDist)) * force;
+          const hubInner = hub.radius * 0.86;
+          if (hubDist > 1) {
+            const nx = hubDx / hubDist;
+            const ny = hubDy / hubDist;
+            const radialForce = ((hubDist - particle.targetRadius) / Math.max(160, particle.targetRadius)) * 0.018;
+            const tangentForce = particle.swirl * Math.min(2.4, Math.max(0.55, hubDist / Math.max(1, particle.targetRadius)));
+            particle.vx += (nx * radialForce - ny * tangentForce) * dt;
+            particle.vy += (ny * radialForce + nx * tangentForce) * dt;
+          }
+          if (hubDist < hubInner) {
+            const force = ((hubInner - hubDist) / hubInner) * 0.054;
+            particle.vx -= (hubDx / Math.max(1, hubDist)) * force * dt;
+            particle.vy -= (hubDy / Math.max(1, hubDist)) * force * dt;
           }
 
-          icons.forEach((icon) => {
-            const dx = icon.x - particle.x;
-            const dy = icon.y - particle.y;
-            const dist = Math.hypot(dx, dy);
-            if (dist < 1) return;
-            const repel = icon.radius + 12;
-            if (dist < repel) {
-              const force = ((repel - dist) / repel) * 0.065;
-              particle.vx -= (dx / dist) * force;
-              particle.vy -= (dy / dist) * force;
-            } else if (dist < influence) {
-              const force = ((influence - dist) / (influence - repel)) * 0.016;
-              particle.vx += (dx / dist) * force;
-              particle.vy += (dy / dist) * force;
-            }
-          });
+          particle.phase += 0.018 * dt;
+          particle.vx += Math.cos(particle.phase) * 0.0028 * dt;
+          particle.vy += Math.sin(particle.phase * 0.87) * 0.0028 * dt;
 
-          particle.vx *= 0.985;
-          particle.vy *= 0.985;
+          particle.vx *= Math.pow(0.992, dt);
+          particle.vy *= Math.pow(0.992, dt);
           const speed = Math.hypot(particle.vx, particle.vy);
-          if (speed > 0.54) {
-            particle.vx = (particle.vx / speed) * 0.54;
-            particle.vy = (particle.vy / speed) * 0.54;
+          const speedLimit = particle.zone === 'hub' ? 0.78 : 1.05;
+          if (speed > speedLimit) {
+            particle.vx = (particle.vx / speed) * speedLimit;
+            particle.vy = (particle.vy / speed) * speedLimit;
           }
 
-          particle.x += particle.vx;
-          particle.y += particle.vy;
-          if (particle.x < -12) particle.x = width + 12;
-          if (particle.x > width + 12) particle.x = -12;
-          if (particle.y < -12) particle.y = height + 12;
-          if (particle.y > height + 12) particle.y = -12;
+          particle.x += particle.vx * dt;
+          particle.y += particle.vy * dt;
+          if (particle.x < -32) particle.x = width + 32;
+          if (particle.x > width + 32) particle.x = -32;
+          if (particle.y < -32) particle.y = height + 32;
+          if (particle.y > height + 32) particle.y = -32;
         });
 
-        const linkParticles = particles.filter((particle, index) => !particle.hubSeed && index % 3 === 0);
+        icons.forEach((icon) => {
+          const dx = icon.x - hub.x;
+          const dy = icon.y - hub.y;
+          const dist = Math.max(1, Math.hypot(dx, dy));
+          const startX = hub.x + (dx / dist) * hub.radius * 0.72;
+          const startY = hub.y + (dy / dist) * hub.radius * 0.72;
+          const endX = icon.x - (dx / dist) * icon.radius * 0.75;
+          const endY = icon.y - (dy / dist) * icon.radius * 0.75;
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(startX, startY);
+          ctx.lineTo(endX, endY);
+          ctx.strokeStyle = 'rgba(201,169,110,0.2)';
+          ctx.lineWidth = 1;
+          ctx.setLineDash([7, 11]);
+          ctx.shadowColor = 'rgba(201,169,110,0.38)';
+          ctx.shadowBlur = 10;
+          ctx.stroke();
+          ctx.restore();
+        });
+
+        const displayParticles = particles.map((particle) => {
+          const relX = particle.x - hub.x;
+          const relY = particle.y - hub.y;
+          const spiral = (1 - morphProgress) * (particle.zone === 'hub' ? 2.8 : 4.4) * (particle.swirl > 0 ? 1 : -1);
+          const cos = Math.cos(spiral);
+          const sin = Math.sin(spiral);
+          return {
+            ...particle,
+            drawX: hub.x + (relX * cos - relY * sin) * morphProgress,
+            drawY: hub.y + (relX * sin + relY * cos) * morphProgress
+          };
+        });
+
+        const linkParticles = displayParticles.filter((particle, index) => particle.zone === 'field' && index % 7 === 0).slice(0, 380);
         for (let i = 0; i < linkParticles.length; i += 1) {
           for (let j = i + 1; j < linkParticles.length; j += 1) {
-            const dist = Math.hypot(linkParticles[i].x - linkParticles[j].x, linkParticles[i].y - linkParticles[j].y);
-            const iHub = Math.hypot(hub.x - linkParticles[i].x, hub.y - linkParticles[i].y);
-            const jHub = Math.hypot(hub.x - linkParticles[j].x, hub.y - linkParticles[j].y);
-            if (dist < 82 && iHub > hub.radius * 1.9 && jHub > hub.radius * 1.9) {
+            const dist = Math.hypot(linkParticles[i].drawX - linkParticles[j].drawX, linkParticles[i].drawY - linkParticles[j].drawY);
+            const iHub = Math.hypot(hub.x - linkParticles[i].drawX, hub.y - linkParticles[i].drawY);
+            const jHub = Math.hypot(hub.x - linkParticles[j].drawX, hub.y - linkParticles[j].drawY);
+            if (dist < 98 && iHub > hub.radius * 1.55 && jHub > hub.radius * 1.55) {
               ctx.beginPath();
-              ctx.moveTo(linkParticles[i].x, linkParticles[i].y);
-              ctx.lineTo(linkParticles[j].x, linkParticles[j].y);
-              ctx.strokeStyle = `rgba(201,169,110,${(1 - dist / 82) * 0.09})`;
+              ctx.moveTo(linkParticles[i].drawX, linkParticles[i].drawY);
+              ctx.lineTo(linkParticles[j].drawX, linkParticles[j].drawY);
+              ctx.strokeStyle = `rgba(201,169,110,${(1 - dist / 98) * 0.13})`;
               ctx.lineWidth = 0.6;
               ctx.stroke();
             }
           }
         }
 
-        particles.forEach((particle) => {
-          const hubDistance = Math.hypot(hub.x - particle.x, hub.y - particle.y);
-          const nearHub = hubDistance < hub.radius * 2.65;
-          const nearIcon = icons.some((icon) => {
-            const dist = Math.hypot(icon.x - particle.x, icon.y - particle.y);
-            return dist > icon.radius + 10 && dist < influence;
-          });
+        displayParticles.forEach((particle) => {
+          const hubDistance = Math.hypot(hub.x - particle.drawX, hub.y - particle.drawY);
+          const nearHub = hubDistance < hub.radius * 3.35;
           ctx.beginPath();
-          ctx.arc(particle.x, particle.y, nearIcon || nearHub ? particle.r * 1.5 : particle.r, 0, Math.PI * 2);
-          ctx.fillStyle = nearIcon || nearHub
-            ? `rgba(201,169,110,${Math.min(0.84, particle.base * (nearHub ? 3.05 : 2.8))})`
-            : `rgba(180,160,120,${particle.base})`;
+          ctx.arc(particle.drawX, particle.drawY, nearHub ? particle.r * 1.44 : particle.r, 0, Math.PI * 2);
+          ctx.fillStyle = nearHub
+            ? `rgba(214,184,120,${Math.min(0.92, particle.base * 2.85)})`
+            : `rgba(190,172,128,${Math.min(0.44, particle.base * 1.5)})`;
           ctx.fill();
         });
 
@@ -2820,9 +3031,12 @@
 
       function openProjectOverlay(index) {
         const project = projects[index];
-        document.getElementById('overlayProjectImage').src = project.image;
-        document.getElementById('overlayProjectImage').alt = project.title;
-        document.getElementById('overlayProjectImage').style.objectPosition = project.imagePosition || 'center';
+        const overlayImage = document.getElementById('overlayProjectImage');
+        overlayImage.src = project.thumbnail;
+        overlayImage.alt = project.title;
+        overlayImage.style.objectPosition = 'center';
+        if (overlayImage.complete && overlayImage.naturalWidth) softenThumbnailBackground(overlayImage);
+        else overlayImage.addEventListener('load', () => softenThumbnailBackground(overlayImage), { once: true });
         document.getElementById('overlayProjectNumber').textContent = `No. ${project.number}`;
         document.getElementById('overlayProjectType').textContent = project.type;
         document.getElementById('overlayProjectTitle').textContent = project.title;
@@ -2830,6 +3044,7 @@
         document.getElementById('overlayProjectTags').innerHTML = projectTags(project.tags);
         document.getElementById('overlayProjectCta').href = project.href;
         overlay.classList.add('is-open');
+        section.classList.add('is-previewing');
         document.body.style.overflow = 'hidden';
         document.getElementById('projectOverlayClose').focus();
       }
@@ -2844,6 +3059,7 @@
       function closeOverlay(overlay) {
         if (!overlay) return;
         overlay.classList.remove('is-open');
+        if (overlay.id === 'projectOverlay') document.getElementById('projects')?.classList.remove('is-previewing');
         if (!document.querySelector('.project-overlay.is-open, .about-preview.is-open')) {
           document.body.style.overflow = '';
         }
@@ -2935,262 +3151,27 @@
     }
 
     function initScrollSnap() {
-      const sections = Array.from(document.querySelectorAll('.snap-section'));
-      if (sections.length < 2) return;
-
-      let currentIndex = 0;
-      let isAnimating = false;
-      let lastWheelTime = 0;
-      let touchStartY = 0;
-      let touchStartX = 0;
-      let touchStartScrollY = 0;
-      let touchSectionIndex = 0;
-      let touchSnapFired = false;
-
-      function easeInOutCubic(t) {
-        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      }
-
-      function snapToIndex(index, instant) {
-        index = Math.max(0, Math.min(sections.length - 1, index));
-        if (index === currentIndex && !instant) return;
-        currentIndex = index;
-        const projectSection = document.getElementById('projects');
-        if (projectSection && sections[index] === projectSection) {
-          projectSection.classList.add('is-revealed', 'is-warping');
-          window.clearTimeout(projectSection._warpTimer);
-          projectSection._warpTimer = window.setTimeout(() => projectSection.classList.remove('is-warping'), 980);
-        }
-
-        const targetY = sections[index].offsetTop;
-
-        if (instant || prefersReducedMotion) {
-          window.scrollTo(0, targetY);
-          return;
-        }
-
-        if (isAnimating) return;
-        isAnimating = true;
-
-        const startY = window.scrollY;
-        const distance = targetY - startY;
-        if (Math.abs(distance) < 2) { isAnimating = false; return; }
-
-        const duration = 820;
-        const startTime = performance.now();
-
-        function step(now) {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          window.scrollTo(0, startY + distance * easeInOutCubic(progress));
-          if (progress < 1) {
-            requestAnimationFrame(step);
-          } else {
-            isAnimating = false;
-            const settleUntil = performance.now() + 220;
-            function settle() {
-              window.scrollTo(0, sections[index].offsetTop);
-              if (performance.now() < settleUntil) requestAnimationFrame(settle);
-            }
-            requestAnimationFrame(settle);
-          }
-        }
-
-        requestAnimationFrame(step);
-      }
-
       function setHash(hash) {
-        if (window.location.hash !== hash) {
-          history.pushState(null, '', hash);
-        }
+        if (window.location.hash !== hash) history.pushState(null, '', hash);
       }
 
-      function documentY(el) {
-        return el ? el.getBoundingClientRect().top + window.scrollY : 0;
+      function scrollToTarget(target, hash) {
+        if (!target) return;
+        setHash(hash);
+        target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
       }
-
-      function syncCurrentIndex() {
-        const midpoint = window.scrollY + window.innerHeight * 0.5;
-        currentIndex = sections.reduce((active, section, index) => midpoint >= section.offsetTop ? index : active, 0);
-      }
-
-      function shouldUseNativeSectionScroll(deltaY) {
-        const section = sections[currentIndex];
-        if (!section) return false;
-        const sectionTop = section.offsetTop;
-        const sectionBottom = sectionTop + section.offsetHeight;
-        const hasOverflow = section.offsetHeight > window.innerHeight + 4;
-        if (!hasOverflow) return false;
-        if (deltaY > 0 && window.scrollY + window.innerHeight < sectionBottom - 2) return true;
-        if (deltaY < 0 && window.scrollY > sectionTop + 2) return true;
-        return false;
-      }
-
-      function shouldRequireStartedAtEdge(section) {
-        return section?.id === 'projects' || section?.id === 'about';
-      }
-
-      function getSectionState(index) {
-        const section = sections[index];
-        if (!section) return null;
-        const top = section.offsetTop;
-        const bottom = top + section.offsetHeight;
-        const maxScroll = Math.max(top, bottom - window.innerHeight);
-        return {
-          section,
-          top,
-          bottom,
-          maxScroll,
-          hasOverflow: section.offsetHeight > window.innerHeight + 4,
-          atLowerEdge: window.scrollY + window.innerHeight >= bottom - 2,
-          atUpperEdge: window.scrollY <= top + 2,
-          startedAtLowerEdge: touchStartScrollY + window.innerHeight >= bottom - 2,
-          startedAtUpperEdge: touchStartScrollY <= top + 2
-        };
-      }
-
-      function shouldSnapFromTouch(deltaY) {
-        const state = getSectionState(touchSectionIndex);
-        if (!state) return false;
-        const movingDown = deltaY > 0;
-        const movingUp = deltaY < 0;
-        if (!state.hasOverflow) return movingDown || movingUp;
-        if (shouldRequireStartedAtEdge(state.section)) {
-          return (movingDown && state.startedAtLowerEdge) || (movingUp && state.startedAtUpperEdge);
-        }
-        return (movingDown && (state.atLowerEdge || state.startedAtLowerEdge))
-          || (movingUp && (state.atUpperEdge || state.startedAtUpperEdge));
-      }
-
-      function clampToTouchSection() {
-        const state = getSectionState(touchSectionIndex);
-        if (!state || !state.hasOverflow || !shouldRequireStartedAtEdge(state.section)) return;
-        if (touchStartScrollY > state.top + 2 && touchStartScrollY < state.maxScroll - 2) {
-          if (window.scrollY < state.top) window.scrollTo(0, state.top);
-          else if (window.scrollY > state.maxScroll) window.scrollTo(0, state.maxScroll);
-          return;
-        }
-        if (!state.startedAtUpperEdge && window.scrollY < state.top) window.scrollTo(0, state.top);
-        if (!state.startedAtLowerEdge && window.scrollY > state.maxScroll) window.scrollTo(0, state.maxScroll);
-      }
-
-      window.addEventListener('wheel', (event) => {
-        syncCurrentIndex();
-        if (shouldUseNativeSectionScroll(event.deltaY)) return;
-        event.preventDefault();
-        if (isAnimating) return;
-        const now = performance.now();
-        if (now - lastWheelTime < 260) return;
-        lastWheelTime = now;
-        if (event.deltaY > 0) snapToIndex(currentIndex + 1);
-        else if (event.deltaY < 0) snapToIndex(currentIndex - 1);
-      }, { passive: false });
-
-      window.addEventListener('touchstart', (event) => {
-        syncCurrentIndex();
-        touchStartY = event.touches[0].clientY;
-        touchStartX = event.touches[0].clientX;
-        touchStartScrollY = window.scrollY;
-        touchSectionIndex = currentIndex;
-        touchSnapFired = false;
-      }, { passive: true });
-
-      window.addEventListener('touchmove', (event) => {
-        if (touchSnapFired) {
-          event.preventDefault();
-          return;
-        }
-        if (event.touches.length !== 1) return;
-        const dY = touchStartY - event.touches[0].clientY;
-        const dX = Math.abs(event.touches[0].clientX - touchStartX);
-        if (Math.abs(dY) <= 8 || Math.abs(dY) <= dX * 1.15) return;
-
-        const state = getSectionState(touchSectionIndex);
-        if (!state) return;
-
-        if (!state.hasOverflow) {
-          event.preventDefault();
-          if (Math.abs(dY) <= 42) return;
-          const nextIndex = dY > 0 ? touchSectionIndex + 1 : touchSectionIndex - 1;
-          if (nextIndex < 0 || nextIndex >= sections.length) return;
-          touchSnapFired = true;
-          snapToIndex(nextIndex);
-          return;
-        }
-
-        if (shouldRequireStartedAtEdge(state.section)) {
-          const startedAtExitEdge = (dY > 0 && state.startedAtLowerEdge) || (dY < 0 && state.startedAtUpperEdge);
-          if (startedAtExitEdge) {
-            event.preventDefault();
-            if (Math.abs(dY) <= 42) return;
-            const nextIndex = dY > 0 ? touchSectionIndex + 1 : touchSectionIndex - 1;
-            if (nextIndex < 0 || nextIndex >= sections.length) return;
-            touchSnapFired = true;
-            snapToIndex(nextIndex);
-            return;
-          }
-
-          if (dY > 0 && window.scrollY + window.innerHeight >= state.bottom - 2) {
-            event.preventDefault();
-            window.scrollTo(0, state.maxScroll);
-            return;
-          }
-          if (dY < 0 && window.scrollY <= state.top + 2) {
-            event.preventDefault();
-            window.scrollTo(0, state.top);
-            return;
-          }
-        }
-
-        if (!shouldSnapFromTouch(dY)) return;
-        const nextIndex = dY > 0 ? touchSectionIndex + 1 : touchSectionIndex - 1;
-        if (nextIndex < 0 || nextIndex >= sections.length) return;
-        event.preventDefault();
-        touchSnapFired = true;
-        snapToIndex(nextIndex);
-      }, { passive: false });
-
-      window.addEventListener('touchend', (event) => {
-        if (touchSnapFired) return;
-        const dY = touchStartY - event.changedTouches[0].clientY;
-        const dX = Math.abs(event.changedTouches[0].clientX - touchStartX);
-        if (Math.abs(dY) > 48 && Math.abs(dY) > dX * 1.4) {
-          if (!shouldSnapFromTouch(dY)) {
-            clampToTouchSection();
-            return;
-          }
-          const nextIndex = dY > 0 ? touchSectionIndex + 1 : touchSectionIndex - 1;
-          if (nextIndex >= 0 && nextIndex < sections.length) snapToIndex(nextIndex);
-        }
-      }, { passive: true });
-
-      window.addEventListener('keydown', (event) => {
-        if (['ArrowDown', 'PageDown'].includes(event.key)) {
-          syncCurrentIndex();
-          if (shouldUseNativeSectionScroll(1)) return;
-          event.preventDefault();
-          if (!isAnimating) snapToIndex(currentIndex + 1);
-        } else if (['ArrowUp', 'PageUp'].includes(event.key)) {
-          syncCurrentIndex();
-          if (shouldUseNativeSectionScroll(-1)) return;
-          event.preventDefault();
-          if (!isAnimating) snapToIndex(currentIndex - 1);
-        }
-      });
 
       document.querySelectorAll('[href="#projects"]').forEach((el) => {
         el.addEventListener('click', (event) => {
           event.preventDefault();
-          setHash('#projects');
-          snapToIndex(1);
+          scrollToTarget(document.getElementById('projects'), '#projects');
         });
       });
 
       document.querySelectorAll('[href="#hero"]').forEach((el) => {
         el.addEventListener('click', (event) => {
           event.preventDefault();
-          setHash('#hero');
-          snapToIndex(0);
+          scrollToTarget(document.getElementById('hero'), '#hero');
         });
       });
 
@@ -3198,7 +3179,7 @@
         el.addEventListener('click', (event) => {
           if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
             event.preventDefault();
-            snapToIndex(0);
+            scrollToTarget(document.getElementById('hero'), '#hero');
           }
         });
       });
@@ -3206,15 +3187,8 @@
       const initialHash = window.location.hash.replace('#', '');
       if (initialHash) {
         const target = document.getElementById(initialHash);
-        const index = sections.findIndex((section) => section.id === initialHash || section.contains(target));
-        if (index >= 0) {
-          currentIndex = index;
-          window.scrollTo(0, target ? documentY(target) : sections[index].offsetTop);
-          return;
-        }
+        if (target) target.scrollIntoView({ behavior: 'auto', block: 'start' });
       }
-
-      window.scrollTo(0, 0);
     }
 
     function initProjectMenu() {
