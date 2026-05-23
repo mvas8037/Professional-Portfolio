@@ -89,7 +89,7 @@
     }
 
     .site-nav ul {
-      font-size: 0.68rem !important;
+      font-size: clamp(0.86rem, 1.4vw, 1rem) !important;
       letter-spacing: 0.08em !important;
     }
 
@@ -143,10 +143,7 @@
 
     .nav-projects:hover .project-menu,
     .nav-projects:focus-within .project-menu,
-    .nav-projects.is-open .project-menu,
-    .nav-about:hover .project-menu,
-    .nav-about:focus-within .project-menu,
-    .nav-about.is-open .project-menu {
+    .nav-projects.is-open .project-menu {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
@@ -459,26 +456,15 @@
       inset: 0;
       z-index: 1;
       pointer-events: none;
-      opacity: 0;
+      opacity: 0.34;
       background:
-        radial-gradient(circle at 50% 52%, rgba(201, 169, 110, 0.36) 0 1px, transparent 2px),
-        radial-gradient(circle at 50% 52%, rgba(201, 169, 110, 0.2), transparent 21%),
-        repeating-linear-gradient(174deg, transparent 0 34px, rgba(248, 248, 248, 0.08) 35px, transparent 37px),
-        repeating-linear-gradient(186deg, transparent 0 52px, rgba(201, 169, 110, 0.055) 53px, transparent 55px);
-      background-size: 44px 44px, auto, auto, auto;
+        radial-gradient(circle at 50% 52%, rgba(201, 169, 110, 0.08) 0 1px, transparent 2px),
+        radial-gradient(circle at 18% 28%, rgba(201, 169, 110, 0.035) 0 1px, transparent 2px),
+        radial-gradient(circle at 74% 72%, rgba(248, 248, 248, 0.03) 0 1px, transparent 2px),
+        radial-gradient(circle at 50% 52%, rgba(201, 169, 110, 0.08), transparent 24%);
+      background-size: 44px 44px, 68px 68px, 86px 86px, auto;
       mix-blend-mode: screen;
-      transform: scale(0.96);
-    }
-
-    .helix-section.is-warping::after {
-      animation: waveParticleMerge 980ms cubic-bezier(0.19, 1, 0.22, 1) both;
-    }
-
-    @keyframes waveParticleMerge {
-      0% { opacity: 0; filter: blur(0); transform: translateY(-26%) scale(0.92); }
-      22% { opacity: 0.78; filter: blur(0.2px); transform: translateY(-13%) scale(0.98); }
-      58% { opacity: 0.46; filter: blur(1px); transform: translateY(0) scale(1.06); }
-      100% { opacity: 0; filter: blur(9px); transform: translateY(10%) scale(1.22); }
+      transform: scale(1);
     }
 
     .projects-layout {
@@ -605,7 +591,7 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       font-family: 'JetBrains Mono', monospace;
-      font-size: clamp(0.48rem, 1.05vw, 0.54rem);
+      font-size: clamp(0.62rem, 1.2vw, 0.7rem);
       letter-spacing: 0.13em;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -621,9 +607,9 @@
     }
 
     .footer-brand-name {
-      color: var(--text-secondary);
+      color: var(--accent);
       font-family: 'Syne', sans-serif;
-      font-size: clamp(0.62rem, 1.2vw, 0.7rem);
+      font-size: inherit;
       font-weight: 700;
       letter-spacing: 0.06em;
     }
@@ -1212,12 +1198,11 @@
 
       .site-nav ul {
         gap: clamp(0.74rem, 3vw, 1rem) !important;
-        font-size: clamp(0.62rem, 2.6vw, 0.68rem) !important;
+        font-size: clamp(0.78rem, 3.1vw, 0.92rem) !important;
         letter-spacing: 0.08em !important;
       }
 
-      .nav-projects .project-menu,
-      .nav-about .project-menu {
+      .nav-projects .project-menu {
         position: fixed !important;
         left: auto !important;
         right: 1rem !important;
@@ -1229,10 +1214,7 @@
 
       .nav-projects:hover .project-menu,
       .nav-projects:focus-within .project-menu,
-      .nav-projects.is-open .project-menu,
-      .nav-about:hover .project-menu,
-      .nav-about:focus-within .project-menu,
-      .nav-about.is-open .project-menu {
+      .nav-projects.is-open .project-menu {
         transform: translateY(0);
       }
 
@@ -1377,14 +1359,10 @@
         align-items: flex-start;
         flex-wrap: wrap;
         padding: 0.75rem 1rem;
-        font-size: clamp(0.44rem, 1.9vw, 0.5rem);
+        font-size: clamp(0.58rem, 2.35vw, 0.66rem);
         gap: 0.55rem 0.85rem;
         margin-top: 0.8rem;
         white-space: normal;
-      }
-
-      .footer-brand-name {
-        font-size: 0.56rem;
       }
 
       .footer-brand,
@@ -1571,7 +1549,7 @@
         justify-content: flex-end;
         min-width: 0;
         gap: 0.44rem !important;
-        font-size: 0.68rem !important;
+        font-size: 0.76rem !important;
         letter-spacing: 0.06em !important;
       }
 
@@ -1734,6 +1712,7 @@
       height: min(78svh, 760px);
       align-self: stretch;
       transform: translateZ(0);
+      overflow: visible;
     }
 
     .constellation-wrap {
@@ -1753,7 +1732,7 @@
     .constellation-core {
       position: absolute;
       left: 50%;
-      top: 54%;
+      top: 60%;
       z-index: 4;
       width: max-content;
       min-width: clamp(8rem, 18vw, 11rem);
@@ -1801,38 +1780,12 @@
       pointer-events: none;
     }
 
-    .black-hole-transition {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      z-index: 2;
-      width: min(44vw, 24rem);
-      aspect-ratio: 1;
-      border-radius: 50%;
-      pointer-events: none;
-      background:
-        radial-gradient(circle, #000 0 25%, rgba(201, 169, 110, 0.28) 29%, rgba(201, 169, 110, 0.08) 42%, transparent 64%);
-      filter: blur(0.3px);
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.24) rotate(-120deg);
-    }
-
-    .helix-section.is-warping .black-hole-transition {
-      animation: blackHoleSpiral 920ms cubic-bezier(0.19, 1, 0.22, 1) both;
-    }
-
-    @keyframes blackHoleSpiral {
-      0% { opacity: 0.95; transform: translate(-50%, -50%) scale(0.16) rotate(-150deg); }
-      56% { opacity: 0.72; transform: translate(-50%, -50%) scale(1.18) rotate(28deg); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.75) rotate(86deg); }
-    }
-
     .orbit-node {
       position: absolute;
       left: var(--node-x);
       top: var(--node-y);
       z-index: 5;
-      width: clamp(11.6rem, 15.5vw, 13.2rem);
+      width: clamp(13.6rem, 18vw, 16.4rem);
       border: 0;
       background: transparent;
       color: inherit;
@@ -1841,10 +1794,10 @@
       transform:
         translate(calc(-50% + var(--morph-x, 0px)), calc(-50% + var(--morph-y, 0px)))
         scale(var(--node-scale, 0.28))
-        rotate(var(--node-rot, -42deg));
+        rotate(var(--node-rot, 0deg));
       transform-origin: 50% 50%;
       opacity: var(--node-opacity, 0);
-      filter: blur(var(--node-blur, 14px)) brightness(var(--node-brightness, 0.62));
+      filter: brightness(var(--node-brightness, 0.62));
       transition: filter 180ms ease;
       transition-delay: var(--reveal-delay, 0ms);
     }
@@ -1855,7 +1808,7 @@
 
     .orbit-node:hover,
     .orbit-node:focus-visible {
-      filter: blur(var(--node-blur, 0)) brightness(var(--node-brightness, 1)) drop-shadow(0 0 18px rgba(201, 169, 110, 0.36));
+      filter: brightness(var(--node-brightness, 1)) drop-shadow(0 0 18px rgba(201, 169, 110, 0.36));
       outline: none;
     }
 
@@ -1872,18 +1825,18 @@
       position: relative;
       display: grid;
       place-items: center;
-      height: 10.4rem;
+      height: clamp(12.1rem, 16vw, 14.6rem);
       filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.68));
     }
 
     .orbit-thumb-wrap::before {
       content: '';
       position: absolute;
-      inset: 5% -4% 4%;
+      inset: 3% -8% 2%;
       z-index: -1;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(201, 169, 110, 0.24), rgba(201, 169, 110, 0.08) 42%, transparent 73%);
-      filter: blur(12px);
+      filter: blur(18px);
       opacity: var(--node-halo-opacity, 0.1);
     }
 
@@ -1917,20 +1870,28 @@
       font-family: 'Syne', sans-serif;
       font-size: 0.9rem;
       font-weight: 800;
-      line-height: 1.02;
+      line-height: 1.08;
+      overflow-wrap: anywhere;
+      text-wrap: balance;
     }
 
     .orbit-node[data-project="robotics"] .orbit-thumb {
-      max-height: 8.4rem;
+      max-height: 12.2rem;
     }
 
+    .orbit-node[data-project="robotics"] {
+      width: clamp(15.2rem, 19.4vw, 17.4rem);
+    }
+
+    .orbit-node[data-project="fpv-drone"] .orbit-node-label,
     .orbit-node[data-project="robotics"] .orbit-node-label {
-      margin-top: 1.35rem;
+      margin-top: 0.46rem;
     }
 
     @keyframes orbitFloat {
       0%, 100% { transform: translate(0, 0) rotate(var(--float-rot-start, 0deg)); }
-      50% { transform: translate(calc(var(--float-x, 0px) * 1px), calc(var(--float-y, -6px) * 1px)) rotate(var(--float-rot-end, 0.8deg)); }
+      34% { transform: translate(calc(var(--float-x, 0px) * 0.72px), calc(var(--float-y, -6px) * 1px)) rotate(var(--float-rot-end, 0.8deg)); }
+      67% { transform: translate(calc(var(--float-y, -6px) * -0.42px), calc(var(--float-x, 0px) * 0.58px)) rotate(var(--float-rot-mid, 0deg)); }
     }
 
     .constellation-summary {
@@ -1962,15 +1923,14 @@
       margin-top: 0.6rem;
     }
 
-    .project-overlay,
-    .about-preview {
+    .project-overlay {
       position: fixed;
       inset: 0;
       z-index: 90;
       display: grid;
       place-items: center;
       padding: clamp(1rem, 4vw, 2.5rem);
-      background: rgba(0, 0, 0, 0.18);
+      background: rgba(0, 0, 0, 0.08);
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
       opacity: 0;
@@ -1979,29 +1939,21 @@
       transition: opacity 220ms ease, visibility 220ms ease;
     }
 
-    .project-overlay.is-open,
-    .about-preview.is-open {
+    .project-overlay.is-open {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
     }
 
-    .about-preview {
-      background: rgba(0, 0, 0, 0.52);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-
-    .project-overlay-card,
-    .about-preview-panel {
+    .project-overlay-card {
       position: relative;
       width: min(100%, 760px);
       max-height: min(86svh, 760px);
       overflow: auto;
       border: 0;
-      background: rgba(0, 0, 0, 0.22);
-      border-radius: 28px;
-      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
       transform: scale(0.92) translateY(1rem);
       opacity: 0;
       transition: transform 520ms cubic-bezier(0.16, 1.25, 0.3, 1), opacity 220ms ease;
@@ -2015,39 +1967,32 @@
       width: min(100%, 830px);
       padding: clamp(1.35rem, 4vw, 2.65rem);
       overflow: visible;
-      background:
-        radial-gradient(ellipse at 68% 50%, rgba(0, 0, 0, 0.2), transparent 70%),
-        radial-gradient(circle at 26% 44%, rgba(201, 169, 110, 0.06), transparent 34%),
-        rgba(0, 0, 0, 0.2);
+      background: transparent;
     }
 
     .project-overlay-card::before,
     .project-overlay-card::after {
       content: '';
       position: absolute;
-      z-index: 0;
       pointer-events: none;
-      border-radius: 28px;
-      background: rgba(0, 0, 0, 0.68);
-      backdrop-filter: blur(26px) saturate(1.08);
-      -webkit-backdrop-filter: blur(26px) saturate(1.08);
-      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.44);
-      mask-image: radial-gradient(ellipse at center, #000 0 58%, rgba(0, 0, 0, 0.72) 74%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse at center, #000 0 58%, rgba(0, 0, 0, 0.72) 74%, transparent 100%);
     }
 
     .project-overlay-card::before {
-      left: clamp(1.35rem, 4vw, 2.65rem);
-      top: clamp(1.35rem, 4vw, 2.65rem);
-      bottom: clamp(1.35rem, 4vw, 2.65rem);
-      width: min(32%, 18rem);
+      inset: clamp(-3.8rem, -5.4vw, -2.2rem);
+      z-index: -2;
+      background:
+        radial-gradient(ellipse at center, #020202 0 38%, rgba(0, 0, 0, 0.86) 52%, rgba(0, 0, 0, 0.44) 70%, transparent 91%),
+        radial-gradient(circle at 24% 48%, rgba(201, 169, 110, 0.12), transparent 34%);
+      filter: blur(34px);
     }
 
     .project-overlay-card::after {
-      right: clamp(1.35rem, 4vw, 2.65rem);
-      top: clamp(1.35rem, 4vw, 2.65rem);
-      bottom: clamp(1.35rem, 4vw, 2.65rem);
-      width: min(52%, 31rem);
+      inset: clamp(-0.45rem, -0.8vw, -0.25rem);
+      z-index: 0;
+      background: #020202;
+      filter: blur(4px);
+      mask-image: radial-gradient(ellipse at center, #000 0 66%, rgba(0, 0, 0, 0.82) 76%, rgba(0, 0, 0, 0.34) 88%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 0 66%, rgba(0, 0, 0, 0.82) 76%, rgba(0, 0, 0, 0.34) 88%, transparent 100%);
     }
 
     .project-overlay-card > * {
@@ -2055,8 +2000,7 @@
       z-index: 1;
     }
 
-    .project-overlay.is-open .project-overlay-card,
-    .about-preview.is-open .about-preview-panel {
+    .project-overlay.is-open .project-overlay-card {
       opacity: 1;
       transform: scale(1) translateY(0);
     }
@@ -2108,80 +2052,6 @@
       background: rgba(0, 0, 0, 0.16);
     }
 
-    .about-preview-panel {
-      overflow: auto;
-      border: 1px solid var(--border);
-      border-radius: 0;
-      background: var(--card);
-      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.72);
-      padding: clamp(1.35rem, 4vw, 2.4rem);
-    }
-
-    .about-preview-photo {
-      width: min(100%, 15rem);
-      aspect-ratio: 4 / 5;
-      object-fit: cover;
-      object-position: 52% 44%;
-      display: block;
-      margin-bottom: 1.35rem;
-      border: 1px solid var(--border);
-      filter: saturate(0.95) contrast(1.03);
-    }
-
-    .about-preview-kicker {
-      color: var(--accent);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    .about-preview-title {
-      margin: 0.65rem 2.6rem 1rem 0;
-      color: var(--text-primary);
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.75rem, 4.5vw, 2.55rem);
-      font-weight: 800;
-      line-height: 1.02;
-    }
-
-    .about-preview-copy {
-      color: var(--text-secondary);
-      font-size: clamp(0.92rem, 1.6vw, 1.02rem);
-      line-height: 1.72;
-    }
-
-    .about-preview-panel > .card-cta {
-      margin-top: 1.25rem;
-    }
-
-    .about-preview-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.8rem;
-      margin: 1.5rem 0;
-    }
-
-    .about-preview-stat {
-      border-top: 1px solid rgba(201, 169, 110, 0.36);
-      padding-top: 0.72rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .about-preview-stat strong {
-      display: block;
-      margin-bottom: 0.28rem;
-      color: var(--text-primary);
-      font-family: 'Syne', sans-serif;
-      font-size: 0.92rem;
-      letter-spacing: 0;
-      text-transform: none;
-    }
-
     @media (min-width: 1240px) {
       .projects-layout {
         grid-template-columns: minmax(0, 1fr);
@@ -2215,7 +2085,7 @@
       }
 
       .constellation-wrap {
-        --constellation-scale: 0.78;
+        --constellation-scale: 0.86;
       }
 
       .site-footer {
@@ -2236,23 +2106,24 @@
       }
 
       .constellation-wrap {
-        --constellation-scale: 0.43;
+        --constellation-scale: 0.5;
+        top: 50%;
       }
 
       .constellation-shell {
-        height: min(64svh, 570px);
+        height: min(70svh, 620px);
       }
 
       .orbit-node {
-        width: 11.1rem;
+        width: 12.9rem;
       }
 
       .orbit-thumb-wrap {
-        height: 9.65rem;
+        height: 11.3rem;
       }
 
       .orbit-node-title {
-        font-size: 0.82rem;
+        font-size: 0.9rem;
       }
 
       .orbit-node-label {
@@ -2260,11 +2131,16 @@
       }
 
       .orbit-node[data-project="robotics"] .orbit-thumb {
-        max-height: 7.45rem;
+        max-height: 10.4rem;
       }
 
+      .orbit-node[data-project="robotics"] {
+        width: 14.4rem;
+      }
+
+      .orbit-node[data-project="fpv-drone"] .orbit-node-label,
       .orbit-node[data-project="robotics"] .orbit-node-label {
-        margin-top: 1rem;
+        margin-top: 0.42rem;
       }
 
       .constellation-summary {
@@ -2286,42 +2162,40 @@
       .project-overlay-card {
         grid-template-columns: minmax(0, 1fr);
         gap: 0.68rem;
-        padding: 0.92rem;
-        border-radius: 20px;
+        padding: 1rem;
+        border-radius: 0;
         width: min(100%, calc(100vw - 1.1rem));
         max-height: calc(100svh - var(--nav-h) - 1.4rem);
-        overflow: auto;
-        background: rgba(0, 0, 0, 0.48);
+        overflow-x: hidden;
+        overflow-y: auto;
+        background: transparent;
       }
 
       .project-overlay {
         place-items: start center;
         padding: calc(var(--nav-h) + 0.7rem) 0.55rem 0.7rem;
-        background: rgba(0, 0, 0, 0.32);
+        background: rgba(0, 0, 0, 0.1);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
       }
 
       .project-overlay-card::before,
       .project-overlay-card::after {
-        left: 1.15rem;
-        right: 1.15rem;
-        width: auto;
-        border-radius: 20px;
-        background: rgba(0, 0, 0, 0.78);
+        border-radius: 0;
       }
 
       .project-overlay-card::before {
-        top: 1.15rem;
-        bottom: auto;
-        height: clamp(96px, 15svh, 128px);
+        inset: -2rem;
       }
 
       .project-overlay-card::after {
-        top: calc(0.92rem + clamp(96px, 15svh, 128px) + 0.68rem);
-        bottom: 1.15rem;
+        inset: -0.35rem;
       }
 
       .project-overlay-card .project-image {
         height: clamp(96px, 15svh, 128px);
+        width: min(82vw, 18rem);
+        justify-self: center;
       }
 
       .project-overlay-card .card-title {
@@ -2366,22 +2240,15 @@
         content: 'Tap a project artifact to preview';
       }
 
-      .about-preview-grid {
-        grid-template-columns: 1fr;
-      }
-
       .project-overlay-card .card-body {
         padding-inline: 0;
-      }
-
-      .about-preview-photo {
-        width: min(100%, 11.5rem);
+        min-width: 0;
       }
     }
 
     @media (max-width: 380px) {
       .constellation-wrap {
-        --constellation-scale: 0.4;
+        --constellation-scale: 0.46;
       }
     }
   </style>
@@ -2401,13 +2268,8 @@
             <a class="block px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="projects/robotics.html">Competitive Robotics</a>
           </div>
         </li>
-        <li class="nav-about relative">
+        <li>
           <a class="nav-link focus-ring" href="about.html">About</a>
-          <div class="project-menu absolute left-1/2 top-[calc(100%+0.95rem)] w-56 border border-[#1e1e1e] bg-[#0e0e0e]/95 p-2 shadow-2xl backdrop-blur-xl" aria-label="About links">
-            <a class="block border-b border-[#1e1e1e] px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="about.html#my-mission">My Mission</a>
-            <a class="block border-b border-[#1e1e1e] px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="about.html#my-experience">My Experience</a>
-            <a class="block px-3 py-3 text-[#b8b8b8] transition hover:bg-[#141414] hover:text-[#c9a96e]" href="about.html#contact">Contact</a>
-          </div>
         </li>
       </ul>
     </div>
@@ -2422,9 +2284,8 @@
         <div class="hero-copy">
           <div class="hero-kicker">
             <span class="hero-kicker-role">Mechanical Engineer</span>
-            <span class="hero-kicker-tip">Press my name</span>
           </div>
-          <button id="aboutPreviewTrigger" class="hero-name hero-name-button focus-ring" type="button" aria-haspopup="dialog" aria-controls="aboutPreview">Michael<br>Vasquez</button>
+          <a class="hero-name hero-name-button focus-ring" href="about.html">Michael<br>Vasquez</a>
           <div class="hero-tagline">designs, develops,<br> delivers.</div>
           <p class="hero-copy-line">From precision mechanisms and FEA-validated structures to production-line robotics - engineering work across the full design cycle.</p>
         </div>
@@ -2457,7 +2318,6 @@
       <div class="projects-layout">
         <div id="constellationShell" class="constellation-shell">
           <div id="constellationWrap" class="constellation-wrap" aria-label="Selected project constellation">
-            <div class="black-hole-transition" aria-hidden="true"></div>
             <div class="constellation-core" aria-hidden="true">
               <div>
                 <div class="constellation-core-kicker">Portfolio</div>
@@ -2513,20 +2373,6 @@
         </div>
       </div>
     </article>
-  </div>
-
-  <div id="aboutPreview" class="about-preview" role="dialog" aria-modal="true" aria-labelledby="aboutPreviewTitle">
-    <section class="about-preview-panel">
-      <button id="aboutPreviewClose" class="overlay-close focus-ring" type="button" aria-label="Close about preview">×</button>
-      <div class="about-preview-kicker">Mechanical Engineer</div>
-      <h2 id="aboutPreviewTitle" class="about-preview-title">My mission.</h2>
-      <img class="about-preview-photo" src="images/about/headshot_v2.png" alt="Michael Vasquez">
-      <div class="about-preview-copy">
-        <p>There’s a certain kind of problem that most people don’t want to touch. That’s usually where I start.</p>
-        <p>The kind of work where the tolerances matter, the stakes are real, and “good enough” isn’t. Looking for technically demanding problems and a team that takes their craft seriously. Let’s connect.</p>
-      </div>
-      <a class="card-cta focus-ring" href="about.html#my-mission"><span>Read the full about page</span><span class="card-cta-arrow" aria-hidden="true">&rarr;</span></a>
-    </section>
   </div>
 
   <script>
@@ -2832,10 +2678,11 @@
         const dx = 380 - nodePositions[index].x;
         const dy = 345 - nodePositions[index].y;
         const dist = Math.max(1, Math.hypot(dx, dy));
-        node.style.setProperty('--float-x', ((dx / dist) * 3.1).toFixed(2));
-        node.style.setProperty('--float-y', ((dy / dist) * 3.1).toFixed(2));
-        node.style.setProperty('--float-rot-start', (index % 2 ? '0.28deg' : '-0.28deg'));
-        node.style.setProperty('--float-rot-end', (index % 2 ? '-0.28deg' : '0.28deg'));
+        node.style.setProperty('--float-x', ((dx / dist) * 7.6 + (index - 2) * 0.8).toFixed(2));
+        node.style.setProperty('--float-y', ((dy / dist) * 7.6 + (index % 2 ? -1.4 : 1.4)).toFixed(2));
+        node.style.setProperty('--float-rot-start', (index % 2 ? '0.75deg' : '-0.75deg'));
+        node.style.setProperty('--float-rot-end', (index % 2 ? '-0.95deg' : '0.95deg'));
+        node.style.setProperty('--float-rot-mid', (index % 2 ? '-0.45deg' : '0.45deg'));
         node.setAttribute('aria-label', `Preview ${project.title}`);
         node.innerHTML = `
           <div class="orbit-node-motion" style="animation:orbitFloat ${floatDefs[index][0]} ease-in-out ${floatDefs[index][1]} infinite">
@@ -2895,14 +2742,14 @@
       }
 
       function wrapCorePoint() {
-        return { x: 380, y: 650 * 0.54 };
+        return { x: 380, y: 650 * 0.58 };
       }
 
       function updateMorphState() {
         const rect = section.getBoundingClientRect();
-        const raw = ((window.innerHeight * 0.98) - rect.top) / (window.innerHeight * 1.12);
-        morphProgress = prefersReducedMotion ? 1 : smootherStep(raw * 1.08);
-        const iconProgress = smootherStep(Math.max(0, (morphProgress - 0.06) / 0.94));
+        const raw = ((window.innerHeight * 0.98) - rect.top) / (window.innerHeight * 0.98);
+        morphProgress = prefersReducedMotion ? 1 : smootherStep(raw);
+        const globalIconProgress = smootherStep(Math.max(0, (morphProgress - 0.04) / 0.96));
         const corePoint = wrapCorePoint();
 
         nodes.forEach((thumbWrap, index) => {
@@ -2911,19 +2758,20 @@
           const final = nodePositions[index];
           const baseDx = final.x - corePoint.x;
           const baseDy = final.y - corePoint.y;
-          const spiral = (1 - morphProgress) * (index % 2 ? -2.55 : 2.55);
-          const cos = Math.cos(spiral);
-          const sin = Math.sin(spiral);
-          const currentX = corePoint.x + (baseDx * cos - baseDy * sin) * morphProgress;
-          const currentY = corePoint.y + (baseDx * sin + baseDy * cos) * morphProgress;
+          const baseDist = Math.max(1, Math.hypot(baseDx, baseDy));
+          const nodeDelay = index === 0 ? 0.02 : 0.05 + index * 0.02;
+          const iconProgress = smootherStep((morphProgress - nodeDelay) / (1 - nodeDelay));
+          const fallIn = 1 - iconProgress;
+          const radialPull = Math.min(190, baseDist * 0.42) * fallIn;
+          const currentX = final.x + (baseDx / baseDist) * radialPull;
+          const currentY = final.y + (baseDy / baseDist) * radialPull;
           node.style.setProperty('--morph-x', (currentX - final.x).toFixed(2) + 'px');
           node.style.setProperty('--morph-y', (currentY - final.y).toFixed(2) + 'px');
-          node.style.setProperty('--node-scale', (0.1 + iconProgress * 0.9).toFixed(3));
-          node.style.setProperty('--node-rot', ((1 - morphProgress) * (index % 2 ? 68 : -68)).toFixed(2) + 'deg');
-          node.style.setProperty('--node-opacity', Math.pow(iconProgress, 1.45).toFixed(3));
-          node.style.setProperty('--node-blur', ((1 - iconProgress) * 18).toFixed(2) + 'px');
-          node.style.setProperty('--node-brightness', (0.56 + iconProgress * 0.44).toFixed(3));
-          node.style.setProperty('--node-halo-opacity', (0.08 + iconProgress * 0.4).toFixed(3));
+          node.style.setProperty('--node-scale', (0.72 + iconProgress * 0.28).toFixed(3));
+          node.style.setProperty('--node-rot', '0deg');
+          node.style.setProperty('--node-opacity', Math.pow(globalIconProgress * iconProgress, 0.92).toFixed(3));
+          node.style.setProperty('--node-brightness', (0.78 + iconProgress * 0.22).toFixed(3));
+          node.style.setProperty('--node-halo-opacity', (0.04 + iconProgress * 0.38).toFixed(3));
         });
 
         if (morphProgress > 0.02) section.classList.add('is-revealed');
@@ -2931,30 +2779,32 @@
 
       function desiredParticleCount() {
         const area = width * height;
-        if (window.innerWidth < 480) return Math.min(980, Math.max(620, Math.round(area / 520)));
-        if (window.innerWidth < 900) return Math.min(1500, Math.max(900, Math.round(area / 570)));
-        return Math.min(3300, Math.max(1900, Math.round(area / 720)));
+        if (window.innerWidth < 480) return Math.min(1280, Math.max(820, Math.round(area / 390)));
+        if (window.innerWidth < 900) return Math.min(1900, Math.max(1180, Math.round(area / 430)));
+        return Math.min(4200, Math.max(2500, Math.round(area / 560)));
       }
 
       function createParticle(index) {
         const hub = hubCenter();
-        const total = desiredParticleCount();
         const angle = Math.random() * Math.PI * 2;
-        const maxRadius = Math.hypot(width, height) * 0.58;
-        const radialBias = Math.pow(Math.random(), 1.65);
-        const targetRadius = hub.radius * 0.82 + maxRadius * radialBias;
-        const radiusJitter = (Math.random() - 0.5) * Math.min(width, height) * 0.08;
-        const actualRadius = Math.max(hub.radius * 0.72, targetRadius + radiusJitter);
-        const zone = targetRadius < hub.radius * 3.6 ? 'hub' : 'field';
+        const maxRadius = Math.hypot(width, height) * 0.6;
+        const radialBias = Math.pow(Math.random(), 1.72);
+        const targetRadius = hub.radius * 0.45 + maxRadius * radialBias;
+        const radiusJitter = (Math.random() - 0.5) * Math.min(width, height) * 0.18;
+        const actualRadius = Math.max(hub.radius * 0.32, targetRadius + radiusJitter);
+        const zone = targetRadius < hub.radius * 4.15 ? 'hub' : 'field';
+        const originRadius = Math.hypot(width, height) * (0.72 + Math.random() * 0.22);
         return {
           x: hub.x + Math.cos(angle) * actualRadius,
           y: hub.y + Math.sin(angle) * actualRadius,
-          vx: (Math.random() - 0.5) * 0.38,
-          vy: (Math.random() - 0.5) * 0.38,
-          r: zone === 'hub' ? Math.random() * 1.1 + 0.52 : Math.random() * 0.95 + 0.34,
-          base: zone === 'hub' ? Math.random() * 0.24 + 0.2 : Math.random() * 0.16 + 0.08,
+          originX: hub.x + Math.cos(angle) * originRadius,
+          originY: hub.y + Math.sin(angle) * originRadius,
+          vx: (Math.random() - 0.5) * 0.52,
+          vy: (Math.random() - 0.5) * 0.52,
+          r: zone === 'hub' ? Math.random() * 0.72 + 0.34 : Math.random() * 0.92 + 0.34,
+          base: zone === 'hub' ? Math.random() * 0.16 + 0.11 : Math.random() * 0.2 + 0.12,
           targetRadius,
-          swirl: (Math.random() < 0.5 ? -1 : 1) * (0.0016 + Math.random() * 0.0026),
+          wander: 0.002 + Math.random() * 0.004,
           phase: Math.random() * Math.PI * 2,
           zone
         };
@@ -2996,10 +2846,9 @@
           if (hubDist > 1) {
             const nx = hubDx / hubDist;
             const ny = hubDy / hubDist;
-            const radialForce = ((hubDist - particle.targetRadius) / Math.max(160, particle.targetRadius)) * 0.018;
-            const tangentForce = particle.swirl * Math.min(2.4, Math.max(0.55, hubDist / Math.max(1, particle.targetRadius)));
-            particle.vx += (nx * radialForce - ny * tangentForce) * dt;
-            particle.vy += (ny * radialForce + nx * tangentForce) * dt;
+            const radialForce = ((hubDist - particle.targetRadius) / Math.max(180, particle.targetRadius)) * 0.008;
+            particle.vx += nx * radialForce * dt;
+            particle.vy += ny * radialForce * dt;
           }
           if (hubDist < hubInner) {
             const force = ((hubInner - hubDist) / hubInner) * 0.054;
@@ -3007,14 +2856,14 @@
             particle.vy -= (hubDy / Math.max(1, hubDist)) * force * dt;
           }
 
-          particle.phase += 0.018 * dt;
-          particle.vx += Math.cos(particle.phase) * 0.0028 * dt;
-          particle.vy += Math.sin(particle.phase * 0.87) * 0.0028 * dt;
+          particle.phase += (0.012 + particle.wander) * dt;
+          particle.vx += Math.cos(particle.phase * 1.17) * particle.wander * dt;
+          particle.vy += Math.sin(particle.phase * 0.83) * particle.wander * dt;
 
           particle.vx *= Math.pow(0.992, dt);
           particle.vy *= Math.pow(0.992, dt);
           const speed = Math.hypot(particle.vx, particle.vy);
-          const speedLimit = particle.zone === 'hub' ? 0.78 : 1.05;
+          const speedLimit = particle.zone === 'hub' ? 0.54 : 0.92;
           if (speed > speedLimit) {
             particle.vx = (particle.vx / speed) * speedLimit;
             particle.vy = (particle.vy / speed) * speedLimit;
@@ -3049,31 +2898,29 @@
           ctx.restore();
         });
 
+        const particleFade = smootherStep(Math.max(0, (morphProgress - 0.04) / 0.96));
+        const radialFall = 1 - particleFade;
         const displayParticles = particles.map((particle) => {
-          const relX = particle.x - hub.x;
-          const relY = particle.y - hub.y;
-          const spiral = (1 - morphProgress) * (particle.zone === 'hub' ? 2.8 : 4.4) * (particle.swirl > 0 ? 1 : -1);
-          const cos = Math.cos(spiral);
-          const sin = Math.sin(spiral);
           return {
             ...particle,
-            drawX: hub.x + (relX * cos - relY * sin) * morphProgress,
-            drawY: hub.y + (relX * sin + relY * cos) * morphProgress
+            drawX: particle.x + (particle.originX - particle.x) * radialFall,
+            drawY: particle.y + (particle.originY - particle.y) * radialFall
           };
         });
 
-        const linkParticles = displayParticles.filter((particle, index) => particle.zone === 'field' && index % 7 === 0).slice(0, 380);
+        const linkParticles = displayParticles.filter((particle, index) => particle.zone === 'field' && index % 5 === 0).slice(0, 560);
         for (let i = 0; i < linkParticles.length; i += 1) {
           for (let j = i + 1; j < linkParticles.length; j += 1) {
             const dist = Math.hypot(linkParticles[i].drawX - linkParticles[j].drawX, linkParticles[i].drawY - linkParticles[j].drawY);
             const iHub = Math.hypot(hub.x - linkParticles[i].drawX, hub.y - linkParticles[i].drawY);
             const jHub = Math.hypot(hub.x - linkParticles[j].drawX, hub.y - linkParticles[j].drawY);
-            if (dist < 98 && iHub > hub.radius * 1.55 && jHub > hub.radius * 1.55) {
+            const outerWeight = Math.min(1, Math.max(0.28, Math.min(iHub, jHub) / Math.max(hub.radius * 5.2, 1)));
+            if (dist < 118 && iHub > hub.radius * 1.75 && jHub > hub.radius * 1.75) {
               ctx.beginPath();
               ctx.moveTo(linkParticles[i].drawX, linkParticles[i].drawY);
               ctx.lineTo(linkParticles[j].drawX, linkParticles[j].drawY);
-              ctx.strokeStyle = `rgba(201,169,110,${(1 - dist / 98) * 0.13})`;
-              ctx.lineWidth = 0.6;
+              ctx.strokeStyle = `rgba(201,169,110,${(1 - dist / 118) * 0.18 * outerWeight * particleFade})`;
+              ctx.lineWidth = 0.72;
               ctx.stroke();
             }
           }
@@ -3081,12 +2928,12 @@
 
         displayParticles.forEach((particle) => {
           const hubDistance = Math.hypot(hub.x - particle.drawX, hub.y - particle.drawY);
-          const nearHub = hubDistance < hub.radius * 3.35;
+          const nearHub = hubDistance < hub.radius * 4.2;
           ctx.beginPath();
-          ctx.arc(particle.drawX, particle.drawY, nearHub ? particle.r * 1.44 : particle.r, 0, Math.PI * 2);
+          ctx.arc(particle.drawX, particle.drawY, nearHub ? particle.r * 1.16 : particle.r, 0, Math.PI * 2);
           ctx.fillStyle = nearHub
-            ? `rgba(214,184,120,${Math.min(0.92, particle.base * 2.85)})`
-            : `rgba(190,172,128,${Math.min(0.44, particle.base * 1.5)})`;
+            ? `rgba(214,184,120,${Math.min(0.56, particle.base * 2.05) * particleFade})`
+            : `rgba(190,172,128,${Math.min(0.58, particle.base * 1.9) * particleFade})`;
           ctx.fill();
         });
 
@@ -3118,15 +2965,14 @@
 
     function initOverlays() {
       const overlayPairs = [
-        [document.getElementById('projectOverlay'), document.getElementById('projectOverlayClose'), null],
-        [document.getElementById('aboutPreview'), document.getElementById('aboutPreviewClose'), document.getElementById('aboutPreviewTrigger')]
+        [document.getElementById('projectOverlay'), document.getElementById('projectOverlayClose'), null]
       ];
 
       function closeOverlay(overlay) {
         if (!overlay) return;
         overlay.classList.remove('is-open');
         if (overlay.id === 'projectOverlay') document.getElementById('projects')?.classList.remove('is-previewing');
-        if (!document.querySelector('.project-overlay.is-open, .about-preview.is-open')) {
+        if (!document.querySelector('.project-overlay.is-open')) {
           document.body.style.overflow = '';
         }
       }
@@ -3258,7 +3104,7 @@
     }
 
     function initProjectMenu() {
-      document.querySelectorAll('.nav-projects, .nav-about').forEach((item) => {
+      document.querySelectorAll('.nav-projects').forEach((item) => {
         const trigger = item.querySelector('a');
         if (!trigger) return;
 
@@ -3266,7 +3112,7 @@
           if (!window.matchMedia('(max-width: 768px)').matches) return;
           if (!item.classList.contains('is-open')) {
             event.preventDefault();
-            document.querySelectorAll('.nav-projects.is-open, .nav-about.is-open').forEach((openItem) => {
+            document.querySelectorAll('.nav-projects.is-open').forEach((openItem) => {
               if (openItem !== item) openItem.classList.remove('is-open');
             });
             item.classList.add('is-open');
@@ -3275,13 +3121,13 @@
       });
 
       document.addEventListener('click', (event) => {
-        if (event.target.closest('.nav-projects, .nav-about')) return;
-        document.querySelectorAll('.nav-projects.is-open, .nav-about.is-open').forEach((item) => item.classList.remove('is-open'));
+        if (event.target.closest('.nav-projects')) return;
+        document.querySelectorAll('.nav-projects.is-open').forEach((item) => item.classList.remove('is-open'));
       });
 
       window.addEventListener('resize', () => {
         if (window.matchMedia('(min-width: 769px)').matches) {
-          document.querySelectorAll('.nav-projects.is-open, .nav-about.is-open').forEach((item) => item.classList.remove('is-open'));
+          document.querySelectorAll('.nav-projects.is-open').forEach((item) => item.classList.remove('is-open'));
         }
       });
     }
