@@ -1732,7 +1732,7 @@
     .constellation-core {
       position: absolute;
       left: 50%;
-      top: 60%;
+      top: 337px;
       z-index: 4;
       width: max-content;
       min-width: clamp(8rem, 18vw, 11rem);
@@ -2106,8 +2106,12 @@
       }
 
       .constellation-wrap {
-        --constellation-scale: 0.5;
+        --constellation-scale: 0.64;
         top: 50%;
+      }
+
+      .constellation-core {
+        top: 328px;
       }
 
       .constellation-shell {
@@ -2164,16 +2168,19 @@
         gap: 0.68rem;
         padding: 1rem;
         border-radius: 0;
-        width: min(100%, calc(100vw - 1.1rem));
-        max-height: calc(100svh - var(--nav-h) - 1.4rem);
+        width: min(22.5rem, calc(100vw - 1.5rem));
+        max-height: min(78svh, calc(100svh - var(--nav-h) - 1.4rem));
+        justify-self: center;
+        align-self: center;
+        margin: auto;
         overflow-x: hidden;
         overflow-y: auto;
         background: transparent;
       }
 
       .project-overlay {
-        place-items: start center;
-        padding: calc(var(--nav-h) + 0.7rem) 0.55rem 0.7rem;
+        place-items: center;
+        padding: calc(var(--nav-h) + 0.7rem) 0.75rem 0.75rem;
         background: rgba(0, 0, 0, 0.1);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
@@ -2248,7 +2255,13 @@
 
     @media (max-width: 380px) {
       .constellation-wrap {
-        --constellation-scale: 0.46;
+        --constellation-scale: 0.6;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .constellation-wrap {
+        --constellation-scale: 0.58;
       }
     }
   </style>
@@ -2584,13 +2597,21 @@
       if (!section || !shell || !wrap || !canvas || !overlay || !core) return;
 
       const ctx = canvas.getContext('2d');
-      const nodePositions = [
+      const desktopNodePositions = [
         { x: 380, y: 112 },
         { x: 650, y: 258 },
         { x: 558, y: 528 },
         { x: 202, y: 528 },
         { x: 110, y: 258 }
       ];
+      const mobileNodePositions = [
+        { x: 380, y: 118 },
+        { x: 570, y: 250 },
+        { x: 505, y: 510 },
+        { x: 255, y: 510 },
+        { x: 190, y: 250 }
+      ];
+      let nodePositions = window.innerWidth < 768 ? mobileNodePositions : desktopNodePositions;
       const floatDefs = [
         ['4.8s', '0ms'],
         ['5.25s', '220ms'],
@@ -2667,6 +2688,21 @@
         }
       }
 
+      function currentNodePositions() {
+        return window.innerWidth < 768 ? mobileNodePositions : desktopNodePositions;
+      }
+
+      function applyNodePositions() {
+        nodePositions = currentNodePositions();
+        nodes.forEach((thumbWrap, index) => {
+          const node = thumbWrap.closest('.orbit-node');
+          const position = nodePositions[index];
+          if (!node || !position) return;
+          node.style.setProperty('--node-x', position.x + 'px');
+          node.style.setProperty('--node-y', position.y + 'px');
+        });
+      }
+
       projects.forEach((project, index) => {
         const node = document.createElement('button');
         node.className = 'orbit-node focus-ring';
@@ -2702,6 +2738,7 @@
         wrap.appendChild(node);
         nodes.push(node.querySelector('.orbit-thumb-wrap'));
       });
+      applyNodePositions();
 
       const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -2713,6 +2750,7 @@
       const particles = [];
 
       function resizeCanvas() {
+        applyNodePositions();
         const rect = section.getBoundingClientRect();
         dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
         width = Math.max(1, rect.width);
@@ -2742,7 +2780,15 @@
       }
 
       function wrapCorePoint() {
-        return { x: 380, y: 650 * 0.58 };
+        const positions = currentNodePositions();
+        const sum = positions.reduce((total, position) => ({
+          x: total.x + position.x,
+          y: total.y + position.y
+        }), { x: 0, y: 0 });
+        return {
+          x: sum.x / positions.length,
+          y: sum.y / positions.length
+        };
       }
 
       function updateMorphState() {
