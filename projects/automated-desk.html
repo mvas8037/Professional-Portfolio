@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<html lang="en"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Standing Desk Automation - Michael Vasquez</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500&amp;family=JetBrains+Mono:wght@300;400&amp;display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -189,19 +188,19 @@
   <p class="proj-subtitle">Custom 3D-printed helical planetary gearbox sized via system dynamics calculations, paired with a from-scratch motor controller circuit - potentiometer speed control, direction switch, voltage readout - and a bracket designed to mate with existing tapped holes. No new drilling.</p>
   <div class="proj-stats">
     <div class="proj-stat"><div class="stat-val">Helical</div><div class="stat-label">Planetary gearbox</div></div>
-    <div class="proj-stat"><div class="stat-val">Custom</div><div class="stat-label">Motor controller</div></div>
+    <div class="proj-stat"><div class="stat-val">Custom</div><div class="stat-label">Controls</div></div>
     <div class="proj-stat"><div class="stat-val">FDM</div><div class="stat-label">All printed parts</div></div>
     <div class="proj-stat"><div class="stat-val">Mech + Elec</div><div class="stat-label">Full integration</div></div>
   </div>
 </div>
-<div class="role-strip"><span class="role-label">Scope -></span><span class="role-content">Mechanical (gearbox + bracket), electrical (motor controller circuit), validation (load testing). Owned every layer.</span></div>
+<div class="role-strip"><span class="role-label">Scope -&gt;</span><span class="role-content">Mechanical (gearbox + bracket), electrical (motor controller circuit), validation (load testing). Owned every layer.</span></div>
 <div class="wrap">
   <div class="content-section" id="overview">
     <div class="section-label">Project Overview</div>
     <h2 class="section-h">Automating a Manual Crank</h2>
     <p class="lead">Off-the-shelf actuators for converting a manual standing desk are expensive and overkill. The real engineering challenge - designing a compact, 3D-printable gearbox with enough reduction to drive the lead screw at usable speed - was interesting enough to build from scratch.</p>
     <p>The project crossed three disciplines: <strong>mechanical</strong> (gear design, system dynamics, bracket geometry), <strong>electrical</strong> (motor controller with user controls), and <strong>validation</strong> (load testing the printed gear teeth). Exactly the kind of cross-functional integration that shows up in real product work.</p>
-    <figure class="project-media"><img src="../images/desk/desk-build-001.jpg" alt="Standing desk automation gearbox and controller prototype"><figcaption>Prototype gearbox and controller hardware for the standing desk automation system.</figcaption></figure>
+    <figure class="project-media"><img src="../images/desk/desk-build-005.jpg" alt="Standing desk automation gearbox and controller prototype"><figcaption>Prototype gearbox and controller hardware for the standing desk automation system.</figcaption></figure>
   </div>
   <div class="content-section" id="gearbox">
     <div class="section-label">Subsystem 01</div>
@@ -209,8 +208,8 @@
     <p>Planetary configuration distributes load across three planet gears simultaneously - significantly more compact than an equivalent spur gear train at the same reduction. Helical tooth profile adds gradual engagement, reducing impact load per tooth (important for PLA).</p>
     <p>Gear ratios sized with closed-form planetary equations against target motor speed and desk lead screw pitch. System dynamics calculations validated torque requirements across the full travel range, accounting for desk weight, lead screw friction, and dynamic start/stop loads.</p>
     <div class="img-row">
-      <figure class="project-media"><img src="../images/desk/desk-build-003.jpg" alt="Standing desk gearbox CAD and printed parts"><figcaption>Gearbox design and printed component iteration for the desk lift drive.</figcaption></figure>
-      <figure class="project-media"><img src="../images/desk/desk-build-004.jpg" alt="Assembled standing desk gearbox"><figcaption>Assembled 3D-printed gearbox prototype after fit and load checks.</figcaption></figure>
+      <figure class="project-media"><img src="../images/desk/desk-build-002.jpg" alt="Standing desk gearbox CAD and printed parts"><figcaption>Gearbox design and printed component iteration for the desk lift drive.</figcaption></figure>
+      <figure class="project-media"><img src="../images/desk/screenshot-2025-02-22-165005.png" alt="Assembled standing desk gearbox"><figcaption>Assembled 3D-printed gearbox prototype after fit and load checks.</figcaption></figure>
     </div>
     <div class="two-col">
       <div><div class="col-head">Why Helical Planetary?</div><p>Three load paths, gradual tooth engagement, lower noise, compact form factor. Trade-off: helical teeth add axial thrust - accounted for in bearing selection.</p></div>
@@ -243,7 +242,7 @@
         <p>Direct-drive motor options were either too weak or too expensive, which made a custom reduction gearbox the best engineering problem to solve.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/desk/desk-build-002.jpg" alt="Manual standing desk crank before automation"><figcaption>Original manual crank that the automation system replaced.</figcaption></figure>
+        <figure class="project-media"><img src="../images/desk/desk-build-009.jpg" alt="Manual standing desk crank before automation"><figcaption>Original manual crank that the automation system replaced.</figcaption></figure>
       </div>
     </div>
     <div class="story-block reverse">
@@ -254,8 +253,8 @@
         <p>It worked, but it was too large and loud. The one-piece planet carrier also created friction and eventually failed at the sun gear shaft under torsional load.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/desk/desk-build-005.jpg" alt="First 3D-printed planetary gearbox iteration"><figcaption>First printed planetary gearbox iteration.</figcaption></figure>
-        <figure class="project-media"><img src="../images/desk/desk-build-006.jpg" alt="First gearbox assembled showing spur gear stages"><figcaption>Three-stage spur gear reduction used to validate torque.</figcaption></figure>
+        <figure class="project-media"><img src="../images/desk/desk-build-010.jpg" alt="First 3D-printed planetary gearbox iteration"><figcaption>First printed planetary gearbox iteration.</figcaption></figure>
+        <figure class="project-media"><img src="../images/desk/desk-build-011.jpg" alt="First gearbox assembled showing spur gear stages"><figcaption>Three-stage spur gear reduction used to validate torque.</figcaption></figure>
       </div>
     </div>
     <div class="story-block">
@@ -266,8 +265,8 @@
         <p>The sun gear is printed into the triangular carrier, removing the weak shaft interface that failed in the first version.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/desk/desk-build-009.jpg" alt="Final helical planetary gearbox components"><figcaption>Final helical planetary gearbox component layout.</figcaption></figure>
-        <figure class="project-media"><img src="../images/desk/desk-build-010.jpg" alt="Final assembled compact planetary gearbox"><figcaption>Compact final gearbox after carrier and tooth-profile redesign.</figcaption></figure>
+        <figure class="project-media"><img src="../images/desk/desk-build-002.jpg" alt="Final helical planetary gearbox components"><figcaption>Final helical planetary gearbox component layout.</figcaption></figure>
+        <figure class="project-media"><img src="../images/desk/desk-build-006.jpg" alt="Final assembled compact planetary gearbox"><figcaption>Compact final gearbox after carrier and tooth-profile redesign.</figcaption></figure>
       </div>
     </div>
     <div class="story-block reverse">
@@ -279,8 +278,8 @@
       </div>
       <div class="story-media">
         <figure class="project-media"><img src="../images/desk/desk-build-013.jpg" alt="Motor controller faceplate for standing desk automation"><figcaption>Controller faceplate with speed, direction, and voltage display.</figcaption></figure>
-        <figure class="project-media"><img src="../images/desk/desk-build-015.jpg" alt="Final gear cover connecting gearbox output to desk input shaft"><figcaption>Final gear cover linking gearbox output to the desk input shaft.</figcaption></figure>
-        <figure class="project-media artifact-card"><video src="../images/gearbox-v2.mov" controls muted playsinline></video><figcaption>Gearbox motion test for the final iteration.</figcaption></figure>
+        <figure class="project-media"><img src="../images/desk/screenshot-2025-02-22-165005.png" alt="Final gear cover connecting gearbox output to desk input shaft"><figcaption>Final gear cover linking gearbox output to the desk input shaft.</figcaption></figure>
+        <figure class="project-media artifact-card"><video src="../images/gearbox-v2.mov" controls="" autoplay="" loop="" muted="" playsinline=""></video><figcaption>Gearbox motion test for the final iteration.</figcaption></figure>
       </div>
     </div>
   </div>
@@ -297,8 +296,8 @@
     </div>
   </div>
 </div>
-<div class="proj-nav"><a href="thermofisher.html"><- ThermoFisher</a><a href="robotics.html">Next: Competitive Robotics -></a></div>
-<footer><span>&copy; 2026 Michael Vasquez / Mechanical Engineer</span><div class="footer-links"><a href="../index.html#projects">Projects</a><a href="../about.html#my-mission">About</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a><a href="../resume.pdf" target="_blank" rel="noopener">Resume</a><a href="../about.html#contact">Contact</a></div></footer>
+<div class="proj-nav"><a href="thermofisher.html">&lt;- ThermoFisher</a><a href="robotics.html">Next: Competitive Robotics -&gt;</a></div>
+<footer><span>© 2026 Michael Vasquez / Mechanical Engineer</span><div class="footer-links"><a href="../index.html#projects">Projects</a><a href="../about.html#my-mission">About</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a><a href="../resume.pdf" target="_blank" rel="noopener">Resume</a><a href="../about.html#contact">Contact</a></div></footer>
 <script>
   document.querySelectorAll('.nav-projects, .nav-about').forEach((item) => {
     const trigger = item.querySelector('a');
@@ -396,4 +395,5 @@
     window.addEventListener('scroll', updateActivePageSection, { passive: true });
   })();
 </script>
+
 </body></html>

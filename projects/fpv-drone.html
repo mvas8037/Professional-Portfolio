@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="en"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FPV Drone - Michael Vasquez</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500&amp;family=JetBrains+Mono:wght@300;400&amp;display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -190,14 +189,14 @@
   <p class="proj-subtitle">Designed an FPV drone frame from scratch with no prior drone experience - built a MATLAB flight simulation, validated it against an established external simulator, then used predicted impact forces as FEA inputs to produce a frame with intentionally <em>sacrificial</em> arms that fail in a controlled manner, protecting the flight controller stack.</p>
   <div class="proj-stats">
     <div class="proj-stat"><div class="stat-val">MATLAB</div><div class="stat-label">Custom flight sim</div></div>
-    <div class="proj-stat"><div class="stat-val">Ansys</div><div class="stat-label">FEA validated</div></div>
+    <div class="proj-stat"><div class="stat-val">Solidworks Simulation</div><div class="stat-label">FEA validated</div></div>
     <div class="proj-stat"><div class="stat-val">Sacrificial</div><div class="stat-label">Controlled-failure design</div></div>
     <div class="proj-stat"><div class="stat-val">Solo</div><div class="stat-label">Independent project</div></div>
   </div>
 </div>
 <div class="role-strip">
-  <span class="role-label">Engineering Loop -></span>
-  <span class="role-content">Component selection -> MATLAB flight sim -> external validation -> FEA on frame using predicted loads -> sacrificial arm geometry -> iteration.</span>
+  <span class="role-label">Engineering Loop -&gt;</span>
+  <span class="role-content">Component selection -&gt; MATLAB flight sim -&gt; external validation -&gt; FEA on frame using predicted loads -&gt; sacrificial arm geometry -&gt; iteration.</span>
 </div>
 
 <div class="wrap">
@@ -205,7 +204,7 @@
     <div class="section-label">Project Overview</div>
     <h2 class="section-h">From Zero to Custom Frame</h2>
     <p class="lead">Rather than building from a known frame, I wanted to engineer one from first principles - the way I'd approach any new mechanical system professionally. That means doing the analytical work upfront: pick components against target performance, simulate the flight characteristics, validate against a reference, then use those validated loads as structural design inputs.</p>
-    <figure class="project-media"><img src="../images/drone/drone-build-001.jpg" alt="Custom FPV drone CAD assembly"><figcaption>Custom FPV drone assembly with frame, arms, body plate, and motor mounting geometry.</figcaption></figure>
+    <figure class="project-media"><img src="../images/drone/drone-build-008.jpg" alt="Custom FPV drone CAD assembly"><figcaption>Custom FPV drone assembly with frame, arms, body plate, and motor mounting geometry.</figcaption></figure>
   </div>
 
   <div class="content-section" id="components">
@@ -213,8 +212,8 @@
     <h2 class="section-h">Component Selection &amp; Performance Targets</h2>
     <p>Defined the performance envelope first (thrust-to-weight, top speed, acceleration profile) and worked backward to size motors, propellers, and ESCs. Each component selection was justified against the target spec.</p>
     <div class="img-row">
-      <figure class="project-media"><img src="../images/drone/drone-build-002.jpg" alt="FPV drone component layout"><figcaption>Component layout and frame packaging during the custom drone design process.</figcaption></figure>
-      <figure class="project-media"><img src="../images/drone/drone-range-estimator-001.jpg" alt="FPV drone range estimator graph"><figcaption>External range-estimator reference used to sanity-check simulation assumptions.</figcaption></figure>
+      <figure class="project-media"><img src="../images/drone/drone-build-009.jpg" alt="FPV drone component layout"><figcaption>Component layout and frame packaging during the custom drone design process.</figcaption></figure>
+      <figure class="project-media"><img src="../images/drone/drone-xcopter-calc-001.png" alt="FPV drone range estimator graph"><figcaption>External drone calculator reference used to sanity-check simulation assumptions.</figcaption></figure>
     </div>
   </div>
 
@@ -240,8 +239,8 @@
     <p>The arms are designed as <strong>sacrificial structural elements</strong>: engineered to fail first and in a controlled manner on hard impact. This protects the center plate (FC, ESCs, camera) from damage. A snapped arm is a 5-minute swap; a destroyed FC stack is a hundreds-of-dollars rebuild. Sacrificial design is common in aerospace and automotive - crumple zones, shear pins, fuses - but rare in hobby FPV where most designers optimize for uniform strength.</p>
     <figure class="project-media"><img src="../images/drone/drone-calc-007.png" alt="FPV drone structural calculation image"><figcaption>Structural calculation snapshot used to guide sacrificial arm sizing.</figcaption></figure>
     <div class="img-row">
-      <figure class="project-media"><img src="../images/drone/drone-build-003.jpg" alt="FPV drone sacrificial arm CAD geometry"><figcaption>Sacrificial arm geometry with reduced sections intended to fail before the electronics stack.</figcaption></figure>
-      <figure class="project-media"><img src="../images/drone/drone-build-004.jpg" alt="FPV drone arm design iteration"><figcaption>Design iteration of the carbon-style frame plates and arm interfaces.</figcaption></figure>
+      <figure class="project-media"><img src="../images/drone/drone-build-003.jpg" alt="FPV drone sacrificial arm CAD geometry"><figcaption>Sacrificial arm geometry with worse case scenario bending impact.</figcaption></figure>
+      <figure class="project-media"><img src="../images/drone/drone-build-004.jpg" alt="FPV drone arm design iteration"><figcaption>Sacrificial arm geometry with worse case scenario side impact.</figcaption></figure>
     </div>
   </div>
   <div class="content-section" id="frame">
@@ -255,7 +254,7 @@
         <p>The arms brace against each other in an X pattern to increase rigidity while pockets remove material where it does not contribute much stiffness.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/drone/drone-build-005.jpg" alt="FPV drone X-frame geometry"><figcaption>X-frame geometry with compact body packaging and braced arms.</figcaption></figure>
+        <figure class="project-media"><img src="../images/drone/drone-build-001.jpg" alt="FPV drone X-frame geometry"><figcaption>X-frame geometry with compact body packaging and braced arms.</figcaption></figure>
       </div>
     </div>
     <div class="story-block reverse">
@@ -266,8 +265,8 @@
         <p>Those results drove the next geometry pass, with material redistributed to raise stiffness while preserving a preferred failure location outside the central electronics bay.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/drone/drone-calc-001.jpg" alt="Initial FPV arm side-load FEA setup"><figcaption>Initial arm side-load setup.</figcaption></figure>
-        <figure class="project-media"><img src="../images/drone/drone-calc-002.jpg" alt="Initial FPV arm stress result"><figcaption>Initial side-load stress results.</figcaption></figure>
+        <figure class="project-media"><img src="../images/drone/drone-build-004.jpg" alt="Initial FPV arm side-load FEA setup"><figcaption>Initial arm side-load setup.</figcaption></figure>
+        <figure class="project-media"><img src="../images/drone/drone-calc-005.jpg" alt="Initial FPV arm stress result"><figcaption>Initial side-load stress results.</figcaption></figure>
         <figure class="project-media"><img src="../images/drone/drone-calc-003.jpg" alt="Initial FPV arm deformation result"><figcaption>Exaggerated deformation from the first arm geometry.</figcaption></figure>
       </div>
     </div>
@@ -279,9 +278,9 @@
         <p>I also checked maximum acceleration loading. Deflection was negligible under that case, which supports stable flight and predictable control response.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/drone/drone-calc-004.jpg" alt="Final FPV arm FEA setup"><figcaption>Final arm setup after geometry iteration.</figcaption></figure>
-        <figure class="project-media"><img src="../images/drone/drone-calc-005.jpg" alt="Final FPV arm stress result"><figcaption>Final arm stress result under impact-derived load.</figcaption></figure>
-        <figure class="project-media"><img src="../images/drone/drone-calc-006.jpg" alt="Final FPV arm deflection result"><figcaption>Final deflection result with exaggerated displacement.</figcaption></figure>
+        <figure class="project-media"><img src="../images/drone/drone-build-007.jpg" alt="Final FPV arm FEA setup"><figcaption>Final arm setup after geometry iteration.</figcaption></figure>
+        <figure class="project-media"><img src="../images/drone/drone-calc-004.jpg" alt="Final FPV arm stress result"><figcaption>Final arm stress result under side impact-derived load.</figcaption></figure>
+        <figure class="project-media"><img src="../images/drone/drone-calc-006.jpg" alt="Final FPV arm deflection result"><figcaption>Final deflection result with exaggerated bending displacement.</figcaption></figure>
       </div>
     </div>
     <div class="story-block reverse">
@@ -291,7 +290,7 @@
         <p>The final assembly model includes mocked electronics so the stack height, battery placement, prop clearance, and service access can be checked before fabrication.</p>
       </div>
       <div class="story-media">
-        <figure class="project-media"><img src="../images/drone/drone-build-010.jpg" alt="FPV drone assembly with mocked electronics"><figcaption>Final drone assembly with mocked-up electronics and frame packaging.</figcaption></figure>
+        <figure class="project-media"><img src="../images/home/home-016.jpg" alt="FPV drone assembly with mocked electronics"><figcaption>Final drone assembly with mocked-up electronics and frame packaging.</figcaption></figure>
       </div>
     </div>
   </div>
@@ -310,8 +309,8 @@
   </div>
 </div>
 
-<div class="proj-nav"><a href="bone-printer.html"><- Bone Printer</a><a href="thermofisher.html">Next: ThermoFisher -></a></div>
-<footer><span>&copy; 2026 Michael Vasquez / Mechanical Engineer</span><div class="footer-links"><a href="../index.html#projects">Projects</a><a href="../about.html#my-mission">About</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a><a href="../resume.pdf" target="_blank" rel="noopener">Resume</a><a href="../about.html#contact">Contact</a></div></footer>
+<div class="proj-nav"><a href="bone-printer.html">&lt;- Bone Printer</a><a href="thermofisher.html">Next: ThermoFisher -&gt;</a></div>
+<footer><span>© 2026 Michael Vasquez / Mechanical Engineer</span><div class="footer-links"><a href="../index.html#projects">Projects</a><a href="../about.html#my-mission">About</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a><a href="../resume.pdf" target="_blank" rel="noopener">Resume</a><a href="../about.html#contact">Contact</a></div></footer>
 <script>
   document.querySelectorAll('.nav-projects, .nav-about').forEach((item) => {
     const trigger = item.querySelector('a');
@@ -409,4 +408,5 @@
     window.addEventListener('scroll', updateActivePageSection, { passive: true });
   })();
 </script>
+
 </body></html>

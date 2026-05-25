@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ThermoFisher 2024 Co-op Rotation - Michael Vasquez</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500&amp;family=JetBrains+Mono:wght@300;400&amp;display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -71,6 +70,8 @@
     .project-media img, .project-media video { width: 100%; height: clamp(230px, 36vw, 500px); display: block; object-fit: contain; background: #080808; filter: saturate(0.96) contrast(1.03); transition: filter 0.3s ease; }
     .project-media.small img, .project-media.small video { height: 220px; }
     .project-media.heroish img, .project-media.heroish video { height: clamp(280px, 43vw, 560px); }
+    .rack-delatcher-operation .video-crop-frame { position: relative; height: clamp(270px, 38vw, 460px); overflow: hidden; background: #080808; }
+    .rack-delatcher-operation .video-crop-frame video { position: absolute; left: 50%; top: 50%; width: 174%; height: 184%; max-width: none; transform: translate(-55%, -50%); object-fit: cover; background: #080808; }
     .project-media:hover img { filter: saturate(1.04) contrast(1.06); }
     .project-media figcaption { font-family: var(--mono); font-size: 0.62rem; color: var(--subtle); padding: 0.85rem 1rem; border-top: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.08em; }
     .requirement-list, .takeaway-list { list-style: none; margin: 1rem 0 1.5rem; }
@@ -117,6 +118,8 @@
       .split-wide, .compare-grid, .tools-grid { grid-template-columns: 1fr; gap: 1.5rem; }
       .image-grid, .image-grid.three { grid-template-columns: 1fr; }
       .project-anchor-nav { position: static; }
+      .rack-delatcher-operation .video-crop-frame { height: clamp(190px, 58vw, 280px); }
+      .rack-delatcher-operation .video-crop-frame video { width: 178%; height: 188%; transform: translate(-55%, -50%); }
       footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
     }
     .about-section-nav { position: fixed; left: clamp(0.55rem, 1.8vw, 1.25rem); top: 50%; z-index: 120; transform: translateY(-50%); display: flex; flex-direction: column; gap: 0.46rem; padding: 0.45rem 0.5rem; border-left: 1px solid rgba(201,169,110,0.28); background: linear-gradient(90deg, rgba(10,10,10,0.72), rgba(10,10,10,0.18)); backdrop-filter: blur(18px); }
@@ -181,9 +184,9 @@
 </header>
 
 <div class="role-strip">
-  <span class="role-label">Manager -></span><span class="role-content">Chris VanQuekelberg</span>
-  <span class="role-label" style="margin-left:1.5rem;">Mentor -></span><span class="role-content">Ken Nogaj</span>
-  <span class="role-label" style="margin-left:1.5rem;">Discipline -></span><span class="role-content">Manufacturing Engineering / Rochester, NY</span>
+  <span class="role-label">Manager -&gt;</span><span class="role-content">Chris VanQuekelberg</span>
+  <span class="role-label" style="margin-left:1.5rem;">Mentor -&gt;</span><span class="role-content">Ken Nogaj</span>
+  <span class="role-label" style="margin-left:1.5rem;">Discipline -&gt;</span><span class="role-content">Manufacturing Engineering / Rochester, NY</span>
 </div>
 
 <main class="wrap">
@@ -248,11 +251,11 @@
       <li>Geometry was simplified to reduce overall cost.</li>
     </ul>
     <div class="image-grid">
-      <figure class="project-media"><img src="../images/tf-2024/image36.png" alt="Rack Delatcher manufacturability improvement detail"><figcaption>Improvement detail and comparison.</figcaption></figure>
+      <figure class="project-media"><img src="../images/tf-2023/rack-unlatcher-v2-prototype.png" alt="Rack Delatcher manufacturability improvement detail"><figcaption>Version 1</figcaption></figure>
       <figure class="project-media"><img src="../images/tf-2024/image37.png" alt="Rack Delatcher updated assembly"><figcaption>Updated Rack Delatcher assembly.</figcaption></figure>
     </div>
-    <figure class="project-media heroish">
-      <video controls preload="metadata" poster="../images/tf-2024/image38.png"><source src="../images/tf-2024/media1.mp4" type="video/mp4"></video>
+    <figure class="project-media heroish rack-delatcher-operation">
+      <div class="video-crop-frame"><video controls="" autoplay="" loop="" muted="" playsinline="" preload="metadata" poster="../images/tf-2024/image38.png"><source src="../images/tf-2024/media1.mp4" type="video/mp4"></video></div>
       <figcaption>Rack Delatcher v2 operation demo.</figcaption>
     </figure>
     <div class="tag-row"><span class="tag tag-accent">Tooling Design</span><span class="tag">DFM</span><span class="tag">Wear Analysis</span><span class="tag">SolidWorks</span><span class="tag">Iterative Prototyping</span></div>
@@ -368,14 +371,9 @@
     <p>I conducted a Design of Experiments varying capping sequence parameters to isolate what was driving stringing. The investigation showed the LINMOT capping actuator was operating at the wrong linear and rotational rates, so its motion did not match the pitch of the closure thread geometry.</p>
     <p>I calculated the correct rotational and linear speed required to match the closure pitch. Hardware limits prevented a perfect match, but the updated parameters moved the process closer to the ideal pitch rate and substantially reduced stringing and capping failures.</p>
     <figure class="project-media heroish">
-      <video controls preload="metadata" poster="../images/tf-2024/image75.png"><source src="../images/tf-2024/media2.mp4" type="video/mp4"></video>
+      <video controls="" autoplay="" loop="" muted="" playsinline="" preload="metadata" poster="../images/tf-2024/image75.png"><source src="../images/tf-2024/media2.mp4" type="video/mp4"></video>
       <figcaption>Apex capping sequence / LINMOT behavior demonstration.</figcaption>
     </figure>
-    <div class="image-grid">
-      <figure class="project-media small"><img src="../images/tf-2024/image75.png" alt="Apex capping setup or LINMOT interface"><figcaption>Capping setup or LINMOT interface.</figcaption></figure>
-      <figure class="project-media small"><img src="../images/tf-2024/image76.png" alt="Apex parameter comparison"><figcaption>Parameter comparison / trial data.</figcaption></figure>
-      <figure class="project-media small"><img src="../images/tf-2024/image77.png" alt="Apex troubleshooting context"><figcaption>Additional process context.</figcaption></figure>
-    </div>
     <h3 class="section-sub">Particulate mitigation</h3>
     <p>To address particulate, I designed and 3D printed a custom air knife to direct airflow down into the reject chute, pulling particulate away from the product path. Particulate levels dropped after machine cleaning combined with optimized LINMOT settings. The air knife did not produce the expected additional reduction, a useful negative result for the next troubleshooting path.</p>
     <div class="image-grid three">
@@ -431,7 +429,7 @@
     <p>Working with Daryl from Quality Engineering, I developed a CMM inspection program to measure centerline positions and characterize fitment. The program struggled to achieve acceptable Gage R&amp;R in a Type 2 MSA study; repeatability degraded across repeated measurements on the same part, indicating an issue with the alignment method rather than the fixture alone.</p>
     <div class="image-grid">
       <figure class="project-media"><img src="../images/tf-2024/image93.png" alt="CMM setup or measurement output"><figcaption>CMM setup or measurement output.</figcaption></figure>
-      <figure class="project-media"><img src="../images/tf-2024/image94.png" alt="Repeatability data or Gage R&R result"><figcaption>Repeatability data / Gage R&amp;R result.</figcaption></figure>
+      <figure class="project-media"><img src="../images/tf-2024/image94.png" alt="Repeatability data or Gage R&amp;R result"><figcaption>Repeatability data / Gage R&amp;R result.</figcaption></figure>
     </div>
     <p>I developed multiple vertical staging fixtures to establish the datum from the part's feet, a more stable reference than the internal cavity. After analysis, the team switched to smart scope measurements with user-defined centerline input, which provided more stable and repeatable results.</p>
     <div class="image-grid">
@@ -453,25 +451,20 @@
     <h3 class="section-sub">Reteaching the vision system</h3>
     <p>Moving the line shifted tubeloader bowl positions outside the thresholds of the previous vision system. I retaught the vision reference points and LVDT measurement positions to match the new physical layout.</p>
     <figure class="project-media heroish">
-      <video controls preload="metadata" poster="../images/tf-2024/image99.png"><source src="../images/tf-2024/media3.MOV" type="video/quicktime"></video>
+      <video controls="" autoplay="" loop="" muted="" playsinline="" preload="metadata" poster="../images/tf-2024/image99.png"><source src="../images/tf-2024/media3.MOV" type="video/quicktime"></video>
       <figcaption>Vision system reteaching process.</figcaption>
     </figure>
     <div class="image-grid three">
       <figure class="project-media small"><img src="../images/tf-2024/image99.png" alt="Vision reference point interface"><figcaption>Vision reference point interface.</figcaption></figure>
       <figure class="project-media small"><img src="../images/tf-2024/image100.png" alt="Vision system detail"><figcaption>Vision system detail.</figcaption></figure>
-      <figure class="project-media small"><img src="../images/tf-2024/image101.png" alt="Line 4 vision context"><figcaption>Additional line move context.</figcaption></figure>
+      <figure class="project-media small"><img src="../images/tf-2024/image104.png" alt="Line 4 vision context"><figcaption>Position control interface</figcaption></figure>
     </div>
     <h3 class="section-sub">Reteaching the tubeloader arm</h3>
     <p>The robot's local coordinate system had shifted when vision offsets were updated, requiring all pick positions to be retaught. I retaught positions for all three bowl configurations, 96-well, 48-well, and 24-well, and updated the guide documentation.</p>
     <figure class="project-media heroish">
-      <video controls preload="metadata" poster="../images/tf-2024/image102.png"><source src="../images/tf-2024/media4.mp4" type="video/mp4"></video>
+      <video controls="" autoplay="" loop="" muted="" playsinline="" preload="metadata" poster="../images/tf-2024/image102.png"><source src="../images/tf-2024/media4.mp4" type="video/mp4"></video>
       <figcaption>Tubeloader arm reteaching sequence.</figcaption>
     </figure>
-    <div class="image-grid three">
-      <figure class="project-media small"><img src="../images/tf-2024/image102.png" alt="Robot pick position interface"><figcaption>Robot pick position interface.</figcaption></figure>
-      <figure class="project-media small"><img src="../images/tf-2024/image103.png" alt="Bowl configuration detail"><figcaption>Bowl configuration detail.</figcaption></figure>
-      <figure class="project-media small"><img src="../images/tf-2024/image104.png" alt="Tubeloader reteach context"><figcaption>Additional tubeloader context.</figcaption></figure>
-    </div>
     <div class="tag-row"><span class="tag tag-accent">Lean Manufacturing</span><span class="tag">Robot Programming</span><span class="tag">Machine Vision</span><span class="tag">LVDT</span><span class="tag">Production Optimization</span></div>
   </section>
 
@@ -517,8 +510,8 @@
   </section>
 </main>
 
-<div class="proj-nav"><a href="thermofisher-2023.html"><- 2023 Rotation</a><a href="automated-desk.html">Next: Automated Desk -></a></div>
-<footer><span>&copy; 2026 Michael Vasquez / Mechanical Engineer</span><div class="footer-links"><a href="../index.html#projects">Projects</a><a href="../about.html#my-mission">About</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a><a href="../resume.pdf" target="_blank" rel="noopener">Resume</a><a href="../about.html#contact">Contact</a></div></footer>
+<div class="proj-nav"><a href="thermofisher-2023.html">&lt;- 2023 Rotation</a><a href="automated-desk.html">Next: Automated Desk -&gt;</a></div>
+<footer><span>© 2026 Michael Vasquez / Mechanical Engineer</span><div class="footer-links"><a href="../index.html#projects">Projects</a><a href="../about.html#my-mission">About</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a><a href="../resume.pdf" target="_blank" rel="noopener">Resume</a><a href="../about.html#contact">Contact</a></div></footer>
 <script>
   document.querySelectorAll('.nav-projects, .nav-about').forEach((item) => {
     const trigger = item.querySelector('a');
@@ -616,5 +609,7 @@
     window.addEventListener('scroll', updateActivePageSection, { passive: true });
   })();
 </script>
-</body>
-</html>
+
+
+
+</body></html>
