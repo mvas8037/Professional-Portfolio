@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en"><head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VEX U Robotics - Michael Vasquez</title>
+  <title>Competitive Robotics - Michael Vasquez</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500&amp;family=JetBrains+Mono:wght@300;400&amp;display=swap" rel="stylesheet">
   <style>
@@ -35,16 +35,11 @@
     .project-hero { padding: 9rem 2.5rem 3rem; max-width: 980px; margin: 0 auto; border-bottom: 1px solid var(--border); }
     .proj-meta-tag { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; }
     .proj-title { font-family: var(--syne); font-weight: 800; font-size: clamp(2.2rem, 5vw, 3.8rem); color: var(--heading); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
-    .proj-subtitle { font-size: 1.05rem; color: var(--body); max-width: 620px; margin-bottom: 2rem; }
     .proj-stats { display: grid; grid-template-columns: repeat(4, 1fr); padding: 1.5rem 0; border-top: 1px solid var(--border); }
     .proj-stat { padding-right: 1.5rem; border-right: 1px solid var(--border); }
     .proj-stat:last-child { border-right: none; }
     .stat-val { font-family: var(--syne); font-size: 1.1rem; font-weight: 700; color: var(--heading); margin-bottom: 0.2rem; line-height: 1.2; }
     .stat-label { font-family: var(--mono); font-size: 0.58rem; color: var(--subtle); text-transform: uppercase; letter-spacing: 0.1em; }
-    /* Role strip */
-    .role-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2.5rem; max-width: 980px; margin: 0 auto; display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
-    .role-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
-    .role-content { font-size: 0.88rem; color: var(--body); }
     /* Content */
     .wrap { max-width: 980px; margin: 0 auto; padding: 0 2.5rem; }
     .content-section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
@@ -95,6 +90,15 @@
     .tag { display: inline-block; font-family: var(--mono); font-size: 0.6rem; color: var(--subtle); border: 1px solid var(--border); padding: 0.3rem 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; }
     .tag-accent { color: var(--accent); border-color: var(--accent-dim); }
     .tag-blue { color: var(--blue); border-color: rgba(107,159,189,0.35); }
+    .season-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .season-card { display: grid; grid-template-rows: auto 1fr; color: inherit; text-decoration: none; background: var(--card); border: 1px solid var(--border); overflow: hidden; transition: transform 0.18s ease, border-color 0.18s ease; }
+    .season-card:hover, .season-card:focus-visible { transform: translateY(-2px); border-color: rgba(201,169,110,0.62); outline: none; }
+    .season-card img { width: 100%; height: clamp(190px, 27vw, 320px); object-fit: cover; background: #080808; border-bottom: 1px solid var(--border); filter: saturate(0.95) contrast(1.04) brightness(0.92); }
+    .season-card-body { padding: 1.2rem; }
+    .season-kicker { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .season-title { font-family: var(--syne); font-size: 1.28rem; line-height: 1.12; font-weight: 700; color: var(--heading); margin-bottom: 0.7rem; }
+    .season-card p { font-size: 0.88rem; margin-bottom: 1rem; }
+    .season-link { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
     /* Sub-projects */
     .subproject { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
     .subproject:last-child { border-bottom: none; }
@@ -117,15 +121,14 @@
     .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem 1.5rem; }
     .footer-links a { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-decoration: none; }
     .footer-links a:hover { color: var(--accent); }
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       nav { padding: 1rem 1.25rem; } .nav-links { gap: 1rem; } .project-menu { position: fixed; left: auto; right: 1rem; top: 4rem; width: min(16rem, calc(100vw - 2rem)); transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu, .nav-about:hover .project-menu, .nav-about:focus-within .project-menu, .nav-about.is-open .project-menu { transform: translateY(0); }
       .project-hero, .wrap, .proj-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
-      .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
       .proj-stats { grid-template-columns: 1fr 1fr; }
       .proj-stat { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
       .two-col, .sp-grid, .story-block, .story-block.reverse { grid-template-columns: 1fr; gap: 1.5rem; }
       .story-block.reverse .story-copy, .story-block.reverse .story-media { order: initial; }
-      .img-row, .img-row-3, .artifact-grid { grid-template-columns: 1fr; }
+      .img-row, .img-row-3, .artifact-grid, .season-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
     }
     .about-section-nav { position: fixed; left: clamp(0.55rem, 1.8vw, 1.25rem); top: 50%; z-index: 120; transform: translateY(-50%); display: flex; flex-direction: column; gap: 0.46rem; padding: 0.45rem 0.5rem; border-left: 1px solid rgba(201,169,110,0.28); background: linear-gradient(90deg, rgba(10,10,10,0.72), rgba(10,10,10,0.18)); backdrop-filter: blur(18px); }
@@ -135,7 +138,7 @@
     .about-section-nav:hover a span, .about-section-nav:focus-within a span, .about-section-nav a.is-active span { max-width: 9rem; opacity: 1; }
     .about-section-nav a.is-active { color: var(--accent); }
     .about-section-nav a.is-active::before { height: 1.56rem; opacity: 1; box-shadow: 0 0 18px rgba(201,169,110,0.42); }
-    @media(max-width:768px){ .project-hero, .wrap, .proj-nav, .role-strip { padding-right:3.15rem; } .about-section-nav { left: auto; right: 0.5rem; top: 50%; bottom: auto; transform: translateY(-50%); flex-direction: column; gap:0.34rem; max-width: none; padding: 0.34rem 0.28rem; border-left:0; border-right:1px solid rgba(201,169,110,0.3); background:rgba(10,10,10,0.34); } .about-section-nav a { grid-template-columns: 0.18rem; gap: 0; min-width: 1.1rem; min-height: 1.36rem; justify-items: center; } .about-section-nav a::before { width:0.18rem; height:0.9rem; } .about-section-nav a.is-active::before { height:1.28rem; } .about-section-nav a span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }
+    @media(max-width:768px){ .project-hero, .wrap, .proj-nav { padding-right:3.15rem; } .about-section-nav { left: auto; right: 0.5rem; top: 50%; bottom: auto; transform: translateY(-50%); flex-direction: column; gap:0.34rem; max-width: none; padding: 0.34rem 0.28rem; border-left:0; border-right:1px solid rgba(201,169,110,0.3); background:rgba(10,10,10,0.34); } .about-section-nav a { grid-template-columns: 0.18rem; gap: 0; min-width: 1.1rem; min-height: 1.36rem; justify-items: center; } .about-section-nav a::before { width:0.18rem; height:0.9rem; } .about-section-nav a.is-active::before { height:1.28rem; } .about-section-nav a span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }
   </style>
   <style>
     html.lightbox-open,
@@ -150,139 +153,86 @@
     .image-lightbox-close:hover,
     .image-lightbox-close:focus-visible { color: var(--accent); border-color: rgba(201,169,110,0.65); outline: none; }
   </style>
+  <link rel="stylesheet" href="../css/site-shell.css">
 </head>
 <body>
-<nav>
-  <a class="nav-logo" href="../index.html">MV<span>.</span></a>
-  <ul class="nav-links">
-    <li class="nav-item nav-projects"><a href="../index.html#projects">Projects</a>
-      <div class="project-menu" aria-label="Project links">
-        <a href="bone-printer.html">Bone 3D Printer</a>
-        <a href="fpv-drone.html">FPV Drone</a>
-        <a href="thermofisher.html">ThermoFisher Co-ops</a>
-        <a href="automated-desk.html">Automated Desk</a>
-        <a href="robotics.html">Competitive Robotics</a>
-      </div>
-    </li>
-    <li class="nav-item nav-about"><a href="../about.html">About</a>
-      <div class="project-menu" aria-label="About links">
-        <a href="../about.html#my-mission">My Mission</a>
-        <a href="../about.html#my-experience">My Experience</a>
-        <a href="../about.html#contact">Contact</a>
-      </div>
-    </li>
-  </ul>
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-logo focus-ring" href="../index.html" aria-label="Michael Vasquez home">MV<span>.</span></a>
+    <ul class="nav-links">
+      <li class="nav-item nav-projects">
+        <a class="nav-link focus-ring" href="../index.html#projects">Projects</a>
+        <div class="project-menu" aria-label="Project links">
+          <a href="bone-printer.html">Bone 3D Printer</a>
+          <a href="fpv-drone.html">FPV Drone</a>
+          <a href="thermofisher.html">ThermoFisher Co-op</a>
+          <a href="automated-desk.html">Standing Desk</a>
+          <a href="robotics.html">Competitive Robotics</a>
+        </div>
+      </li>
+      <li><a class="nav-link focus-ring" href="../about.html">About</a></li>
+    </ul>
+  </div>
 </nav>
 <aside class="about-section-nav" aria-label="Page sections">
-  <a href="#overview" class="is-active"><span>Overview</span></a>
-  <a href="#mechanisms"><span>Mechanisms</span></a>
-  <a href="#autonomy"><span>Autonomy</span></a>
-  <a href="#leadership"><span>Leadership</span></a>
-  <a href="#seasons"><span>Seasons</span></a>
+  <a href="#seasons" class="is-active"><span>Seasons</span></a>
   <a href="#tools"><span>Tools</span></a>
 </aside>
 
 <div class="project-hero">
-  <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">05 / Leadership / 2019 - 2022</span></div>
-  <h1 class="proj-title">VEX U<br>Competition Robot</h1>
-  <p class="proj-subtitle">THIS PAGE IS A WORK IN PROGRESS.
-
-Multi-year competition robotics - 4-bar linkage with intake rollers, pivoting deposit tray, drivetrain with independent odometry wheels, and PID controllers for autonomous position correction. <strong>Innovate Award</strong> at World Championships, 3rd in qualification rounds. Led 15+ member team as President of RIT VEX U Robotics.</p>
+  <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">05 / Leadership / 2018 - 2022</span></div>
+  <h1 class="proj-title">Competitive<br>Robotics</h1>
   <div class="proj-stats">
     <div class="proj-stat"><div class="stat-val">1st</div><div class="stat-label">Innovate Award / Worlds</div></div>
     <div class="proj-stat"><div class="stat-val">3rd</div><div class="stat-label">Qualification rank</div></div>
     <div class="proj-stat"><div class="stat-val">15+</div><div class="stat-label">Team members led</div></div>
-    <div class="proj-stat"><div class="stat-val">3 Seasons</div><div class="stat-label">Active design history</div></div>
+    <div class="proj-stat"><div class="stat-val">4 Seasons</div><div class="stat-label">Active design history</div></div>
   </div>
 </div>
-<div class="role-strip"><span class="role-label">Role -&gt;</span><span class="role-content">President, RIT VEX U Robotics / Hardware sub-team lead / Cross-functional with software and autonomous programming teams.</span></div>
 <div class="wrap">
-  <div class="content-section" id="overview">
-    <div class="section-label">Project Overview</div>
-    <h2 class="section-h">Designed End-to-End</h2>
-    <p class="lead">VEX U is the college-level competition where teams design, build, and program two robots that work in parallel during a match. The 2021-2022 season - the year we won the Innovate Award - I developed a robot end-to-end, which taught me more about mechatronic integration than any class I've taken.</p>
-    <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-001.jpg" alt="VEX U competition robot at World Championships"><figcaption>Competition robot at Worlds, showing mechanism packaging and service access.</figcaption></figure>
-  </div>
-  <div class="content-section" id="mechanisms">
-    <div class="section-label">Mechanism Design</div>
-    <h2 class="section-h">4-Bar Linkage + Intake Rollers + Pivoting Tray</h2>
-    <p>A <strong>4-bar linkage</strong> elevates the intake-and-deposit assembly to scoring height, maintaining the tray parallel to the ground throughout travel so game pieces can't tip out. <strong>Intake rollers</strong> mounted on the linkage pull game pieces in; a <strong>pivoting tray</strong> deposits them in a stack rather than dropping them individually.</p>
-    <p>Each subsystem - linkage geometry, roller drive ratio, tray pivot - was designed iteratively to balance speed, reliability, and weight within the VEX motor budget.</p>
-    <div class="img-row">
-      <figure class="project-media"><img src="../images/vex/vex-high-school/vex-robot-006.jpg" alt="VEX U four-bar linkage detail"><figcaption>Four-bar linkage and intake packaging on the competition robot.</figcaption></figure>
-      <figure class="project-media"><img src="../images/vex/vex-high-school/vex-robot-004.jpg" alt="VEX U scoring mechanism detail"><figcaption>Scoring mechanism detail showing how the robot packaged lift, intake, and deposit functions.</figcaption></figure>
-    </div>
-  </div>
-  <div class="content-section" id="autonomy">
-    <div class="section-label">Drivetrain &amp; Autonomy</div>
-    <h2 class="section-h">Independent Odometry + PID Position Control</h2>
-    <p>The drivetrain uses <strong>independent free-spinning tracking wheels</strong> for odometry - separated from the powered wheels so they give a clean position signal regardless of slip or contact with other robots.</p>
-    <p>I wrote <strong>parallel PID controllers</strong> using the odometry feedback to automatically correct the robot's position whenever a disturbance occurs during autonomous. This kept autonomous routines hitting scoring positions even through collisions and unplanned field events.</p>
-    <div class="img-row">
-      <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-007.jpg" alt="VEX U drivetrain and mechanism view"><figcaption>Drivetrain and mechanism view used to package powered motion and tracking hardware.</figcaption></figure>
-      <figure class="project-media"><img src="../images/vex/vex-u/screenshot-2025-02-22-165644.png" alt="VEX robotics autonomous or controls reference"><figcaption>Controls/autonomous reference artifact for tuning repeatable robot behavior.</figcaption></figure>
-    </div>
-    <div class="two-col">
-      <div><div class="col-head">Why Independent Odometry?</div><p>Powered wheels slip under acceleration and robot contact. Independent tracking wheels give a clean position signal regardless of drive state - necessary for closing PID loops on actual position.</p></div>
-      <div><div class="col-head">Why PID Correction?</div><p>Open-loop autonomous fails when anything unexpected happens - and something always does. Closed-loop PID on odometry made our autonomous survive contact and still reach scoring positions.</p></div>
-    </div>
-  </div>
-  <div class="content-section" id="leadership">
-    <div class="section-label">Leadership</div>
-    <h2 class="section-h">Managing 15+ Engineers Across Sub-Teams</h2>
-    <p>As President I ran the technical program for two robots simultaneously - organized hardware and software sub-teams, led design reviews, made final architectural calls, and bridged mechanical design with the autonomous programming team. This is where I learned to delegate, mentor, and communicate technical decisions to a non-uniform audience.</p>
-    <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-001.jpg" alt="VEX U robot pit work at World Championships"><figcaption>Worlds pit work and system access during competition support.</figcaption></figure>
-  </div>
   <div class="content-section" id="seasons">
-    <div class="section-label">Original Flow</div>
-    <h2 class="section-h">Competition Robotics Across Three Seasons</h2>
-    <div class="story-block">
-      <div class="story-copy">
-        <div class="story-kicker">Competition Overview</div>
-        <div class="story-title">VEX rewards fast mechanical iteration under real match pressure.</div>
-        <p>VEX Robotics Competition is built around yearly game objectives where teams design, build, and program robots to score against other teams. VEX U is the university division, with fewer design restrictions and more room for custom fabricated parts and advanced programming.</p>
-        <p>I competed from sophomore year of high school through junior year at RIT. Most seasons, I led the mechanical design work and helped bridge hardware decisions with the programming team's autonomous strategy.</p>
-      </div>
-      <div class="story-media">
-        <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-005.jpg" alt="VEX U robot competition setup"><figcaption>Competition robot packaging from the VEX U season.</figcaption></figure>
-      </div>
-    </div>
-    <div class="story-block reverse">
-      <div class="story-copy">
-        <div class="story-kicker">2021-2022 Season</div>
-        <div class="story-title">VEX U robot with lift, intake, deposit tray, and closed-loop positioning.</div>
-        <p>The university robot combined a four-bar lift, intake rollers, a pivoting deposit tray, and independent odometry wheels. The design earned the Innovate Award at the VEX World Championship and ranked third in qualifications.</p>
-        <p>This season became the strongest example of full-system design: mechanism packaging, drivetrain constraints, autonomous positioning, and service access all had to work together under match conditions.</p>
-      </div>
-      <div class="story-media">
-        <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-008.jpg" alt="VEX U robot side mechanism view"><figcaption>2021-2022 robot mechanism package.</figcaption></figure>
-        <figure class="project-media"><img src="../images/vex/vex-u/vex-robot-009.jpg" alt="VEX U robot drivetrain and linkage view"><figcaption>Drivetrain, linkage, and intake integration.</figcaption></figure>
-      </div>
-    </div>
-    <div class="story-block">
-      <div class="story-copy">
-        <div class="story-kicker">2020-2021 Season</div>
-        <div class="story-title">A transitional season focused on mechanism packaging and reliability.</div>
-        <p>The 2020-2021 robot work emphasized compact mechanism layout and fast iteration. These builds are where I refined the habits that carried into VEX U: simplify the load path, make service access obvious, and test mechanisms before the full robot is complete.</p>
-      </div>
-      <div class="story-media">
-        <figure class="project-media"><img src="../images/vex/vex-high-school/vex-robot-012.jpg" alt="2020-2021 VEX robot mechanism"><figcaption>Mechanism and packaging work from the 2020-2021 season.</figcaption></figure>
-        <figure class="project-media"><img src="../images/vex/vex-robot-011.jpg" alt="VEX robot iteration from high school competition"><figcaption>Design iteration used to validate scoring geometry.</figcaption></figure>
-      </div>
-    </div>
-    <div class="story-block reverse">
-      <div class="story-copy">
-        <div class="story-kicker">2019-2020 Season</div>
-        <div class="story-title">Early competition builds built the foundation for later leadership.</div>
-        <p>The high-school seasons were the foundation: drivetrain layout, structure, lift geometry, driver serviceability, and the discipline of designing around a changing game strategy. They also gave me early experience leading mechanical decisions with a team depending on the outcome.</p>
-      </div>
-      <div class="story-media">
-        <figure class="project-media"><img src="../images/vex/vex-high-school/vex-robot-004.jpg" alt="2019-2020 VEX robot build"><figcaption>Early competition robot build from the high-school seasons.</figcaption></figure>
-        <figure class="project-media"><img src="../images/vex/vex-high-school/vex-robot-006.jpg" alt="High-school VEX robot mechanism detail"><figcaption>Mechanism detail from an earlier VEX build.</figcaption></figure>
-      </div>
+    <div class="section-label">Season Archive</div>
+    <h2 class="section-h">Competition Robotics Across Four Seasons</h2>
+    <p class="lead">Each season had a different game, team structure, and design problem. The first two pages cover V5RC high-school robots; the final two cover the jump into VEX U, where I took on broader system design and team leadership.</p>
+    <div class="season-grid" aria-label="Robotics season pages">
+      <a class="season-card" href="robotics-2018-2019.html">
+        <img src="../images/vex/vex-high-school/vex-robot-004.jpg" alt="2018-2019 V5RC robot build">
+        <div class="season-card-body">
+          <div class="season-kicker">2018-2019 / V5RC</div>
+          <h3 class="season-title">High-school foundation</h3>
+          <p>Early drivetrain, structure, lift geometry, and driver-control lessons under tight competition constraints.</p>
+          <span class="season-link">Open season -&gt;</span>
+        </div>
+      </a>
+      <a class="season-card" href="robotics-2019-2020.html">
+        <img src="../images/vex/vex-high-school/vex-robot-006.jpg" alt="2019-2020 V5RC mechanism detail">
+        <div class="season-card-body">
+          <div class="season-kicker">2019-2020 / V5RC</div>
+          <h3 class="season-title">Mechanism iteration</h3>
+          <p>Sharper packaging decisions, more reliable scoring mechanisms, and stronger team design reviews.</p>
+          <span class="season-link">Open season -&gt;</span>
+        </div>
+      </a>
+      <a class="season-card" href="robotics-2020-2021.html">
+        <img src="../images/vex/vex-u/vex-robot-005.jpg" alt="2020-2021 VEX U robot packaging">
+        <div class="season-card-body">
+          <div class="season-kicker">2020-2021 / VEX U</div>
+          <h3 class="season-title">University transition</h3>
+          <p>The first VEX U year expanded the design space into custom fabrication, deeper controls, and larger team coordination.</p>
+          <span class="season-link">Open season -&gt;</span>
+        </div>
+      </a>
+      <a class="season-card" href="robotics-2021-2022.html">
+        <img src="../images/vex/vex-u/vex-robot-008.jpg" alt="2021-2022 VEX U robot mechanism package">
+        <div class="season-card-body">
+          <div class="season-kicker">2021-2022 / VEX U</div>
+          <h3 class="season-title">Worlds Innovate Award</h3>
+          <p>Four-bar lift, intake rollers, pivoting tray, independent odometry, and PID correction integrated into one robot.</p>
+          <span class="season-link">Open season -&gt;</span>
+        </div>
+      </a>
     </div>
   </div>
-
   <div class="content-section" id="tools">
     <div class="section-label">Engineering Tools</div>
     <div class="tools-block">
@@ -297,13 +247,13 @@ Multi-year competition robotics - 4-bar linkage with intake rollers, pivoting de
   </div>
 </div>
 <div class="proj-nav"><a href="automated-desk.html">&lt;- Automated Desk</a><a href="../index.html">All Projects -&gt;</a></div>
-<footer><span>© 2026 Michael Vasquez / Mechanical Engineer</span><div class="footer-links"><a href="../index.html#projects">Projects</a><a href="../about.html#my-mission">About</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a><a href="../resume.pdf" target="_blank" rel="noopener">Resume</a><a href="../about.html#contact">Contact</a></div></footer>
+<footer><span>&copy; 2026 Michael Vasquez / Mechanical Engineer</span><div class="footer-links"><a href="../index.html#projects">Projects</a><a href="../about.html#my-mission">About</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a><a href="../resume.pdf" target="_blank" rel="noopener">Resume</a><a href="../about.html#contact">Contact</a></div></footer>
 <script>
   document.querySelectorAll('.nav-projects, .nav-about').forEach((item) => {
     const trigger = item.querySelector('a');
     if (!trigger) return;
     trigger.addEventListener('click', (event) => {
-      if (!window.matchMedia('(max-width: 768px)').matches) return;
+      if (!window.matchMedia('(max-width: 900px)').matches) return;
       if (!item.classList.contains('is-open')) {
         event.preventDefault();
         document.querySelectorAll('.nav-projects.is-open, .nav-about.is-open').forEach((openItem) => {

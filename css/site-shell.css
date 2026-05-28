@@ -1,0 +1,324 @@
+/* Shared shell guardrails for nav, dropdowns, footers, and section jump rails. */
+:root {
+  --shell-nav-h: 4.35rem;
+  --shell-link-size: 0.8rem;
+  --shell-logo-size: 1rem;
+  --shell-inline-pad: clamp(1rem, 4vw, 2.5rem);
+  --shell-gold: #c9a96e;
+}
+
+body {
+  min-width: 320px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html,
+  body,
+  a,
+  button {
+    cursor: crosshair !important;
+  }
+}
+
+body > nav,
+.site-nav {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 200 !important;
+  width: 100% !important;
+  min-height: var(--shell-nav-h) !important;
+  height: var(--shell-nav-h) !important;
+  padding: 0 var(--shell-inline-pad) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: rgba(5, 5, 5, 0.92) !important;
+  border-bottom: 1px solid var(--border, #1e1e1e) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+}
+
+.nav-inner,
+.site-nav > div {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 1rem !important;
+}
+
+.nav-logo,
+.site-nav a[aria-label*="home"] {
+  flex: 0 0 auto;
+  font-family: var(--syne, 'Syne', sans-serif) !important;
+  font-size: var(--shell-logo-size) !important;
+  line-height: 1 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+}
+
+.nav-logo span,
+.site-nav a[aria-label*="home"] span {
+  color: var(--shell-gold) !important;
+}
+
+.nav-links,
+.site-nav ul {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(0.8rem, 3vw, 2rem) !important;
+  min-width: 0;
+  list-style: none !important;
+}
+
+.nav-links > li > a,
+.site-nav ul > li > a {
+  font-family: var(--sans, 'Inter', sans-serif) !important;
+  font-size: var(--shell-link-size) !important;
+  line-height: 1 !important;
+  color: var(--heading, #f0f0f0) !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  font-weight: 300 !important;
+  -webkit-font-smoothing: antialiased !important;
+  text-rendering: geometricPrecision !important;
+  transition: color 180ms ease !important;
+}
+
+.nav-links > li > a:hover,
+.nav-links > li > a:focus-visible,
+.nav-links > li:hover > a,
+.nav-links > li:focus-within > a,
+.nav-projects:hover > a,
+.nav-projects:focus-within > a,
+.nav-projects.is-open > a,
+.nav-projects.is-open > a.nav-link,
+.nav-about:hover > a,
+.nav-about:focus-within > a,
+.nav-about.is-open > a,
+.nav-about.is-open > a.nav-link,
+.site-nav ul > li > a:hover,
+.site-nav ul > li > a:focus-visible,
+.site-nav ul > li:hover > a,
+.site-nav ul > li:focus-within > a,
+.site-nav .nav-projects.is-open > a,
+.site-nav .nav-about.is-open > a,
+body > nav .nav-projects.is-open > a,
+body > nav .nav-about.is-open > a {
+  color: var(--shell-gold) !important;
+  outline: none !important;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.project-menu {
+  position: absolute !important;
+  left: auto !important;
+  right: 0 !important;
+  top: calc(100% + 0.75rem) !important;
+  transform: translateY(-8px) scale(0.98) !important;
+  transform-origin: top right !important;
+  min-width: min(18rem, calc(100vw - 2rem)) !important;
+  padding: 0.42rem !important;
+  border: 0 !important;
+  border-radius: 0.85rem !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(180deg, rgba(24, 24, 24, 0.94), rgba(8, 8, 8, 0.94)) !important;
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.48),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(22px) saturate(1.08) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.08) !important;
+  transition: opacity 180ms ease, visibility 180ms ease, transform 180ms ease !important;
+}
+
+.project-menu::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: -0.85rem !important;
+  height: 0.85rem !important;
+}
+
+.project-menu a {
+  display: block !important;
+  font-family: var(--sans, 'Inter', sans-serif) !important;
+  font-size: var(--shell-link-size) !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  font-weight: 300 !important;
+  border: 0 !important;
+  border-radius: 0.58rem !important;
+  padding: 0.72rem 0.82rem !important;
+  color: var(--heading, #f0f0f0) !important;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease !important;
+}
+
+.project-menu a + a {
+  margin-top: 0.12rem;
+}
+
+.project-menu a:hover,
+.project-menu a:focus-visible {
+  background: rgba(201, 169, 110, 0.12) !important;
+  color: var(--shell-gold) !important;
+  outline: none !important;
+  transform: translateX(2px);
+}
+
+.nav-projects:hover .project-menu,
+.nav-projects:focus-within .project-menu,
+.nav-projects.is-open .project-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+footer,
+.site-footer {
+  width: 100vw !important;
+  max-width: none !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  padding: 1.1rem var(--shell-inline-pad) !important;
+  border-top: 1px solid rgba(201, 169, 110, 0.28) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 0.7rem 1.25rem !important;
+  min-height: auto !important;
+  background: rgba(5, 5, 5, 0.92) !important;
+}
+
+footer span,
+footer a,
+.site-footer span,
+.site-footer a {
+  font-family: var(--mono, 'JetBrains Mono', monospace) !important;
+  font-size: var(--shell-link-size) !important;
+  line-height: 1.55 !important;
+}
+
+.footer-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  flex-wrap: wrap !important;
+  gap: 0.65rem 1rem !important;
+}
+
+.footer-brand {
+  flex-wrap: wrap;
+}
+
+.proj-stats .proj-stat + .proj-stat {
+  padding-left: clamp(1.25rem, 2.2vw, 2rem) !important;
+}
+
+.about-section-nav {
+  max-width: min(13rem, calc(100vw - 1rem));
+}
+
+.about-section-nav:not(:hover):not(:focus-within) a:not(.is-active) span {
+  max-width: 0 !important;
+  opacity: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .page {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  body > nav {
+    padding-inline: 1rem !important;
+  }
+
+  .nav-links {
+    gap: 0.7rem !important;
+  }
+
+  .nav-links > li > a,
+  .site-nav ul > li > a,
+  .project-menu a {
+    font-size: var(--shell-link-size) !important;
+  }
+
+  .project-menu {
+    position: fixed !important;
+    left: auto !important;
+    right: 0.75rem !important;
+    top: calc(var(--shell-nav-h) + 0.35rem) !important;
+    transform: translateY(-8px) scale(0.98) !important;
+  }
+
+  .nav-projects:hover .project-menu,
+  .nav-projects:focus-within .project-menu,
+  .nav-projects.is-open .project-menu {
+    transform: translateY(0) scale(1) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-section-nav {
+    left: auto !important;
+    right: 0.5rem !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+    flex-direction: column !important;
+  }
+
+  .about-section-nav a {
+    grid-template-columns: 0.18rem !important;
+    gap: 0 !important;
+    min-width: 1.1rem !important;
+    justify-items: center !important;
+  }
+
+  .about-section-nav a span {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    max-width: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+  }
+
+  .proj-stats .proj-stat + .proj-stat {
+    padding-left: 0 !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav-links {
+    gap: 0.5rem !important;
+  }
+
+  body > nav,
+  .site-nav {
+    --shell-inline-pad: 0.85rem;
+  }
+
+  .nav-links > li > a,
+  .site-nav ul > li > a,
+  .project-menu a {
+    font-size: var(--shell-link-size) !important;
+  }
+}

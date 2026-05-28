@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en"><head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About - Michael Vasquez</title>
@@ -103,7 +103,7 @@
     .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem 1.5rem; }
     .footer-links a { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); text-decoration: none; }
     .footer-links a:hover { color: var(--accent); }
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       nav { padding: 1rem 1.25rem; } .nav-links { gap: 1rem; } .project-menu { position: fixed; left: auto; right: 1rem; top: 4rem; width: min(16rem, calc(100vw - 2rem)); transform: translateY(-6px); } .nav-projects:hover .project-menu, .nav-projects:focus-within .project-menu, .nav-projects.is-open .project-menu { transform: translateY(0); }
       .project-hero, .wrap, .proj-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
       .role-strip { padding-left: 1.25rem; padding-right: 1.25rem; }
@@ -159,24 +159,27 @@
     .about-section-nav a.is-active::before { height: 1.56rem; opacity: 1; box-shadow: 0 0 18px rgba(201,169,110,0.42); }
     @media(max-width:768px){ .page-hero,.wrap { padding-left:1.25rem; padding-right:3.15rem; } .page-hero { display:flex; flex-direction:column; align-items:stretch; } .page-hero .eyebrow { order:1; } .page-title { order:2; } .about-photo { order:3; width:min(100%,340px); margin:0 0 1rem; } .page-lead { order:4; } .skills-grid { grid-template-columns:1fr; } .exp-row { grid-template-columns:1fr; gap:0.5rem; } .exp-row > div:first-child { order:1; } .exp-row > div:last-child { order:2; } .exp-date { display:block; margin-bottom:0.2rem; } .contact-actions { align-items:flex-start; flex-wrap:wrap; gap:0.7rem; } .about-section-nav { left: auto; right: 0.5rem; top: 50%; bottom: auto; transform: translateY(-50%); flex-direction: column; gap:0.34rem; max-width: none; padding: 0.34rem 0.28rem; border-left:0; border-right:1px solid rgba(201,169,110,0.3); background:rgba(10,10,10,0.34); } .about-section-nav a { grid-template-columns: 0.18rem; gap: 0; min-width: 1.1rem; min-height: 1.36rem; justify-items: center; } .about-section-nav a::before { width:0.18rem; height:0.9rem; } .about-section-nav a.is-active::before { height:1.28rem; } .about-section-nav a span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }
   </style>
+  <link rel="stylesheet" href="css/site-shell.css">
 </head>
 <body>
-<nav>
-  <a class="nav-logo" href="index.html">MV<span>.</span></a>
-  <ul class="nav-links">
-    <li class="nav-item nav-projects"><a href="index.html#projects">Projects</a>
-      <div class="project-menu" aria-label="Project links">
-        <a href="projects/bone-printer.html">Bone 3D Printer</a>
-        <a href="projects/fpv-drone.html">FPV Drone</a>
-        <a href="projects/thermofisher.html">ThermoFisher Co-ops</a>
-        <a href="projects/automated-desk.html">Automated Desk</a>
-        <a href="projects/robotics.html">Competitive Robotics</a>
-      </div>
-    </li>
-    <li class="nav-item"><a href="about.html">About</a></li>
-  </ul>
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-logo focus-ring" href="index.html" aria-label="Michael Vasquez home">MV<span>.</span></a>
+    <ul class="nav-links">
+      <li class="nav-item nav-projects">
+        <a class="nav-link focus-ring" href="index.html#projects">Projects</a>
+        <div class="project-menu" aria-label="Project links">
+          <a href="projects/bone-printer.html">Bone 3D Printer</a>
+          <a href="projects/fpv-drone.html">FPV Drone</a>
+          <a href="projects/thermofisher.html">ThermoFisher Co-op</a>
+          <a href="projects/automated-desk.html">Standing Desk</a>
+          <a href="projects/robotics.html">Competitive Robotics</a>
+        </div>
+      </li>
+      <li><a class="nav-link focus-ring" href="about.html">About</a></li>
+    </ul>
+  </div>
 </nav>
-
 <aside class="about-section-nav" aria-label="About page sections">
   <a href="#my-mission" class="is-active"><span>Mission</span></a>
   <a href="#technical-skills"><span>Skills</span></a>
@@ -315,7 +318,7 @@
   </div>
 </div>
 
-<footer><span>© 2026 <span class="footer-name">Michael Vasquez</span> / Mechanical Engineer</span><div class="footer-links"><a href="index.html#projects">Projects</a><a href="about.html#my-mission">About</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a><a href="resume.pdf" target="_blank" rel="noopener">Resume</a><a href="about.html#contact">Contact</a></div></footer>
+<footer><span>&copy; 2026 <span class="footer-name">Michael Vasquez</span> / Mechanical Engineer</span><div class="footer-links"><a href="index.html#projects">Projects</a><a href="about.html#my-mission">About</a><a href="https://linkedin.com/in/michael-vasquez-573290206" target="_blank" rel="noopener">LinkedIn</a><a href="resume.pdf" target="_blank" rel="noopener">Resume</a><a href="about.html#contact">Contact</a></div></footer>
 <script>
   function sortSkillChips(root = document) {
     const rank = { 'sp-e': 0, 'sp-p': 1, 'sp-w': 2 };
@@ -336,7 +339,7 @@
     const trigger = item.querySelector('a');
     if (!trigger) return;
     trigger.addEventListener('click', (event) => {
-      if (!window.matchMedia('(max-width: 768px)').matches) return;
+      if (!window.matchMedia('(max-width: 900px)').matches) return;
       if (!item.classList.contains('is-open')) {
         event.preventDefault();
         document.querySelectorAll('.nav-projects.is-open').forEach((openItem) => {
