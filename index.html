@@ -66,6 +66,8 @@
       background: var(--bg);
       scroll-behavior: auto;
       overscroll-behavior-y: none;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
     }
 
     body {
@@ -242,10 +244,13 @@
       margin-top: clamp(1rem, 2.4vh, 1.5rem);
       color: var(--text-primary);
       font-family: 'Syne', sans-serif;
-      font-size: clamp(3rem, 10.4vw, 8.2rem);
+      font-size: clamp(3.1rem, 9.6vw, 7.65rem);
       font-weight: 800;
       letter-spacing: 0;
       line-height: 0.76;
+      font-kerning: normal;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
       text-wrap: balance;
     }
 
@@ -790,8 +795,13 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       text-decoration: none;
+      text-shadow: none;
       transition: border-color 160ms ease, color 160ms ease, background 160ms ease, transform 160ms ease;
       white-space: nowrap;
+    }
+
+    .card-cta span {
+      text-shadow: none;
     }
 
     .card-cta:hover,
@@ -1308,7 +1318,7 @@
       }
 
       .hero-name {
-        font-size: clamp(2.35rem, 10.4vw, 3rem);
+        font-size: clamp(2.45rem, 10vw, 3rem);
         line-height: 0.8;
       }
 
