@@ -2293,6 +2293,16 @@
         --constellation-scale: 0.58;
       }
     }
+
+    @media (max-width: 768px), (pointer: coarse) {
+      #constellationParticles {
+        display: none;
+      }
+
+      .orbit-node-motion {
+        animation: none !important;
+      }
+    }
   </style>
   <link rel="stylesheet" href="css/site-shell.css">
 </head>
@@ -2481,6 +2491,7 @@
     ];
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersLightConstellation = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
 
     function initWaveform() {
       const canvas = document.getElementById('waveCanvas');
@@ -2546,7 +2557,17 @@
         state.lastTrailY = -9999;
       });
 
+      let waveVisible = true;
+      const waveObserver = new IntersectionObserver((entries) => {
+        waveVisible = entries.some((entry) => entry.isIntersecting);
+      }, { threshold: 0.02 });
+      waveObserver.observe(hero);
+
       function draw() {
+        if (prefersLightConstellation && !waveVisible) {
+          setTimeout(() => requestAnimationFrame(draw), 180);
+          return;
+        }
         state.phase += prefersReducedMotion ? 0 : 0.014;
         state.disturbances.forEach((disturbance) => {
           disturbance.strength *= 0.978;
@@ -2746,7 +2767,7 @@
         node.innerHTML = `
           <div class="orbit-node-motion" style="animation:orbitFloat ${floatDefs[index][0]} ease-in-out ${floatDefs[index][1]} infinite">
             <div class="orbit-thumb-wrap">
-              <img class="orbit-thumb" src="${project.thumbnail}" alt="${project.title}" loading="lazy">
+              <img class="orbit-thumb" src="${project.thumbnail}" alt="${project.title}" loading="eager" decoding="async" fetchpriority="high">
             </div>
             <div class="orbit-node-label">
               <div class="orbit-node-num">${project.number}</div>
@@ -2762,6 +2783,11 @@
         nodes.push(node.querySelector('.orbit-thumb-wrap'));
       });
       applyNodePositions();
+
+      projects.forEach((project) => {
+        const thumb = new Image();
+        thumb.src = project.thumbnail;
+      });
 
       const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -2847,10 +2873,11 @@
       }
 
       function desiredParticleCount() {
+        if (prefersLightConstellation) return 0;
         const area = width * height;
-        if (window.innerWidth < 480) return Math.min(1280, Math.max(820, Math.round(area / 390)));
-        if (window.innerWidth < 900) return Math.min(1900, Math.max(1180, Math.round(area / 430)));
-        return Math.min(4200, Math.max(2500, Math.round(area / 560)));
+        if (window.innerWidth < 480) return Math.min(340, Math.max(220, Math.round(area / 1200)));
+        if (window.innerWidth < 900) return Math.min(520, Math.max(320, Math.round(area / 1250)));
+        return Math.min(2600, Math.max(1800, Math.round(area / 620)));
       }
 
       function createParticle(index) {
@@ -2898,6 +2925,10 @@
       }
 
       function drawParticles() {
+        if (prefersLightConstellation) {
+          updateMorphState();
+          return;
+        }
         const now = performance.now();
         const dt = Math.min(2.4, Math.max(0.45, (now - lastFrameTime) / 16.67));
         lastFrameTime = now;
@@ -2977,7 +3008,7 @@
           };
         });
 
-        const linkParticles = displayParticles.filter((particle, index) => particle.zone === 'field' && index % 5 === 0).slice(0, 560);
+        const linkParticles = displayParticles.filter((particle, index) => particle.zone === 'field' && index % 8 === 0).slice(0, 260);
         for (let i = 0; i < linkParticles.length; i += 1) {
           for (let j = i + 1; j < linkParticles.length; j += 1) {
             const dist = Math.hypot(linkParticles[i].drawX - linkParticles[j].drawX, linkParticles[i].drawY - linkParticles[j].drawY);
@@ -3010,6 +3041,11 @@
       }
 
       requestAnimationFrame(drawParticles);
+
+      if (prefersLightConstellation) {
+        window.addEventListener('scroll', updateMorphState, { passive: true });
+        window.addEventListener('resize', updateMorphState);
+      }
 
       function openProjectOverlay(index) {
         const project = projects[index];
