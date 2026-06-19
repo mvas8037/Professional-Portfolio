@@ -283,6 +283,42 @@ footer > span:not(.footer-divider) {
   max-width: min(13rem, calc(100vw - 1rem));
 }
 
+/* ===========================================================================
+   Project & About page content flow (shared, large-screen polish)
+   Centralized here so every project/about page widens consistently on big
+   screens and images render at their true aspect ratio with no letterbox
+   bands. Loaded after page-local styles, so these win.
+   =========================================================================== */
+
+/* Use more of large/ultrawide screens instead of a fixed 980px column.
+   Below ~1196px this resolves to the original 980px, so laptop/tablet
+   layouts are unchanged; only large screens gain width. */
+.project-hero,
+.role-strip,
+.wrap,
+.proj-nav {
+  max-width: clamp(980px, 82vw, 1280px) !important;
+}
+
+/* Keep paragraph line length readable even as the column widens. */
+.wrap p,
+.proj-subtitle {
+  max-width: 74ch;
+}
+
+/* Images: size to their own aspect ratio (no fixed-height letterboxing).
+   Tall images are capped so they never dominate the viewport. */
+.project-media img {
+  height: auto !important;
+  max-height: 80vh !important;
+  object-fit: contain !important;
+}
+
+/* Side-by-side figures top-align naturally when heights differ. */
+.story-media {
+  align-items: start !important;
+}
+
 .about-section-nav:not(:hover):not(:focus-within) a:not(.is-active) span {
   max-width: 0 !important;
   opacity: 0 !important;
